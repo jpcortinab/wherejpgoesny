@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neighborhood Guides — WHERE.JP.GOES.NY</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⭐️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<!-- Analytics: free at https://www.goatcounter.com — sign up, then replace WHEREJPGOESNY below with your own site code -->
+<script data-goatcounter="https://WHEREJPGOESNY.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<style>
+  .guide-shell { display: grid; grid-template-columns: 260px 1fr; gap: 32px; align-items: start; }
+  .guide-nav {
+    position: sticky; top: 84px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+  .guide-nav .borough-group { margin-bottom: 18px; }
+  .guide-nav .borough-title { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-faint); margin-bottom: 6px; }
+  .guide-nav a {
+    display: flex; justify-content: space-between;
+    text-decoration: none; color: var(--ink-soft);
+    font-size: 0.9rem; padding: 5px 8px; border-radius: 7px;
+  }
+  .guide-nav a:hover { background: var(--neutral-soft); color: var(--ink); }
+  .guide-nav a span.n { color: var(--ink-faint); }
+  .borough-section { margin-bottom: 44px; }
+  .borough-section > h2 { font-size: 1.8rem; }
+  details.hood-group {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  details.hood-group[open] { box-shadow: var(--shadow); }
+  details.hood-group summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  details.hood-group summary::-webkit-details-marker { display: none; }
+  details.hood-group summary .chev { transition: transform .15s; color: var(--ink-faint); font-family: var(--sans); }
+  details.hood-group[open] summary .chev { transform: rotate(90deg); }
+  .hood-summary-meta { font-family: var(--sans); font-size: 0.85rem; color: var(--ink-faint); font-weight: 500; }
+  .hood-body { padding: 0 20px 20px; display: grid; gap: 12px; }
+  @media (max-width: 860px) {
+    .guide-shell { grid-template-columns: 1fr; }
+    .guide-nav { position: static; max-height: none; }
+  }
+  #hood-search { width: 100%; margin-bottom: 14px; }
+</style>
+</head>
+<body data-page="guides">
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="star">★</span>WHERE.JP.GOES.NY</a>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    <div class="nav-links">
+      <a href="index.html" data-page="home">Home</a>
+      <a href="map.html" data-page="map">Map</a>
+      <a href="guides.html" data-page="guides">Guides</a>
+      <a href="quiz.html" data-page="quiz">Quiz</a>
+      <a href="directory.html" data-page="directory">All Spots</a>
+    </div>
+  </div>
+</nav>
+
+<header class="section-tight">
+  <div class="wrap">
+    <div class="eyebrow">Browse</div>
+    <h1>Neighborhood guides</h1>
+    <p class="lede">Every neighborhood, ranked from best to worst spot. Click one open to see the full list, in order — with the notes I'd give a friend.</p>
+  </div>
+</header>
+
+<section class="section-tight">
+  <div class="wrap">
+    <div class="guide-shell">
+      <nav class="guide-nav" id="guide-nav"></nav>
+      <div id="guide-main">
+        <input type="search" id="hood-search" placeholder="Jump to a neighborhood…">
+        <div id="guide-content"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>WHERE.JP.GOES.NY — one New Yorker's answer to "where should I eat?" <span class="faint" id="last-updated"></span></span>
+    <a href="map.html" class="muted">Prefer a map? →</a>
+  </div>
+</footer>
+
+<script src="data/data.js"></script>
+<script src="js/util.js"></script>
+<script>
+  var BOROUGH_ORDER = ['Manhattan', 'Brooklyn', 'Queens', 'Bronx', 'Staten Island'];
+
+  function slug(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''); }
+
+  var byBorough = {};
+  BOROUGH_ORDER.forEach(function (b) { byBorough[b] = []; });
+  NEIGHBORHOODS.forEach(function (n) {
+    if (!byBorough[n.borough]) byBorough[n.borough] = [];
+    byBorough[n.borough].push(n);
+  });
+  Object.keys(byBorough).forEach(function (b) {
+    byBorough[b].sort(function (a, c) { return c.count - a.count; });
+  });
+
+  var navHtml = '';
+  var contentHtml = '';
+
+  BOROUGH_ORDER.filter(function (b) { return byBorough[b] && byBorough[b].length; }).forEach(function (borough) {
+    var hoods = byBorough[borough];
+    navHtml += '<div class="borough-group"><div class="borough-title">' + borough + '</div>';
+    hoods.forEach(function (n) {
+      navHtml += '<a href="#hood-' + slug(borough) + '-' + slug(n.hood) + '">' + n.hood + ' <span class="n">' + n.count + '</span></a>';
+    });
+    navHtml += '</div>';
+
+    contentHtml += '<div class="borough-section"><h2>' + borough + '</h2>';
+    hoods.forEach(function (n) {
+      var spots = RESTAURANTS.filter(function (r) { return r.borough === borough && r.hood === n.hood; });
+      spots.sort(function (a, b) {
+        var as = a.stars === null ? -1 : a.stars, bs = b.stars === null ? -1 : b.stars;
+        if (bs !== as) return bs - as;
+        return b.recScore - a.recScore;
+      });
+      var id = 'hood-' + slug(borough) + '-' + slug(n.hood);
+      var metaBits = n.count + ' spot' + (n.count === 1 ? '' : 's');
+      if (n.topRating !== null) metaBits += ' &middot; top ' + n.topRating + '★';
+      contentHtml += '<details class="hood-group" id="' + id + '" data-hood-name="' + n.hood.toLowerCase() + '">' +
+        '<summary><span>' + n.hood + '</span><span class="hood-summary-meta">' + metaBits + ' <span class="chev">›</span></span></summary>' +
+        '<div class="hood-body">' +
+          spots.map(function (s) { return spotCardHtml(s, { hideLocation: true }); }).join('') +
+        '</div>' +
+      '</details>';
+    });
+    contentHtml += '</div>';
+  });
+
+  document.getElementById('guide-nav').innerHTML = navHtml;
+  document.getElementById('guide-content').innerHTML = contentHtml;
+
+  document.getElementById('hood-search').addEventListener('input', function (e) {
+    var q = e.target.value.trim().toLowerCase();
+    document.querySelectorAll('.hood-group').forEach(function (d) {
+      var match = !q || d.dataset.hoodName.indexOf(q) !== -1;
+      d.style.display = match ? '' : 'none';
+      if (q && match) d.open = true;
+    });
+    document.querySelectorAll('.borough-section').forEach(function (sec) {
+      var anyVisible = Array.from(sec.querySelectorAll('.hood-group')).some(function (d) { return d.style.display !== 'none'; });
+      sec.style.display = anyVisible ? '' : 'none';
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WHERE.JP.GOES.NY — Where to eat in New York</title>
+<meta name="description" content="A personal, opinionated guide to 500+ NYC restaurants — with an interactive map, neighborhood guides, and a two-minute quiz that gives you five recommendations.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⭐️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<!-- Analytics: free at https://www.goatcounter.com — sign up, then replace WHEREJPGOESNY below with your own site code -->
+<script data-goatcounter="https://WHEREJPGOESNY.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body data-page="home">
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="star">★</span>WHERE.JP.GOES.NY</a>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    <div class="nav-links">
+      <a href="index.html" data-page="home">Home</a>
+      <a href="map.html" data-page="map">Map</a>
+      <a href="guides.html" data-page="guides">Guides</a>
+      <a href="quiz.html" data-page="quiz">Quiz</a>
+      <a href="directory.html" data-page="directory">All Spots</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">A personal New York restaurant guide</div>
+    <h1>Where should I eat?</h1>
+    <p class="lede">Friends and family visiting New York always ask the same question. The honest answer depends on neighborhood, budget, occasion, and what kind of night you're after — so I turned my running spreadsheet into something they could search themselves.</p>
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top: 24px;">
+      <a class="btn btn-primary" href="quiz.html">Take the 2-minute quiz</a>
+      <a class="btn btn-outline" href="map.html">Explore the map</a>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><b id="stat-total">—</b><span>Spots tracked</span></div>
+      <div class="stat"><b id="stat-hoods">—</b><span>Neighborhoods</span></div>
+      <div class="stat"><b id="stat-boroughs">—</b><span>Boroughs</span></div>
+      <div class="stat"><b id="stat-rated">—</b><span>Actually rated</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="section-tight">
+  <div class="wrap">
+    <div class="grid grid-4">
+      <a class="card tool-card" href="map.html">
+        <div class="icon">🗺️</div>
+        <h3>The Map</h3>
+        <p class="muted">Every neighborhood I've eaten through, pinned and color-coded by how good it actually is.</p>
+      </a>
+      <a class="card tool-card" href="guides.html">
+        <div class="icon">📖</div>
+        <h3>Neighborhood Guides</h3>
+        <p class="muted">Browse borough by borough, hood by hood — ranked, with the notes I'd actually give a friend.</p>
+      </a>
+      <a class="card tool-card" href="quiz.html">
+        <div class="icon">🎯</div>
+        <h3>The Quiz</h3>
+        <p class="muted">Tell me the vibe, budget, and neighborhood. I'll hand back five places worth going.</p>
+      </a>
+      <a class="card tool-card" href="directory.html">
+        <div class="icon">🔎</div>
+        <h3>Full Directory</h3>
+        <p class="muted">Search and filter the entire list — every cuisine, every price point, every star rating.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap" style="max-width: 760px;">
+    <div class="eyebrow">How this happened</div>
+    <h2>From a spreadsheet to something people actually use</h2>
+    <p>I used to respond to "where should I eat?" with a few names off the top of my head. But the right recommendation depends on much more than that — neighborhood, cuisine, budget, occasion, and what kind of experience someone's after.</p>
+    <p>I'd already been keeping a personal spreadsheet of everywhere I'd tried, so I started organizing it around those questions and sharing tailored recommendations instead. As more people used it, I kept refining the list based on what was actually useful to them, and eventually turned it into a website they could navigate on their own.</p>
+    <p>What started as a way to keep track of a personal interest became a way to share a part of New York I love. Something I started for fun is now something friends and family actually use — and now, so can you.</p>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="wrap" style="max-width: 760px;">
+    <div class="eyebrow">How to read the ratings</div>
+    <h2>The scale</h2>
+    <div class="card" style="padding: 8px 24px;">
+      <div class="legend-item"><span class="stars">★★★★★</span><span><b>Extraordinary</b> — worth a flight to NYC</span></div>
+      <div class="legend-item"><span class="stars">★★★★<span class="dim">★</span></span><span><b>Excellent</b> — go out of your way, and tell everyone about it</span></div>
+      <div class="legend-item"><span class="stars">★★★<span class="dim">★★</span></span><span><b>Very good</b> — would happily return and recommend to friends</span></div>
+      <div class="legend-item"><span class="stars">★★<span class="dim">★★★</span></span><span><b>Good</b> — would return, but wouldn't make a special trip</span></div>
+      <div class="legend-item"><span class="stars">★<span class="dim">★★★★</span></span><span><b>Fair</b> — only if invited, probably wouldn't recommend</span></div>
+      <div class="legend-item"><span class="stars"><span class="dim">★★★★★</span></span><span><b>Poor</b> — would avoid going back altogether</span></div>
+      <div class="legend-item"><span class="pill pill-accent" style="margin-right:4px;">✦ Mofe</span><span>An intangible sense of swagger or ambiance a place has — beyond just the food.</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>WHERE.JP.GOES.NY — one New Yorker's answer to "where should I eat?" <span class="faint" id="last-updated"></span></span>
+    <span class="faint">Neighborhood map is approximate — the source list tracks neighborhoods, not street addresses.</span>
+  </div>
+</footer>
+
+<script src="data/data.js"></script>
+<script src="js/util.js"></script>
+<script>
+  document.getElementById('stat-total').textContent = META.totalCount;
+  document.getElementById('stat-hoods').textContent = NEIGHBORHOODS.length;
+  document.getElementById('stat-boroughs').textContent = META.boroughs.length;
+  document.getElementById('stat-rated').textContent = META.ratedCount;
+</script>
+</body>
+</html>

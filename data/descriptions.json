@@ -1,0 +1,1970 @@
+{
+ "1": {
+  "name": "Red Hook Tavern",
+  "description": "Cozy, tin-ceilinged American tavern from the Hometown Bar-B-Que team on the Red Hook waterfront, known for a dry-aged burger with melted American cheese and a serious natural wine list."
+ },
+ "2": {
+  "name": "Lucali's",
+  "description": "Cash-only, BYOB Carroll Gardens pizzeria opened in 2006 by Mark Iacono in a former candy store, known for wafer-thin, crackly-crust pies and no reservations, delivery, or slices."
+ },
+ "3": {
+  "name": "Eleven Madison Park",
+  "description": "Daniel Humm's art deco Flatiron dining room held 3 Michelin stars since 2012, the first 3-star restaurant to go all-plant-based in 2021, though it reintroduced some seafood and meat courses in 2025."
+ },
+ "4": {
+  "name": "Le Bernadin",
+  "description": "Eric Ripert's three-Michelin-star French seafood restaurant in Midtown, open since 1986, offering a seafood-focused \u00e0 la carte menu and prix-fixe tasting menus from $180-250."
+ },
+ "5": {
+  "name": "Kappo Masa",
+  "description": "Upper East Side Japanese spot inside the Gagosian Gallery, a collaboration between chef Masa Takayama and art dealer Larry Gagosian serving omakase and small plates amid works by Warhol and Picasso."
+ },
+ "6": {
+  "name": "Marea",
+  "description": "Elegant Central Park South Italian seafood restaurant from chef Michael White, known for crudo and uni-and-crab casarecce pasta, and a Michelin star held from 2012 to 2022."
+ },
+ "7": {
+  "name": "4 Charles Prime Rib",
+  "description": "Clubby, dimly lit West Village steakhouse styled like an old robber baron's den, from Chicago's Hogsalt group, known for slow-roasted prime rib and notoriously hard-to-get reservations."
+ },
+ "8": {
+  "name": "Bangklyn",
+  "description": "Casual East Harlem Thai counter-service spot doubling as an espresso bar and vintage clothing shop, serving pad Thai, papaya salad, and Southern Thai fried chicken."
+ },
+ "9": {
+  "name": "The Four Horsemen",
+  "description": "James Murphy (of LCD Soundsystem)'s Williamsburg wine bar and restaurant, Michelin-starred since 2019, known for a deep natural wine list and a frequently changing New American small-plates menu."
+ },
+ "10": {
+  "name": "Au Cheval",
+  "description": "NYC outpost of the famed Chicago diner-style burger spot, tucked down Cortlandt Alley near the Financial District, known for its griddled cheeseburger and bone marrow."
+ },
+ "11": {
+  "name": "Nha Trang",
+  "description": "Long-running, no-frills Chinatown Vietnamese spot near the Financial District, family-run since the early 1990s, known for pho and traditional Vietnamese comfort dishes."
+ },
+ "12": {
+  "name": "Casa Mono",
+  "description": "Andy Nusser's Gramercy-area Spanish tapas restaurant near Union Square, Michelin-starred since 2009, known for garlicky razor clams and bone marrow inspired by Spain's Costa Brava."
+ },
+ "13": {
+  "name": "Babbo",
+  "description": "Mario Batali and Joe Bastianich's Greenwich Village Italian restaurant, opened in 1998 in a former carriage house, long Michelin-starred and now run by Stephen Starr after Batali's 2017 exit."
+ },
+ "14": {
+  "name": "Ernesto's",
+  "description": "Basque taverna on the Lower East Side named for Hemingway, run by a chef with Alinea and Basque-region experience, known for Ib\u00e9rico ham and battered fried hake in a pintxo-bar-style setting."
+ },
+ "15": {
+  "name": "Emilio's Ballato",
+  "description": "Old-school Nolita Italian-American institution open since 1956, no-reservations and famously celebrity-heavy, with walls covered in photos of famous regulars from Rihanna to David Bowie."
+ },
+ "16": {
+  "name": "Blue Ribbon Brasserie",
+  "description": "Late-night Soho brasserie serving seafood and American fare from 4pm to 4am since 1992, an industry favorite known for fried chicken, oysters, and bone marrow."
+ },
+ "17": {
+  "name": "The Odeon",
+  "description": "Storied Tribeca brasserie opened in 1980, an early SNL-era celebrity hangout credited with putting Tribeca on the map and immortalized on the cover of Bright Lights, Big City."
+ },
+ "18": {
+  "name": "Amma",
+  "description": "Longtime Midtown East Indian restaurant open since 2002, known for individually plated rather than family-style classic Indian dishes and a well-curated wine list; recent listings show it closed."
+ },
+ "19": {
+  "name": "Jean Georges",
+  "description": "Jean-Georges Vongerichten's flagship French restaurant on Columbus Circle inside the Trump International Hotel, a longtime Michelin two-star known for refined French technique with global flavors."
+ },
+ "20": {
+  "name": "Masa",
+  "description": "Chef Masa Takayama's Columbus Circle omakase counter, the first Japanese restaurant in the US to earn three Michelin stars, known for flying in fish from Tokyo and pristine sushi in an austere hinoki-wood room."
+ },
+ "21": {
+  "name": "S&P",
+  "description": "Flatiron lunch counter in the former Eisenberg's space, run by the Court Street Grocers team, a nod to old-school Jewish delis with pastrami sandwiches, matzo ball soup, and egg creams."
+ },
+ "22": {
+  "name": "Jeju",
+  "description": "West Village Korean noodle bar from chef Douglas Kim, the first noodle bar in the US to earn a Michelin star, known for ramyun bowls in spicy pork or chilled soy milk broth."
+ },
+ "23": {
+  "name": "Semma",
+  "description": "Greenwich Village South Indian restaurant from chef Vijay Kumar, Michelin-starred since 2022, known for exploring regional Tamil Nadu cuisine rarely seen outside home kitchens."
+ },
+ "24": {
+  "name": "Don Angie",
+  "description": "West Village Italian-American restaurant from husband-and-wife chefs Angela Rito and Scott Tacinelli, known for its signature pinwheel lasagna and briefly Michelin-starred from 2021 to 2023."
+ },
+ "25": {
+  "name": "Waverly Inn",
+  "description": "Graydon Carter's clubby West Village townhouse restaurant, a celebrity magnet since reopening in 2006, known for its $55 truffled mac and cheese and a strict no-photos policy."
+ },
+ "26": {
+  "name": "Claud",
+  "description": "East Village European-leaning bistro from partners Chase Sinzer and Joshua Pinsky, a dimly lit, ingredient-focused wine-bar-style spot serving shared plates of French-American food."
+ },
+ "27": {
+  "name": "WSP Dosas",
+  "description": "Long-running vegan South Indian food cart on the south side of Washington Square Park, run by Vendy Cup winner Thiru Kumar, known for cheap curried-potato dosas and samosas."
+ },
+ "28": {
+  "name": "Superiority Burger",
+  "description": "Brooks Headley's East Village vegetarian burger spot with retro diner styling, known for its bean-and-grain veggie patty and Bib Gourmand recognition."
+ },
+ "29": {
+  "name": "Dera",
+  "description": "Halal Jackson Heights Pakistani and Desi spot open since the 1970s under earlier names, known for halwa poori and nihari beef shank stew."
+ },
+ "30": {
+  "name": "Chongqing Lao Zao",
+  "description": "Flushing hot pot restaurant elaborately decorated like a Sichuan village with grass huts and lanterns, known for Chongqing-style beef tallow hot pot and long walk-in waits."
+ },
+ "31": {
+  "name": "Trinciti Roti Shop",
+  "description": "Family-run South Ozone Park Trinidadian shop open since 2005, known for doubles, aloo pie, bake, and roti, plus Caribbean snacks and drinks."
+ },
+ "32": {
+  "name": "Mariscos El Submarino",
+  "description": "Jackson Heights Mexican seafood spot from Sinaloa native Alonso Guzman, praised by former New York Times critic Pete Wells, known for towering tostadas, ceviches, and aguachile."
+ },
+ "33": {
+  "name": "Umeko",
+  "description": "West Village Japanese spot from the team behind Williamsburg's Ume, known for $48 seasonal don sets with rotating fish and handroll fixings."
+ },
+ "34": {
+  "name": "Cafe Spaghetti",
+  "description": "Chef Sal Lamboglia's cozy Carroll Gardens-area Italian restaurant, a modern take on the classic neighborhood red-sauce spot with a wraparound cafe bar."
+ },
+ "35": {
+  "name": "Mariscos El Submarino",
+  "description": "Greenpoint outpost of the Mexican seafood mini-chain started by Alonso Guzman, known for molcajete-style aguachile and fresh tostadas in a lively, casual dining room."
+ },
+ "36": {
+  "name": "Liilia",
+  "description": "Missy Robbins' acclaimed Italian restaurant in a converted Williamsburg/Greenpoint-area auto body shop, known for handmade pasta and a James Beard Best Chef NYC award."
+ },
+ "37": {
+  "name": "Birds of a Feather",
+  "description": "Williamsburg Sichuan restaurant from chef Ziqiang Lu, formerly of Michelin-starred Caf\u00e9 China, known for spicy, no-cornstarch dishes like soup dumplings and chili-oil wontons."
+ },
+ "38": {
+  "name": "Uluh",
+  "description": "East Village Chinese restaurant and teahouse with over thirty teas, known for Sichuan-leaning dishes and daily-roasted Peking duck, named one of Eater's best Chinese restaurants in the city."
+ },
+ "39": {
+  "name": "Joe's Shanghai",
+  "description": "Chinatown institution famous for pork and crab soup dumplings, part of a small chain founded by chef Joe Si tracing back to a 1994 Flushing original."
+ },
+ "40": {
+  "name": "Peking Duck House",
+  "description": "Chinatown restaurant on Mott Street serving Peking duck since 1978, known for its tableside duck-carving presentation and three-course preparation; a longtime favorite of former mayor Ed Koch."
+ },
+ "41": {
+  "name": "Ray's Candy",
+  "description": "24-hour, cash-only East Village institution near Tompkins Square Park open since 1974, known for soft serve, fried Oreos, milkshakes, and egg creams."
+ },
+ "42": {
+  "name": "Caf\u00e9 Mogador",
+  "description": "Family-run East Village Moroccan restaurant open since 1983, a downtown dining institution known for lamb and chicken tagines, harira soup, and flaky bastilla."
+ },
+ "43": {
+  "name": "Cote",
+  "description": "Flatiron Korean steakhouse from Simon Kim, the first Michelin-starred Korean barbecue restaurant in the world, known for USDA Prime and American Wagyu grilled tableside alongside banchan."
+ },
+ "44": {
+  "name": "Cosme",
+  "description": "Enrique Olvera's Flatiron Mexican restaurant open since 2014, known for its all-black dining room and modern Mexican dishes using Hudson Valley ingredients, ranked among the World's 50 Best."
+ },
+ "45": {
+  "name": "Kazu Nori",
+  "description": "NoMad-area hand roll bar and sibling of Sugarfish, known for made-to-order sets of nori hand rolls filled with toro, salmon, crab, and other seafood."
+ },
+ "46": {
+  "name": "Grammercy Tavern",
+  "description": "Danny Meyer's Flatiron restaurant open since 1994, winner of multiple James Beard awards, split between a casual front tavern and a formal prix-fixe dining room helmed by chef Michael Anthony."
+ },
+ "47": {
+  "name": "The Boil",
+  "description": "Greenwich Village Cajun and Creole seafood spot known for by-the-pound boils of crawfish, king crab, and shrimp, served in a lively, cash-only dining room."
+ },
+ "48": {
+  "name": "Minetta Tavern",
+  "description": "Keith McNally's Greenwich Village tavern dating to 1937, once frequented by Hemingway and other literary figures, now a Michelin-starred French-leaning spot known for its Black Label burger."
+ },
+ "49": {
+  "name": "Blue Hill",
+  "description": "Dan Barber's Greenwich Village farm-to-table restaurant open since 2000, Michelin-starred, sourcing largely from Stone Barns and known for its no-menu Family Meal format."
+ },
+ "50": {
+  "name": "Amy Ruth's",
+  "description": "Harlem soul food institution on 116th Street since 1998, named after the owner's grandmother, known for fried chicken and waffles and menu items named after famous figures."
+ },
+ "51": {
+  "name": "63 Clinton",
+  "description": "Lower East Side tasting-menu restaurant from chefs Sam Clonts and Raymond Trinh, both formerly of Bar Uch\u016b, Michelin-starred, known for a globally influenced seven-course menu including a signature breakfast taco."
+ },
+ "52": {
+  "name": "Vanessas's",
+  "description": "Cash-friendly Chinatown-adjacent dumpling shop on Eldridge Street open since 1999, known for cheap pork and chive dumplings and sesame pancakes served fast through a street-side window."
+ },
+ "53": {
+  "name": "Katz's",
+  "description": "Landmark Lower East Side deli since 1888, famous for hand-cut pastrami on rye and its ticket-at-the-door ordering ritual; the setting for the famous scene in When Harry Met Sally."
+ },
+ "54": {
+  "name": "Kiki's",
+  "description": "No-reservations Greek taverna on Division Street known for moussaka, grilled loukaniko and spanakopita at reasonable prices, packing a crowd nightly despite its no-frills room."
+ },
+ "55": {
+  "name": "Keens Steakhouse",
+  "description": "19th-century Garment District steakhouse dating to 1885, famous for its mutton chop and dry-aged steaks, plus a ceiling hung with thousands of clay churchwarden pipes."
+ },
+ "56": {
+  "name": "Milos",
+  "description": "Estiatorio Milos, the Greek seafood institution near Central Park South, lets diners pick whole fish from an ice display before it's grilled simply with olive oil and lemon."
+ },
+ "57": {
+  "name": "Avra",
+  "description": "Greek seafood spot near Grand Central since 2000, known for whole fish flown in daily and charcoal-grilled with lemon and olive oil, with a plant-filled patio and Sunday jazz brunch."
+ },
+ "58": {
+  "name": "Il Bucco",
+  "description": "Rustic Mediterranean-Italian restaurant on a NoHo cobblestone block, opened in 1994 out of a former antiques shop, known for handmade pasta and a candlelit wine cellar downstairs."
+ },
+ "59": {
+  "name": "Fish Cheeks",
+  "description": "Lively Bond Street Thai spot from chef brothers Ohm and Chat Suansilphong, known for coconut crab curry and whole steamed fish, with a colorful, cafeteria-like dining room and steady waits."
+ },
+ "60": {
+  "name": "Vic's",
+  "description": "Great Jones Street Italian spot from the Rosie's/Shuka team, serving handmade pastas and wood-fired pizza under chef Hillary Sterling, with rainbow cookies for dessert and a lively wraparound bar."
+ },
+ "61": {
+  "name": "The Musket Room",
+  "description": "Michelin-starred Nolita restaurant that opened in 2013 with a New Zealand-inspired menu, now led by chef Mary Attea, serving refined tasting menus in an intimate room with a garden."
+ },
+ "62": {
+  "name": "Torrisi",
+  "description": "Michelin-starred Italian restaurant from Major Food Group in the Puck Building, where chef Rich Torrisi folds playful touches like Jamaican beef ragu into Roman-leaning, reservation-hard fine dining."
+ },
+ "63": {
+  "name": "Wayan",
+  "description": "Nolita restaurant from chef Cedric Vongerichten blending his wife Ochi's Indonesian home cooking with a modern French sensibility, in a teak-paneled, Rockwell Group-designed space with Jakarta-sourced wood carvings."
+ },
+ "64": {
+  "name": "Thai Diner",
+  "description": "Diner-meets-Thai spot from Ann Redding and Matt Danzer, formerly of Michelin-starred Uncle Boons, earning a Bib Gourmand for dishes like khao soi and Thai tea babka French toast in a retro-diner room."
+ },
+ "65": {
+  "name": "Caf\u00e9 Habana",
+  "description": "Cuban-Mexican corner cafe on Prince Street since 1998, famous for its fire-roasted, cotija-dusted grilled corn and Cuban sandwiches, still doing brisk business in its old Dominican-diner shell."
+ },
+ "66": {
+  "name": "Le Coucou",
+  "description": "Michelin-starred French fine dining from chef Daniel Rose inside the 11 Howard hotel, a 2017 James Beard Best New Restaurant known for classic technique in a candlelit, whitewashed-brick room."
+ },
+ "67": {
+  "name": "Raoul's",
+  "description": "Soho institution opened in 1974 by Alsatian brothers Guy and Serge Raoul, a dim, art-crammed French bistro known for steak au poivre and its decades-long, still-loud popularity."
+ },
+ "68": {
+  "name": "Locanda Verde",
+  "description": "Andrew Carmellini's bustling Tribeca osteria inside the Greenwich Hotel, open since 2009 for urban Italian cooking morning through night, popular for weekend brunch as much as dinner."
+ },
+ "69": {
+  "name": "Mr Chow",
+  "description": "Tribeca outpost of Michael Chow's decades-old fine-dining Chinese restaurant group, known for handmade noodle theater and Beijing-inspired dishes like chicken satay in a black-and-white room hung with Warhol and Schnabel art."
+ },
+ "70": {
+  "name": "Hoexters",
+  "description": "Revived version of a beloved 1970s-80s Upper East Side haunt once frequented by Dali and Princess Grace, now a maximalist multi-room spot known for gorgonzola garlic bread and old-school cocktails."
+ },
+ "71": {
+  "name": "Nelo",
+  "description": "Long-running Madison Avenue Italian restaurant amid the flagship fashion boutiques, long known as a jet-set favorite for classic Italian dishes served in an elegant, boutique-scaled dining room."
+ },
+ "72": {
+  "name": "Al Badawi",
+  "description": "Brooklyn-born Palestinian restaurant's Second Avenue outpost, a BYOB spot with an open oven for fresh flatbreads plus hummus, baba ghanoush and family-style meat platters from the team behind Ayat."
+ },
+ "73": {
+  "name": "Sugarfish",
+  "description": "Outpost of the LA-born Sugarfish chain built around chef Kazunori Nozawa's minimalist \"Trust Me\" omakase sets, skipping rolls like spicy tuna in favor of traditional, no-frills nigiri and sashimi."
+ },
+ "74": {
+  "name": "Up Thai",
+  "description": "Upper East Side Thai spot dressed up with lanterns and wood accents, serving elevated street-food dishes like duck tamarind, massaman curry and Thai crepe dumplings."
+ },
+ "75": {
+  "name": "Hillstone",
+  "description": "Polished chain outpost known for consistent American comfort food, including crispy oysters, prime steaks, a veggie burger and sushi rolls, with nightly live jazz and reliably packed tables."
+ },
+ "77": {
+  "name": "Maloney & Porceli",
+  "description": "Midtown East steakhouse from the Smith & Wollensky restaurant family, known since 1996 for crackling pork shank, Waldorf salad and classic steaks in a clubby, wood-paneled dining room."
+ },
+ "78": {
+  "name": "Kazu Nori",
+  "description": "Counter-only hand roll bar from the team behind Sugarfish, serving warm rice-and-nori rolls one at a time in sets of three to six, named for chef Kazunori Nozawa."
+ },
+ "79": {
+  "name": "Nobu",
+  "description": "Nobu Fifty Seven, the Midtown outpost of chef Nobu Matsuhisa's Peruvian-Japanese restaurant group co-owned with Robert De Niro, known for black cod miso and yellowtail jalapeno in a David Rockwell-designed space."
+ },
+ "80": {
+  "name": "Masseria dei Vini",
+  "description": "Modern Italian spot near Lincoln Center with a 400-label, mostly Italian wine list, known for Puglia-inspired handmade pastas, seafood crudos and wood-oven Neapolitan-style pizzas."
+ },
+ "81": {
+  "name": "Barney Greengrass",
+  "description": "Cash-only Amsterdam Avenue appetizing shop and deli since 1908, nicknamed \"the Sturgeon King\" for its smoked sturgeon, salmon and whitefish, run by the same family for three generations."
+ },
+ "82": {
+  "name": "Sushi of Gari",
+  "description": "Columbus Avenue outpost of chef Masatoshi \"Gari\" Sugio's sushi restaurants, known since 1997 for eclectic, sauce-topped nigiri that breaks from soy-sauce tradition, plus baked Kumamoto oysters."
+ },
+ "83": {
+  "name": "Pearl Oyster Bar",
+  "description": "Cornelia Street seafood spot run by Rebecca Charles from 1997 to 2022, credited with reviving the New England-style oyster bar in New York and famous for its buttery lobster roll."
+ },
+ "84": {
+  "name": "Via Carota",
+  "description": "Grove Street trattoria from Jody Williams and Rita Sodi, also of Buvette and I Sodi, 2019 James Beard Best Chef winners, serving all-day rustic Italian food from bare wood tables."
+ },
+ "85": {
+  "name": "Barbuto",
+  "description": "Jonathan Waxman's West Village mainstay, now on Horatio Street after reopening in 2021, known for roast chicken with salsa verde and simple, seasonal Italian-Californian cooking."
+ },
+ "86": {
+  "name": "Palma",
+  "description": "Cornelia Street Italian restaurant since 2001 with an ivy-covered garden and 200-year-old carriage house, serving family-recipe pastas and seasonal dishes sourced partly from its own garden."
+ },
+ "87": {
+  "name": "Emily",
+  "description": "Downing Street offshoot of the Emily pizza mini-chain, known for its Emmy double-patty dry-aged burger alongside Detroit-style and round thin-crust pizzas, in a cozy, often-packed room."
+ },
+ "88": {
+  "name": "Fiaschetteria Pistoia",
+  "description": "Walk-in-only Christopher Street trattoria run by the same family behind the original in Pistoia, Italy, known for hand-rolled pasta like duck ragu pappardelle in a tiny seven-table room."
+ },
+ "89": {
+  "name": "Sant Ambroeus",
+  "description": "West 4th Street outpost of the Milanese cafe founded in 1936, serving northern Italian breakfast, lunch and dinner with a lively weekend sidewalk brunch scene."
+ },
+ "90": {
+  "name": "Li'industrie",
+  "description": "Manhattan offshoot of the Williamsburg slice shop opened by Massimo Laveglia in 2017, known for thin, naturally fermented New York-style slices and a cult-favorite burrata slice."
+ },
+ "103": {
+  "name": "Birria-Landia",
+  "description": "Jackson Heights food truck (with LES and Williamsburg offshoots) run by brothers from Puebla, known for quesabirrias and beef birria tacos dunked in rich consomme, often with long lines."
+ },
+ "104": {
+  "name": "Asian Jewels Seafood Restaurant",
+  "description": "A cavernous, chandelier-lit Flushing banquet hall known for weekend dim sum carts loaded with pork and shrimp dumplings, sticky rice, and pan-fried turnip cake."
+ },
+ "105": {
+  "name": "Abuqir",
+  "description": "No-frills Egyptian seafood counter where diners pick whole fish, shrimp, or squid from the case and get it baked, fried, or grilled Egyptian-style, spices and all."
+ },
+ "106": {
+  "name": "Chez Moi",
+  "description": "Brick-walled French bistro serving classics like steak frites, escargot, and mussels alongside creative cocktails, with a hidden downstairs speakeasy bar that hosts late-night burlesque."
+ },
+ "107": {
+  "name": "Wenwen",
+  "description": "Michelin-listed Greenpoint Taiwanese spot from the chefs behind 886, known for sacha hot honey popcorn chicken and whole striped bass in a black sugar-yuzu vinaigrette."
+ },
+ "108": {
+  "name": "Dinosaur Bar-B-Que",
+  "description": "Cavernous Gowanus outpost of the upstate Dinosaur Bar-B-Que chain, serving gut-busting platters of pork ribs, Texas-style brisket, and pulled pork in a roadhouse setting."
+ },
+ "109": {
+  "name": "Misi",
+  "description": "From the team behind Lilia, this South Williamsburg spot at the old Domino Sugar Refinery focuses on handmade pasta and vegetable antipasti, with an open kitchen and no walk-ins."
+ },
+ "110": {
+  "name": "Crocodile",
+  "description": "Le Crocodile is an all-day brasserie inside the Wythe Hotel from the chefs behind Chez Ma Tante, known for steak au poivre, roast chicken, and crisp golden frites."
+ },
+ "111": {
+  "name": "Ichiran",
+  "description": "Japanese tonkotsu ramen chain known for its solo 'flavor concentration' booths, where diners customize broth richness, noodle firmness, and fat content via order form before pushing a call button."
+ },
+ "112": {
+  "name": "Taqueria Ramirez",
+  "description": "Tiny CDMX-style taqueria that went viral on TikTok, serving suadero, tripa, and al pastor carved from a trompo onto small corn tortillas; expect a line down the block."
+ },
+ "113": {
+  "name": "Los Mariscos",
+  "description": "Seafood spin-off of Los Tacos No. 1 tucked into a side corner of Chelsea Market, serving Baja-style fish and shrimp tacos, ceviche, and aguachile at a casual counter."
+ },
+ "114": {
+  "name": "Pastis",
+  "description": "Keith McNally's revived Meatpacking District French brasserie, known for icy oysters, steak frites, and a tin-ceilinged, zinc-bar dining room that once drew Manhattan's fashion crowd."
+ },
+ "115": {
+  "name": "Chef's Table at Brooklyn Fare",
+  "description": "Formerly two-Michelin-starred tasting-counter restaurant tucked inside a Hell's Kitchen grocery store, an 18-seat room now run by chefs Max Natmessnig and Marco Prins with a seafood-forward menu."
+ },
+ "116": {
+  "name": "Hwa Yuan Szechuan",
+  "description": "Revived by the founding family in 2017, this Chinatown institution is known for the cold sesame noodles that made original chef Shorty Tang famous, plus tableside-carved Peking duck."
+ },
+ "117": {
+  "name": "Nom Wah Tea Parlor",
+  "description": "Chinatown's oldest continuously running restaurant, open since 1920, known for classic dim sum, dumplings, and an almond cookie recipe that's been a neighborhood staple for generations."
+ },
+ "118": {
+  "name": "Thursday Kitchen",
+  "description": "Small, no-reservations East Village spot serving Korean-leaning tapas under $12 a plate, like edamame dumplings and kimchi paella, from a chef with French and Spanish training."
+ },
+ "119": {
+  "name": "Mokyo",
+  "description": "Sister restaurant to Thursday Kitchen on St. Marks Place, serving Korean small plates that mix in Spanish and South American influences, like truffle salsa verde and kabayaki-butter pork jowl."
+ },
+ "120": {
+  "name": "Momofuku",
+  "description": "David Chang's original 2004 noodle bar that launched the Momofuku empire, a no-reservations East Village staple for pork buns, ramen, and soft serve with multiple James Beard nods."
+ },
+ "121": {
+  "name": "Veselka",
+  "description": "Family-run East Village institution open since 1954, a round-the-clock haven for pierogi, borscht, and other Ukrainian comfort food that grew from a candy store into a neighborhood landmark."
+ },
+ "122": {
+  "name": "Madame Vo",
+  "description": "Husband-and-wife-run East Village Vietnamese spot known for pho with added short rib, crispy shrimp cha gio, and whiskey-based Vietnamese espresso martinis in a bright-to-dark dining room."
+ },
+ "123": {
+  "name": "Nobu",
+  "description": "Nobu Matsuhisa's Financial District flagship, backed by Robert De Niro, known for rock shrimp tempura and black cod miso in a David Rockwell-designed space with limestone columns."
+ },
+ "124": {
+  "name": "Sugarfish",
+  "description": "No-reservations sushi spot built on chef Kazunori Nozawa's 'Trust Me' omakase-style set menus, focused on the purity of the fish rather than elaborate rolls; tipping is not accepted."
+ },
+ "125": {
+  "name": "Jua",
+  "description": "Michelin-starred Flatiron tasting-menu spot from a Jungsik alum, blending French technique with Korean ingredients across a wood-fired multi-course menu from chilled mulhoe to dry-aged fish."
+ },
+ "126": {
+  "name": "Rezdora",
+  "description": "Michelin-starred Flatiron osteria from a Massimo Bottura alum, recreating Emilia-Romagna cooking with hand-rolled pastas like anolini di Parma and gramigna with slow-braised sausage ragu."
+ },
+ "127": {
+  "name": "Amelie",
+  "description": "Greenwich Village French wine bar near Washington Square with 90-plus wines by the glass, known for happy-hour flights and small plates like steak tartare and daube provencale."
+ },
+ "128": {
+  "name": "Manoushe",
+  "description": "Small Lebanese takeout spot on Bleecker Street turning out manoushe flatbreads with crispy, chewy dough and vegetarian or meat toppings, tracing back to a 2013 Nolita pop-up."
+ },
+ "129": {
+  "name": "Bar Pitti",
+  "description": "Cash-only Greenwich Village Italian institution since 1992, famous for its sidewalk patio, brusque service, and homemade pastas like pappardelle and truffle rigatoni that draw a celebrity-spotting crowd."
+ },
+ "130": {
+  "name": "San Sabino",
+  "description": "West Village Italian-American seafood spot from the Don Angie chefs, blending handmade pasta with coastal-inspired dishes that nod to San Francisco, the Jersey Shore, and New Orleans."
+ },
+ "131": {
+  "name": "Carbone",
+  "description": "Michelin-starred red-sauce revival on Thompson Street from Major Food Group, styled after mid-century Italian-American restaurants with tuxedoed captains and signatures like spicy rigatoni vodka."
+ },
+ "132": {
+  "name": "Dame",
+  "description": "Michelin-listed English seafood restaurant from a Cherry Point alum, known for fish and chips, grilled oysters with Chartreuse hollandaise, and a disco soundtrack on MacDougal Street."
+ },
+ "133": {
+  "name": "Freeman's",
+  "description": "Hunting-lodge-styled restaurant at the end of a hidden alley off Rivington Street, open since 2004, serving rustic early-American dishes like duck confit and mussels in paprika butter."
+ },
+ "134": {
+  "name": "Clinton St Bakery",
+  "description": "Lower East Side brunch magnet since 2001, famous for airy pancakes made with folded-in egg whites, plus biscuits, that have drawn two-hour weekend waits and 'best pancakes' honors."
+ },
+ "135": {
+  "name": "Cervo's",
+  "description": "Michelin-recognized Canal Street spot with a menu inspired by coastal Spain and Portugal, known for fried shrimp heads, octopus-and-mussel escabeche, and piri piri roasted chicken."
+ },
+ "136": {
+  "name": "Burger Joint",
+  "description": "Hidden-in-plain-sight burger counter behind a velvet curtain in a Midtown hotel lobby, a no-frills institution since 2002 serving just burgers, fries, and shakes under walls covered in celebrity signatures."
+ },
+ "137": {
+  "name": "\u00c7ka Ka Q\u00ebllu",
+  "description": "Murray Hill Albanian restaurant doubling as a small museum of 18th- and 19th-century artifacts, praised for home-style meze, mantia, byrek, and mixed grills, with a NYT Top 100 nod."
+ },
+ "138": {
+  "name": "21 Club",
+  "description": "Former Prohibition-era speakeasy turned Midtown power-lunch institution, known for its cast-iron lawn jockeys out front and a hidden wine cellar that stored bottles for Sinatra and Nixon; closed permanently in 2020."
+ },
+ "139": {
+  "name": "Alimenteria, il Bucco",
+  "description": "Il Buco Alimentari e Vineria is a bustling, communal-table Noho Italian market-restaurant with California touches, known for bucatini cacio e pepe, whole branzino, and spit-roasted short ribs."
+ },
+ "140": {
+  "name": "BondST",
+  "description": "A high-end sushi restaurant in the Noho neighborhood of Manhattan."
+ },
+ "141": {
+  "name": "Gyu-Kaku",
+  "description": "Outpost of the Japanese yakiniku chain where diners grill their own USDA beef tableside, alongside the company's own kimchi and dipping sauces, in a casual group-dining format."
+ },
+ "142": {
+  "name": "Parm",
+  "description": "Casual Nolita offshoot of Torrisi turned standalone in 2011, known for its chicken parm and roast turkey sandwiches, Italian combos, and pizza knots at the counter or bar."
+ },
+ "143": {
+  "name": "Rubirosa",
+  "description": "Nolita pizzeria since 2009 descended from Staten Island's Joe & Pat's, known for its trademarked Tie Dye pizza swirling vodka and pesto sauces, plus a popular carbonara."
+ },
+ "144": {
+  "name": "Ruby's",
+  "description": "Little Ruby's, a small, always-busy Nolita cafe with an Australian bent, serving salads, burgers, and all-day brunch fare from a compact space that's been running since 2003."
+ },
+ "145": {
+  "name": "Pinch",
+  "description": "Pinch Chinese is a narrow Soho dim sum spot known for hand-formed dumplings made in view of diners, plus a 72-hour wind sand chicken and an extensive wine list."
+ },
+ "146": {
+  "name": "Shuka",
+  "description": "Spacious Soho Mediterranean spot known for kebabs, a standout steak kabob, chicken schnitzel, and house-made labne, with most dishes under $20 and a reliably crowd-pleasing menu."
+ },
+ "147": {
+  "name": "Balthazar",
+  "description": "Keith McNally's 1997 Soho brasserie modeled on a Parisian institution, famous for steak frites (about 200 orders a day), French onion soup, and a raw bar under a tin ceiling."
+ },
+ "148": {
+  "name": "Sugarfish",
+  "description": "Soho branch of the no-reservations sushi chain built on chef Kazunori Nozawa's 'Trust Me' set menus, prioritizing the quality of the fish over elaborate rolls; no tipping."
+ },
+ "149": {
+  "name": "Hamburger America",
+  "description": "Soho counter from self-described 'hamburger historian' George Motz, specializing in Oklahoma-style smashburgers grilled over paper-thin onions, plus rotating regional specials and a doo-wop diner feel."
+ },
+ "150": {
+  "name": "Piccola Cucina",
+  "description": "A Sicilian-leaning Italian restaurant in Soho, part of a small local group known for pasta and seafood."
+ },
+ "151": {
+  "name": "The Dutch",
+  "description": "Soho New American spot split between a lively bar and a calmer dining room, known for hanger steak with spicy orange sauce and kimchi fried rice, and roasted brussels sprouts."
+ },
+ "152": {
+  "name": "Sadelle's",
+  "description": "Major Food Group's glossy take on a Jewish appetizing shop, known for its smoked fish towers, LEO bagel sandwiches, and a glass-walled bagel bakery where staff chant 'hot bagels.'"
+ },
+ "153": {
+  "name": "12 Chairs",
+  "description": "Soho all-day cafe serving Middle Eastern and Israeli dishes alongside sandwiches, salads, and even the odd pierogi or schnitzel, with everything on the menu priced under $20."
+ },
+ "154": {
+  "name": "Sant Ambroeus",
+  "description": "Milanese import on Lafayette Street serving vitello tonnato, cotoletta alla milanese and housemade pasta alongside an all-day espresso and pastry bar, a slow-paced European-style haven beloved by SoHo regulars."
+ },
+ "155": {
+  "name": "Caf\u00e9 Select",
+  "description": "European rail-station-styled SoHo bistro serving Swiss classics like bratwurst, r\u00f6sti and schnitzel, with a cozy back room that turns into a fondue den in winter."
+ },
+ "156": {
+  "name": "Batard",
+  "description": "Markus Glocker's tablecloth-free modern European tasting-menu spot in Tribeca, voted 2014's best new restaurant by the James Beard Foundation before closing in 2023."
+ },
+ "157": {
+  "name": "Tamarind",
+  "description": "Elevated Indian dining in a high-ceilinged, marble-bar Hudson Street space, known for tandoor-fired prawns, chana pindi and malai naan; it held a Michelin star until 2015."
+ },
+ "158": {
+  "name": "Wolfgang's",
+  "description": "Wolfgang Zwiener's namesake Tribeca steakhouse, opened after decades as headwaiter at Peter Luger, known for a dry-aged porterhouse for two or more under a banquet hall of chandeliers."
+ },
+ "159": {
+  "name": "Le Colonial",
+  "description": "Longtime Upper East Side fixture since 1993 for upscale French-Vietnamese cooking, with a colonial-styled dining room of louvered panels and vintage Vietnam photos plus an upstairs lounge."
+ },
+ "160": {
+  "name": "Sushi of Gari",
+  "description": "Chef Masatoshi 'Gari' Sugio's original East 78th Street sushi counter, known for inventive sauced nigiri that breaks from soy-sauce tradition, built around a daily-changing fish selection."
+ },
+ "161": {
+  "name": "Avra",
+  "description": "Bi-level Greek seafood house near Central Park serving whole fish sold by the pound and charcoal-grilled mezze, in a marble-and-oak room styled like an open-air Greek villa."
+ },
+ "162": {
+  "name": "Casa Cruz",
+  "description": "Michelin-starred chef John Fraser's South American-Mediterranean menu in a Beaux-Arts Upper East Side townhouse, with Josper-oven branzino and a rooftop terrace hung with Haring and Warhol pieces."
+ },
+ "163": {
+  "name": "Gatopardo",
+  "description": "An Italian restaurant on the Upper East Side."
+ },
+ "164": {
+  "name": "Via Quadronno",
+  "description": "Milanese-style paninoteca near the Met, known for its busy espresso bar and simple, high-quality panini stacked with cured meats, cheese and truffle."
+ },
+ "165": {
+  "name": "Le Bilboquet",
+  "description": "Scene-y French bistro near Central Park that's drawn regulars, socialites and celebrities since 1986, known for its Cajun chicken and buzzy after-work bar crowd."
+ },
+ "166": {
+  "name": "Flex Mussels",
+  "description": "Third Avenue seafood spot built around Prince Edward Island mussels prepared more than twenty ways, from a parmesan-cream Parma pot to a ginger-coconut Bangkok broth."
+ },
+ "167": {
+  "name": "Piccola Cucina",
+  "description": "Chef Philip Guardione's Sicilian osteria off Park Avenue, serving handmade pasta and Sicilian specialties like pasta alla Norma in a warm, rustic-wood dining room."
+ },
+ "168": {
+  "name": "Russian Tea Room",
+  "description": "Art Deco Midtown institution founded in 1926 by the Russian Imperial Ballet, known for its gold-leaf ceiling, artwork evoking Chagall and Picasso, and a list of about 50 vodkas."
+ },
+ "169": {
+  "name": "JG Melon",
+  "description": "Cash-only Third Avenue pub open since 1972, famous for a thick, open-faced burger under melted American cheese that regularly ranks among the city's best."
+ },
+ "170": {
+  "name": "Sant Ambroeus",
+  "description": "Madison Avenue outpost of the 1936 Milanese pasticceria, an Upper East Side institution since 1982 for espresso, pastries and classic Italian dishes like homemade pasta."
+ },
+ "171": {
+  "name": "Zamovar",
+  "description": "A Russian restaurant on the Upper West Side."
+ },
+ "172": {
+  "name": "Jacob's Pickles",
+  "description": "Southern-inspired comfort-food spot known for pickled everything, biscuits, creamy grits and craft beer, a Columbus Avenue neighborhood staple since 2011."
+ },
+ "173": {
+  "name": "Blue Ribbon Sushi",
+  "description": "Blue Ribbon restaurant group's sushi bar and grill near Columbus Circle, serving creative sushi and sashimi alongside sake and shochu cocktails in a wood-paneled lounge."
+ },
+ "174": {
+  "name": "Sugarfish",
+  "description": "West Coast import from chef Kazunori Nozawa, built around fixed 'Trust Me' sushi sets that stick to traditional nigiri, with no California or spicy tuna rolls."
+ },
+ "175": {
+  "name": "Zabar's",
+  "description": "Legendary Broadway appetizing store and deli founded by Louis and Lillian Zabar in 1934, a half-block-long Upper West Side landmark for smoked fish, bagels and specialty groceries."
+ },
+ "176": {
+  "name": "Flor de Mayo",
+  "description": "Chino-Latino rotisserie spot open since 1977, one of the last of its kind in the city, known for Peruvian-style roast chicken alongside Chinese dishes like pepper steak."
+ },
+ "177": {
+  "name": "Faicco's",
+  "description": "Fourth-generation Bleecker Street Italian pork store and deli open since 1900, famous for oversized sandwiches like the chicken cutlet and a loaded Italian hero."
+ },
+ "178": {
+  "name": "American Bar",
+  "description": "Country-club-styled West Village spot serving Continental American classics like chopped salad and hamachi crudo, with imported rattan chairs and an 18-seat terrazzo bar."
+ },
+ "179": {
+  "name": "Salts Cure",
+  "description": "Counter-order West Village cafe from the LA import Breakfast by Salt's Cure, known for pre-sweetened oatmeal griddle cakes and a fried chicken sandwich."
+ },
+ "180": {
+  "name": "The Clam",
+  "description": "Hudson Street seafood house with a raw bar and market-driven menu of chowder, oysters and fresh fish, in an exposed-brick room overlooking James J. Walker Park."
+ },
+ "181": {
+  "name": "Johns of Bleecker St",
+  "description": "Family-run coal-oven pizzeria on Bleecker Street since 1929, serving only whole pies, no slices, in the tomato-pie style that's made it a Village institution."
+ },
+ "182": {
+  "name": "Waverly Dinner",
+  "description": "Classic West Village diner open since 1980, with vinyl booths, counter seating and a menu of Greek- and Italian-inflected American standards."
+ },
+ "183": {
+  "name": "Caviar Russe",
+  "description": "Michelin-starred Madison Avenue caviar specialist with a dark, velvet-lined lounge downstairs and a townhouse-style dining room above, built around tasting menus centered on roe."
+ },
+ "184": {
+  "name": "Lartusi",
+  "description": "L'Artusi, the West Village Italian wine bar from the dell'anima team, open since 2008 and known for rustic pastas, a crudo bar and a deep Italian wine list."
+ },
+ "185": {
+  "name": "Penny",
+  "description": "31-seat marble raw bar above Claud from chefs Joshua Pinsky and Chase Sinzer, known for its Ice Box seafood platters in a no-tables, wine-forward format."
+ },
+ "186": {
+  "name": "Buenos Aires",
+  "description": "East 6th Street parrilla serving classic Argentine grilled meats, empanadas and milanesa alongside pastas and langoustines, built around traditional asado-style cooking."
+ },
+ "187": {
+  "name": "E.A.T",
+  "description": "Eli Zabar's original Madison Avenue gourmet shop and cafe, opened in 1973, known for artisanal breads and elevated sandwiches that launched his East Side food empire."
+ },
+ "188": {
+  "name": "El Quijote",
+  "description": "The city's oldest Spanish restaurant, open since 1930 next to the Chelsea Hotel, known for paella, garlic shrimp and lobster in green sauce under kitschy Don Quixote murals."
+ },
+ "189": {
+  "name": "Zest Sushi",
+  "description": "A neighborhood sushi spot on the Lower East Side."
+ },
+ "190": {
+  "name": "Comal",
+  "description": "A New Mexican restaurant on the Lower East Side."
+ },
+ "191": {
+  "name": "Antico",
+  "description": "A casual Italian panini spot in Greenwich Village."
+ },
+ "192": {
+  "name": "Rice Thief",
+  "description": "Queens spot built around ganjang gejang, soy-marinated raw crab, especially its Gunsan crab platter, served with gloves and bibs for hands-on assembly; it began as a ghost kitchen before opening a dining room."
+ },
+ "193": {
+  "name": "Caf\u00e9 Mogador",
+  "description": "Williamsburg outpost of the East Village Moroccan institution, serving tagines, couscous and merguez alongside hummus and harissa in a room that opens onto a garden."
+ },
+ "194": {
+  "name": "Sal Tangs",
+  "description": "A Chinese restaurant in Brooklyn Heights."
+ },
+ "195": {
+  "name": "Ume",
+  "description": "A sushi restaurant in the East Village."
+ },
+ "196": {
+  "name": "Peter Luger",
+  "description": "Williamsburg's 1887 steakhouse institution, a James Beard 'America's Classic' known for a dry-aged porterhouse for two or more, lunch-only burgers and free chocolate coins with the check."
+ },
+ "197": {
+  "name": "The River Cafe",
+  "description": "Fixed-price fine-dining destination on a barge below the Brooklyn Bridge, prized for its Manhattan skyline view, choreographed tableside service and a garden strung with fairy lights."
+ },
+ "198": {
+  "name": "Cecconis",
+  "description": "Brooklyn outpost of the international Cecconi's group, rooted in London's Mayfair original, serving Northern Italian fare in a converted Empire Stores warehouse with skyline-view terrace seating."
+ },
+ "199": {
+  "name": "Semkeh",
+  "description": "A Lebanese restaurant in Bushwick."
+ },
+ "200": {
+  "name": "Roberta's",
+  "description": "East Williamsburg/Bushwick pizzeria open since 2008, known for wood-fired pies made with rooftop-garden ingredients, a hipster following, and its own in-house radio station."
+ },
+ "201": {
+  "name": "Fette Sau",
+  "description": "Converted auto-body-shop BBQ joint open since 2007, known for heritage-breed meats sold by the half-pound, brisket, pork ribs, hot links, eaten at picnic tables; permanently closed as of 2024."
+ },
+ "202": {
+  "name": "12 Chairs",
+  "description": "An Israeli restaurant in Williamsburg."
+ },
+ "203": {
+  "name": "Sunday in Brooklyn",
+  "description": "Wythe Avenue restaurant in Williamsburg serving New American fare across extended breakfast, brunch and dinner service throughout the day."
+ },
+ "204": {
+  "name": "Hole in the Wall",
+  "description": "An American restaurant in Williamsburg."
+ },
+ "205": {
+  "name": "Okiboru",
+  "description": "A small Orchard Street counter spot specializing in tsukemen (dipping ramen), with a rich bonito-forward dipping broth and a soupy tonkotsu option; expect a line."
+ },
+ "206": {
+  "name": "Skirt Steak",
+  "description": "Chef Laurent Tourondel's prix-fixe steak frites spot near Madison Square Garden, built around a $48 wagyu skirt steak with peppercorn-b\u00e9arnaise and unlimited hand-cut fries."
+ },
+ "207": {
+  "name": "Empire Diner",
+  "description": "A restored 1946 Art Deco diner car on Tenth Avenue, a Chelsea fixture since the 1970s, serving updated classic American diner fare and cocktails with a retro-modern twist."
+ },
+ "208": {
+  "name": "Quijote",
+  "description": "Dating to 1930 inside the Hotel Chelsea, one of NYC's oldest Spanish restaurants, known for tapas, paella, and a dark, stained-glass dining room full of Don Quixote imagery."
+ },
+ "209": {
+  "name": "Tompkins Square Bagels",
+  "description": "Hand-rolled, kettle-boiled bagels near Tompkins Square Park since 2011, known for oversized, fully-loaded builds like the bacon-and-chorizo 'Weezer' and dozens of cream cheese options."
+ },
+ "210": {
+  "name": "Crif Dogs",
+  "description": "A St. Marks Place hot dog institution since 2001, serving deep-fried, bacon-wrapped dogs with inventive toppings; also the entrance to the hidden speakeasy PDT via its phone booth."
+ },
+ "211": {
+  "name": "Blue Ribbon Fried Chicken",
+  "description": "An all-chicken counter spot from the Bromberg brothers of Blue Ribbon, serving Southern-style fried chicken by the piece or as a dinner with rosemary bread and pickles, open late."
+ },
+ "212": {
+  "name": "MUD",
+  "description": "A laid-back East Village caf\u00e9 and offshoot of the original Mudtruck coffee cart, serving all-day brunch, coffee, and world-kitchen-style bowls in a garden-equipped space."
+ },
+ "213": {
+  "name": "Ruby's",
+  "description": "An Australian-style all-day caf\u00e9 bringing Aussie brunch culture to the East Village, known for burgers, pastas, and a full coffee program in a small, lively room."
+ },
+ "214": {
+  "name": "Sant Ambroeus",
+  "description": "The Brookfield Place outpost of the Milanese hospitality group, pairing an espresso-and-pastry bar with a formal Italian dining room known for housemade pasta like cacio e pepe."
+ },
+ "215": {
+  "name": "1803",
+  "description": "A New Orleans-inspired restaurant serving Cajun-Creole staples like gumbo and jambalaya, with cocktails influenced by NOLA bar culture and a hidden onsite jazz speakeasy called Bon Courage."
+ },
+ "216": {
+  "name": "Gato",
+  "description": "Bobby Flay's Mediterranean restaurant in a converted 100-year-old building, blending Spanish, Greek, and Turkish influences; the spot closed in 2021 after a seven-year run."
+ },
+ "217": {
+  "name": "COQODAQ",
+  "description": "A Korean fried chicken concept from Simon Kim (Cote) in the Flatiron District, designed by Rockwell Group, known for caviar-topped nuggets, humanely-raised chicken, and an outsized champagne list."
+ },
+ "218": {
+  "name": "The Clocktower",
+  "description": "A Michelin-starred British restaurant from chef Jason Atherton inside The New York EDITION at Madison Square Park, known for refined takes on fish and chips and beef Wellington."
+ },
+ "219": {
+  "name": "Saigon Shack",
+  "description": "A cash-only, always-packed NYU-area spot for pho, banh mi, and spring rolls in a wood-clad, tin-ceilinged room near Washington Square Park."
+ },
+ "220": {
+  "name": "Ippudo",
+  "description": "The first U.S. outpost of Shigemi Kawahara's Japanese ramen chain, known for rich tonkotsu broth, pork buns, and long waits in a noisy, dimly lit room near NYU."
+ },
+ "221": {
+  "name": "Il Mulino",
+  "description": "A Greenwich Village institution since 1981 and long considered one of the city's top Italian restaurants, known for a lavish antipasti parade and hearty Abruzzese cooking."
+ },
+ "222": {
+  "name": "Brooklyn Bagel Company",
+  "description": "A kettle-boiled, hand-rolled bagel shop near Washington Square Park, recognized by Food Network as among the city's best, with smoked fish and gluten-free options."
+ },
+ "223": {
+  "name": "Village Taverna",
+  "description": "A bright, high-ceilinged Greek taverna near Washington Square Park known for fried calamari, shrimp souvlaki, and other classic grilled and mezze plates."
+ },
+ "224": {
+  "name": "Caf\u00e9 Reggio",
+  "description": "A MacDougal Street coffeehouse open since 1927, credited as the first in the U.S. to serve cappuccino, with a dim, art-filled room that's appeared in The Godfather Part II."
+ },
+ "225": {
+  "name": "Lil Frankie's",
+  "description": "Frank Prisinzano's East Village pizza and pasta spot since 1999, cooking Neapolitan pies in a wood-burning oven built with real Vesuvius lava, open into the early morning."
+ },
+ "226": {
+  "name": "Sauce",
+  "description": "Another Frank Prisinzano spot, on a Rivington and Allen corner, serving Northern and Southern Italian pastas and pizza in a loud, always-busy room with long waits."
+ },
+ "227": {
+  "name": "Forsythia",
+  "description": "An intimate Stanton Street nook focused on Roman cooking, from a chef who trained in Rome and Bologna, known for a fried cacio e pepe risotto ball and a short tasting menu."
+ },
+ "228": {
+  "name": "The Nines",
+  "description": "A grand European-style piano bar on Great Jones Street with velvet seats, cheetah-print carpet, and a luxe menu of oysters, caviar, and a burger alongside classic cocktails."
+ },
+ "229": {
+  "name": "Bar Primi",
+  "description": "A pasta-focused Italian spot on the NoHo/East Village border from chef Andrew Carmellini's group, making fresh, non-GMO pastas to order alongside a well-chosen Italian wine list."
+ },
+ "230": {
+  "name": "C as in Charlie",
+  "description": "A 40-seat NoHo spot serving Korean-Southern small plates, like Seoul'sbury steak with gruyere grits, from a trio of Korean-American chefs raised in Atlanta; holds a Michelin Bib Gourmand."
+ },
+ "231": {
+  "name": "Prince St Pizza",
+  "description": "A Nolita slice-shop institution known for thick square Sicilian-style pies, especially the Spicy Spring topped with pepperoni cups and Fra Diavolo sauce."
+ },
+ "232": {
+  "name": "Upside Pizza",
+  "description": "A pizza spot in Nolita."
+ },
+ "233": {
+  "name": "Cipriani",
+  "description": "An Italian restaurant in Soho."
+ },
+ "234": {
+  "name": "La Esquina",
+  "description": "A taco spot in Soho."
+ },
+ "235": {
+  "name": "La Goulue",
+  "description": "A French restaurant on the Upper East Side."
+ },
+ "236": {
+  "name": "Cipriani",
+  "description": "An Italian restaurant on the Upper East Side."
+ },
+ "237": {
+  "name": "Tavern on the Green",
+  "description": "An American restaurant on the Upper West Side."
+ },
+ "238": {
+  "name": "P.J Clarkes",
+  "description": "A burger spot on the Upper West Side."
+ },
+ "239": {
+  "name": "Caf\u00e9 Cluny",
+  "description": "A French restaurant in the West Village."
+ },
+ "240": {
+  "name": "Nami Nori",
+  "description": "A sushi restaurant in the West Village."
+ },
+ "241": {
+  "name": "Elephant and Castle",
+  "description": "A diner in the West Village."
+ },
+ "242": {
+  "name": "Gotan",
+  "description": "A brunch spot in Tribeca."
+ },
+ "243": {
+  "name": "Carnitas Ramirez",
+  "description": "A Mexican restaurant in the East Village."
+ },
+ "244": {
+  "name": "El Pinguino",
+  "description": "A Mexican restaurant in Greenpoint."
+ },
+ "245": {
+  "name": "Claro",
+  "description": "A Mexican restaurant in Brooklyn Heights."
+ },
+ "246": {
+  "name": "Ignazio's",
+  "description": "A pizza spot in DUMBO."
+ },
+ "247": {
+  "name": "Juliana's",
+  "description": "A pizza spot in DUMBO."
+ },
+ "248": {
+  "name": "Grimaldis",
+  "description": "A pizza spot in DUMBO."
+ },
+ "249": {
+  "name": "Oxomoco",
+  "description": "A Mexican restaurant in Greenpoint."
+ },
+ "250": {
+  "name": "Jaques Brasserie",
+  "description": "A French restaurant on the Upper East Side."
+ },
+ "251": {
+  "name": "Marks off Madison",
+  "description": "A deli and brunch spot in Flatiron."
+ },
+ "252": {
+  "name": "Harry's",
+  "description": "A steakhouse in the Financial District."
+ },
+ "253": {
+  "name": "Dante",
+  "description": "An Italian restaurant in Greenwich Village."
+ },
+ "254": {
+  "name": "La Lanterna Di Vittorio",
+  "description": "An Italian spot in Greenwich Village."
+ },
+ "255": {
+  "name": "Ivan Ramen",
+  "description": "A ramen restaurant on the Lower East Side."
+ },
+ "256": {
+  "name": "Souvlaki",
+  "description": "Whitewashed, bougainvillea-draped Greek spot on the Lower East Side modeled after a Mykonos taverna, serving chicken and pork souvlaki pitas with tzatziki and feta-dusted hand-cut fries."
+ },
+ "257": {
+  "name": "Indochine",
+  "description": "Legendary French-Vietnamese restaurant on Lafayette Street open since 1984, known for leaf-print booths, a fashion-and-celebrity crowd, and dishes like spicy beef salad and Vietnamese bouillabaisse."
+ },
+ "258": {
+  "name": "Pascale Jones",
+  "description": "Nolita pizzeria and pasta spot from the Charlie Bird team, known for wood-fired pies like a clam pizza with littlenecks and garlicky cream, plus an extensive wine list."
+ },
+ "259": {
+  "name": "Lure",
+  "description": "Subterranean SoHo seafood spot styled like a yacht cabin, serving sushi, raw bar and seafood classics; named one of Eater's best seafood restaurants in New York."
+ },
+ "260": {
+  "name": "Boucherie",
+  "description": "Bustling French brasserie and steakhouse in the former Circle Repertory Theater space, known for steak tartare, boeuf bourguignon and a serious dry-aged and A5 wagyu program."
+ },
+ "261": {
+  "name": "Roeys",
+  "description": "Cozy West Village sibling of Rosemary's inspired by Florence cafes and Neapolitan pizzerias, turning out sourdough pizzas from a wood-burning oven alongside seasonal Italian dishes."
+ },
+ "262": {
+  "name": "Los Tacos No. 1",
+  "description": "No-frills Tribeca taqueria from the Los Tacos No. 1 chain, serving Tijuana-style tacos and quesadillas on fresh-cooked tortillas with horchata and aguas frescas."
+ },
+ "263": {
+  "name": "P.J Clarkes",
+  "description": "Waterfront Battery Park City outpost of the historic P.J. Clarke's saloon, serving the same raw bar and classic burgers as the original 1884 Midtown location."
+ },
+ "264": {
+  "name": "Claudette",
+  "description": "Fifth Avenue bistro from the Casa Nela group (Bobo, Rosemary's, Roey's) evoking the French Riviera, serving Provence- and Mediterranean-inflected bistro classics and seafood."
+ },
+ "265": {
+  "name": "Karakatta",
+  "description": "Small, neon-lit ramen shop near Washington Square Park from the Mr. Taka team, known for spicy ginger stamina ramen served in five levels of heat."
+ },
+ "266": {
+  "name": "White Oak Tavern",
+  "description": "Neighborhood Village tavern serving comfort-driven American bar food alongside a deep whiskey and bourbon collection, with a casual pub feel that gets lively on trivia nights."
+ },
+ "267": {
+  "name": "Electric Lemon",
+  "description": "Seasonal American restaurant on the 24th floor of the Equinox Hotel at Hudson Yards, spotlighting Mid-Atlantic farms with skyline views from its terrace and fire pits."
+ },
+ "268": {
+  "name": "Tacos No. 1",
+  "description": "NoHo taco stand from the Los Tacos No. 1 chain, dishing out Tijuana-style tacos and quesadillas on fresh-cooked tortillas at an affordable, street-stand price."
+ },
+ "269": {
+  "name": "Spring Aspen Cafe",
+  "description": "NoHo outpost of Aspen favorite Spring Cafe, serving organic, mostly vegan and vegetarian breakfasts, juices and smoothies made with cold-pressed oils and house-made sauces."
+ },
+ "270": {
+  "name": "Altro Paradiso",
+  "description": "Airy SoHo Italian spot from chef Ignacio Mattos, open since 2016 and known for silky vitello tonnato, house-made pasta and tiramisu around a glimmering brass bar."
+ },
+ "271": {
+  "name": "The Palm",
+  "description": "Tribeca outpost of the classic New York steakhouse chain, known for prime-aged steaks, jumbo Nova Scotia lobster and caricature-covered walls in a clubby wood-and-leather room."
+ },
+ "272": {
+  "name": "Serafina",
+  "description": "Longtime Upper East Side Italian spot known for thin-crust, wood-fired pizzas and Northern Italian family recipes, drawing a buzzy, celebrity-adjacent crowd for over 30 years."
+ },
+ "273": {
+  "name": "Quique Crudo",
+  "description": "Walk-in-only Mexican seafood counter from the Casa Enrique team, serving lobster ceviche, scallop aguachile and crab tostadas in a tightly packed, speakeasy-lit nook."
+ },
+ "274": {
+  "name": "Quality Eats",
+  "description": "Casual West Village steakhouse from the Quality Meats/Quality Italian group, serving naturally-raised, lesser-known cuts of beef at approachable prices in a dark, vibey room."
+ },
+ "275": {
+  "name": "RH Rooftop",
+  "description": "Glass-roofed rooftop restaurant atop the RH design gallery in the Meatpacking District, serving polished casual American fare from chef Brendan Sodikoff amid chandeliers and olive trees."
+ },
+ "276": {
+  "name": "Catch Steak",
+  "description": "Energetic Meatpacking District steakhouse from Catch Hospitality Group and chef Michael Vignola, offering wagyu and dry-aged steaks alongside seafood in a multi-room space with a retractable-roof patio."
+ },
+ "277": {
+  "name": "Serafina",
+  "description": "Meatpacking District branch of the longtime Serafina Italian chain near the Whitney and High Line, serving thin-crust pizza and pastas like lobster ravioli across three cozy floors."
+ },
+ "278": {
+  "name": "Jack's Wife Freda",
+  "description": "All-day Chelsea outpost of the beloved Jack's Wife Freda mini-chain, serving bright, Mediterranean-leaning breakfast and brunch fare in a chic, welcoming cafe setting."
+ },
+ "279": {
+  "name": "TAO",
+  "description": "Subterranean, multi-level Pan-Asian restaurant and nightclub in Chelsea from the TAO Group, serving sushi, yakitori and dim sum alongside Hunan- and Szechuan-inspired dishes."
+ },
+ "280": {
+  "name": "The Standard",
+  "description": "Meatpacking District staple since 2009 blending a raw bar and steakhouse menu with New American cooking, known for its Standard Burger and dry-aged steaks."
+ },
+ "281": {
+  "name": "Catch",
+  "description": "Tri-level, 400-seat Meatpacking District spot combining a seafood-and-sushi dining room with a glass-enclosed rooftop lounge, long known as a celebrity and nightlife hotspot."
+ },
+ "282": {
+  "name": "STK",
+  "description": "Modern steakhouse-lounge in the Meatpacking District pairing signature steaks and elevated cocktails with a live DJ and a lively, see-and-be-seen dining room."
+ },
+ "283": {
+  "name": "Buddakhan",
+  "description": "Stephen Starr's theatrical Pan-Asian restaurant inside Chelsea Market, serving bold fusion dim sum, noodle soups and seafood in a dramatic, temple-like dining room."
+ },
+ "284": {
+  "name": "Kosaka",
+  "description": "Michelin-starred sushi restaurant near the Village/Chelsea border led by veteran chef Yoshihiko Kosaka, offering an elegant, serene omakase counter after nearly four decades in the business."
+ },
+ "285": {
+  "name": "The Tyger",
+  "description": "Chinatown/SoHo-border restaurant serving contemporary cuisine drawn from across East and Southeast Asia, its name a nod to William Blake's poem of the same title."
+ },
+ "286": {
+  "name": "Chinese Tuxedo",
+  "description": "Upscale Chinese-American restaurant on historic Doyers Street, reviving the name of a landmark 1904 Chinatown institution inside an ornately restored former theater space."
+ },
+ "287": {
+  "name": "Kopitiam",
+  "description": "Chinatown Malaysian coffee shop serving Nyonya-Peranakan dishes like blue rice salad in a casual, communal setting named for the Hokkien word for coffee shop."
+ },
+ "288": {
+  "name": "Temakase",
+  "description": "No-frills hand-roll bar serving made-to-order temaki meant to be eaten within seconds of rolling, offering high-end sushi quality at an accessible East Village price."
+ },
+ "289": {
+  "name": "Borrachito",
+  "description": "Late-night East Village taqueria tucked behind cocktail bar The Garret East, serving birria, pork, steak and fish tacos in a hidden, speakeasy-style setup."
+ },
+ "290": {
+  "name": "Studio 151",
+  "description": "Hidden East Village speakeasy behind an unmarked door with a red lightbulb, pairing an affordable omakase sushi counter with a vinyl listening room spinning Japanese jazz and soul."
+ },
+ "291": {
+  "name": "The Smith",
+  "description": "Bustling American bistro chain known for braised short rib cavatelli and a bacon-marmalade burger, serving a crowd-pleasing menu in a big-windowed, tile-floored space."
+ },
+ "292": {
+  "name": "The Bao",
+  "description": "St. Marks Place soup dumpling specialist and sister to Flushing's Kung Fu Xiao Long Bao, offering nearly a dozen xiao long bao varieties including inventive flavors."
+ },
+ "293": {
+  "name": "Ko",
+  "description": "A casual American restaurant in the East Village."
+ },
+ "294": {
+  "name": "Fulton",
+  "description": "Jean-Georges Vongerichten's seafood restaurant at Pier 17, a two-floor space with a nautical Yabu Pushelberg design and Brooklyn Bridge views, known for warm octopus and swordfish Milanese."
+ },
+ "295": {
+  "name": "MoMo Sushi",
+  "description": "A neighborhood sushi restaurant in Flatiron."
+ },
+ "296": {
+  "name": "Bondi sushi",
+  "description": "Flatiron sushi spot known for signature combo boxes, single maki rolls and rice bowls alongside classic nigiri and sashimi from its sushi bar."
+ },
+ "297": {
+  "name": "EATALY",
+  "description": "Sprawling 50,000-square-foot Italian marketplace near Madison Square Park from founder Oscar Farinetti, combining restaurants, a retail grocery, a bakery and a cooking school under one roof."
+ },
+ "298": {
+  "name": "Cuba",
+  "description": "Old Havana-styled Cuban spot on Thompson Street since 2004, known for mojitos, ropa vieja and rum-aged Bistec Cienfuegos rib eye served alongside live salsa music."
+ },
+ "299": {
+  "name": "Mr Capri",
+  "description": "An Italian restaurant in Greenwich Village."
+ },
+ "300": {
+  "name": "Murray's Bagels",
+  "description": "Greenwich Village bagel institution since 1996, known for hand-rolled, kettle-boiled bagels in a dozen-plus varieties alongside smoked fish platters and classic appetizing sides."
+ },
+ "301": {
+  "name": "Rasa",
+  "description": "A Malaysian restaurant in Greenwich Village."
+ },
+ "302": {
+  "name": "Tortaria",
+  "description": "A casual Mexican spot in Greenwich Village."
+ },
+ "303": {
+  "name": "Bob's Bagels",
+  "description": "A neighborhood bagel shop in Greenwich Village."
+ },
+ "304": {
+  "name": "PF Changs",
+  "description": "Outpost of the national P.F. Chang's chain, serving American Chinese and pan-Asian fare like lettuce wraps, spicy chicken and hand-rolled sushi in a casual-upscale setting."
+ },
+ "305": {
+  "name": "Mermaid Oyster Bar",
+  "description": "Casual, oyster-focused seafood spot from the Mermaid Inn restaurant group, part of a small NYC family of seafood restaurants built around fresh oysters and raw-bar fare."
+ },
+ "306": {
+  "name": "Wallse",
+  "description": "Kurt Gutenbrunner's Austrian fine-dining fixture in Greenwich Village since 2000, known for spaetzle and schnitzel served with old-world charm; held a Michelin star from 2006 to 2022."
+ },
+ "307": {
+  "name": "ZZ's Clam Bar",
+  "description": "A tiny Michelin-starred raw bar from Major Food Group (Carbone, Torrisi) that packed oysters, clams, and crudo into about a dozen seats on Thompson Street before closing in 2023."
+ },
+ "308": {
+  "name": "Beauty and Essex",
+  "description": "Entered through a working pawn shop, this Lower East Side spot serves chef Chris Santos's globally inspired small plates and steaks across a multi-room, chandelier-lit space."
+ },
+ "309": {
+  "name": "Cafe Katja",
+  "description": "A snug Lower East Side Austrian tavern on Orchard Street known for schnitzel, house-made sausages, spaetzle, and a deep list of Central European beers."
+ },
+ "310": {
+  "name": "Oh k dog",
+  "description": "A grab-and-go Lower East Side stand serving Korean-style rice hot dogs on a stick, battered in panko and stuffed with options like potato, mozzarella, or squid ink."
+ },
+ "311": {
+  "name": "Congee Village",
+  "description": "A sprawling, bamboo-filled Cantonese institution on Allen Street, family-owned for decades, known for its congee, salt-and-pepper shrimp, and family-style sizzling hot-plate dishes."
+ },
+ "312": {
+  "name": "Dudley's",
+  "description": "An Australian-inflected all-day cafe and bar on the Lower East Side, a neighborhood staple since 2012 known for its Bronte burger, chicken schnitzel, and weekend brunch."
+ },
+ "313": {
+  "name": "Blue Ribbon Izakaya",
+  "description": "The Bromberg brothers' Japanese izakaya on the Lower East Side, pairing standout sushi and small plates with sake and a relaxed beer garden out back."
+ },
+ "314": {
+  "name": "375 Chicken",
+  "description": "A no-frills, halal-certified Lower East Side fried chicken counter started by a chef's family, known for its thrice-fried chicken sandwiches, tenders, and crispy fries."
+ },
+ "315": {
+  "name": "Gem",
+  "description": "A Lower East Side tasting-menu restaurant opened by young chef Flynn McGarry, pairing a daytime cafe with an inventive, vegetable-forward nightly dinner; since closed."
+ },
+ "316": {
+  "name": "Ms Korea",
+  "description": "A round-the-clock Korean barbecue spot in Midtown's Koreatown spread over three floors, known for Hang-Ari Galbi, short ribs marinated 48 hours in clay pots."
+ },
+ "317": {
+  "name": "Smith & Wollensky",
+  "description": "A Midtown East steakhouse institution since 1977 at 49th and Third, known for USDA Prime dry-aged steaks and a classic, white-tablecloth New York steakhouse feel."
+ },
+ "318": {
+  "name": "Little Spain",
+  "description": "Jose Andres's sprawling Hudson Yards food hall gathering several Spanish restaurants and tapas kiosks, from paella and flame-grilled meats to seafood imported from Spain."
+ },
+ "319": {
+  "name": "Carmine's",
+  "description": "A Times Square Italian-American institution serving Southern Italian classics in oversized, family-style portions meant for sharing, modeled after a big Italian wedding feast."
+ },
+ "320": {
+  "name": "STK",
+  "description": "A Midtown steakhouse-meets-lounge with DJ sets and a nightclub energy, serving prime cuts alongside a scene-heavy happy hour and weekend brunch."
+ },
+ "321": {
+  "name": "Temple Bar",
+  "description": "A moody, windowless NoHo cocktail bar on Lafayette Street, revived in 2021 by the team behind Attaboy after the original 1990s martini spot closed."
+ },
+ "322": {
+  "name": "Atla",
+  "description": "Chef Enrique Olvera's casual all-day Mexican spot in NoHo, serving inventive takes on Mexican classics in a space that shifts from bright cafe to lively bar."
+ },
+ "323": {
+  "name": "Rocco's",
+  "description": "A retro-styled sports bar in NoHo from The Garret Group, serving smoked ribs, brisket burgers, and game-day classics amid vintage sports memorabilia."
+ },
+ "324": {
+  "name": "Caf\u00e9 Lafayette",
+  "description": "Chef Andrew Carmellini's grand French caf\u00e9 and bakery on the corner of Lafayette and Great Jones, known for market-driven bistro cooking and an all-day boulangerie."
+ },
+ "325": {
+  "name": "Bar Primi",
+  "description": "A casual NoHo pasta shop from the group behind Locanda Verde and The Dutch, focused on fresh, cooked-to-order pastas in a lively, wine-friendly room."
+ },
+ "326": {
+  "name": "Sushi on Jones",
+  "description": "A sushi restaurant in NoHo, serving rolls and Japanese classics to the neighborhood."
+ },
+ "327": {
+  "name": "Lombardi's",
+  "description": "Often credited as America's first licensed pizzeria, dating to 1905, this Nolita coal-oven institution on Spring Street still draws crowds for its classic thin-crust pies."
+ },
+ "328": {
+  "name": "Rintintin",
+  "description": "A Mediterranean restaurant in Nolita, part of the neighborhood's dense mix of small downtown spots."
+ },
+ "329": {
+  "name": "Tacombi",
+  "description": "The original Nolita location of Tacombi, a colorful taqueria chain built around a vintage VW bus, serving street-style tacos, esquites, and micheladas since 2010."
+ },
+ "330": {
+  "name": "A Pasta Bar",
+  "description": "A pasta-focused Italian restaurant in Soho."
+ },
+ "331": {
+  "name": "Black Tap",
+  "description": "A Soho burger joint best known for its towering, over-the-top 'CrazyShake' milkshakes piled with candy and pastry, alongside classic smashed burgers."
+ },
+ "332": {
+  "name": "Boqueria",
+  "description": "A Soho outpost of the Boqueria tapas group, named for Barcelona's famous food market, serving Spanish small plates like patatas bravas, jam\u00f3n, and paella."
+ },
+ "333": {
+  "name": "Jack's Wife Freda",
+  "description": "A perennially packed Soho brunch spot from a husband-and-wife team blending Mediterranean and American diner classics, best known for its 'Green Eggs' plate."
+ },
+ "334": {
+  "name": "Bo Caphe",
+  "description": "A Vietnamese restaurant in Soho, serving pho, banh mi, and other Vietnamese staples."
+ },
+ "335": {
+  "name": "Lola Taverna",
+  "description": "A Mediterranean taverna-style restaurant in Soho."
+ },
+ "336": {
+  "name": "Her Name was Carmen",
+  "description": "A Latin restaurant in Soho."
+ },
+ "337": {
+  "name": "Mercer Kitchen",
+  "description": "Jean-Georges Vongerichten's below-street-level restaurant inside the Mercer Hotel, a long-running Soho fixture known for its industrial-chic dining room and market-driven American menu."
+ },
+ "338": {
+  "name": "Pera",
+  "description": "A Mediterranean restaurant in Soho."
+ },
+ "339": {
+  "name": "Peccora Bianca",
+  "description": "Part of the Pecora Bianca group of casual Italian restaurants, known for wood-fired pizza, house-made pasta, and a popular weekend brunch."
+ },
+ "340": {
+  "name": "Altesi",
+  "description": "An Italian restaurant in Soho."
+ },
+ "341": {
+  "name": "Papatzul",
+  "description": "A Soho Mexican restaurant specializing in Yucatecan-style dishes, known for guacamole prepared tableside and mole-based specialties."
+ },
+ "342": {
+  "name": "Felix",
+  "description": "A longtime Soho French bistro on West Broadway, popular for weekend brunch and its lively, see-and-be-seen sidewalk and bar scene."
+ },
+ "343": {
+  "name": "Les Amis",
+  "description": "A French restaurant in Soho."
+ },
+ "344": {
+  "name": "19 Cleveland",
+  "description": "An American restaurant in Soho."
+ },
+ "345": {
+  "name": "Casa Carmen",
+  "description": "A Mexican restaurant in Tribeca."
+ },
+ "346": {
+  "name": "P.J Clarkes",
+  "description": "A historic Irish saloon dating to 1884, one of Manhattan's oldest pub institutions, famous for its classic bacon cheeseburger and old-school New York bar atmosphere."
+ },
+ "347": {
+  "name": "Sarabeth's",
+  "description": "A longtime Upper East Side brunch institution known citywide for its jams, baked goods, and classic eggs Benedict, part of a small local chain."
+ },
+ "348": {
+  "name": "TAO",
+  "description": "A cavernous pan-Asian restaurant and lounge dominated by a giant Buddha statue, part of Tao Group's nightlife empire, known as much for its scene as its sushi and Peking duck."
+ },
+ "349": {
+  "name": "Lavo",
+  "description": "Tao Group's Italian restaurant and nightclub, known for its rooftop, DJ-driven late nights, and dishes like its signature meatball sliders."
+ },
+ "350": {
+  "name": "The Smith",
+  "description": "A high-energy American brasserie chain with an Upper West Side outpost, known for its mac and cheese, deviled eggs, and a reliably packed weekend brunch."
+ },
+ "351": {
+  "name": "Las Ramblas",
+  "description": "A tiny West Village tapas bar known for Spanish pinchos, cheese and charcuterie boards, and a well-curated list of Spanish wines by the glass."
+ },
+ "352": {
+  "name": "Rosemarys",
+  "description": "A perpetually busy West Village Italian trattoria known for its house-made pastas and herbs grown in its own rooftop garden."
+ },
+ "353": {
+  "name": "Saint Theos",
+  "description": "An Italian restaurant in the West Village."
+ },
+ "354": {
+  "name": "Buvette",
+  "description": "A tiny, beloved French 'gastroth\u00e8que' on Grove Street from chef Jody Williams, known for its tartines, steak tartare, and long weekend brunch lines."
+ },
+ "355": {
+  "name": "Morandi",
+  "description": "Keith McNally's rustic Italian trattoria on Waverly Place, a long-running West Village fixture for homey pastas and an old-world dining room."
+ },
+ "356": {
+  "name": "Dante West Village",
+  "description": "A historic Greenwich Village cafe dating to 1915, repeatedly named World's Best Bar, known for its Negronis and Italian-inflected small plates as much as its espresso."
+ },
+ "357": {
+  "name": "Olio e Piu",
+  "description": "A casual West Village Italian spot known for its burrata bar and a lively brunch and happy hour scene."
+ },
+ "358": {
+  "name": "Jacks Wife Freda",
+  "description": "An all-day American-Mediterranean bistro and NYC institution since 2011, popular for weekend brunch and lingering meals in a bustling, laid-back dining room."
+ },
+ "359": {
+  "name": "I Sodi",
+  "description": "Rita Sodi's Tuscan restaurant near Bleecker and Grove, known for understated, seasonal pastas like spinach-ricotta ravioli, whole baked branzino, and a serious Negroni list."
+ },
+ "360": {
+  "name": "Up Thai",
+  "description": "Upscale Thai spot known for elevated street-food dishes like duck tamarind, massaman curry, and Thai crepe dumplings in a lantern-lit dining room."
+ },
+ "361": {
+  "name": "The Spaniard",
+  "description": "A West Village whiskey bar with over 100 scotches and elevated bar food -- duck buffalo wings, ribeye with housemade steak sauce, and lobster toast."
+ },
+ "362": {
+  "name": "Tacombi",
+  "description": "Yucatan-inspired taco spot with a colorful, casual vibe, known for Baja fish tacos, al pastor, and Mexican street corn, with walls that open to the street in warm weather."
+ },
+ "363": {
+  "name": "Isle of Capri",
+  "description": "Family-run Upper East Side Italian institution open since 1955, known for classic veal scaloppine and a split-level dining room the Times once called the city's best small Italian restaurant."
+ },
+ "364": {
+  "name": "Market Table",
+  "description": "Farm-to-table West Village restaurant since 2007 from chefs Mike Price and Joey Campanaro, known for seasonal American dishes like grilled branzino and crispy half chicken."
+ },
+ "365": {
+  "name": "Casa Enrique",
+  "description": "Michelin-starred Mexican restaurant serving chef Cosme Aguilar's family recipes from Chiapas, known for mole, crunchy fish tacos, and a tequila- and mezcal-focused bar."
+ },
+ "366": {
+  "name": "La Loncheria",
+  "description": "Contemporary Mexican luncheonette from the Hecho en Dumbo team, serving updated tortas and tacos like lamb belly barbacoa alongside mezcal in a bright, tiled space."
+ },
+ "367": {
+  "name": "188 Bakery Cuchifritos",
+  "description": "Decades-old Bronx counter-service spot near Grand Concourse known for classic Puerto Rican cuchifritos like chicharrones and pernil, with a big Spanish-language menu on the wall."
+ },
+ "368": {
+  "name": "Esme",
+  "description": "A Greenpoint brunch spot that served American small plates, savory French toast, and a fried chicken sandwich in a bustling, garden-adjacent space before closing in 2024."
+ },
+ "369": {
+  "name": "Pierozek",
+  "description": "Michelin Bib Gourmand-rated Greenpoint pierogi shop run by a women-owned team, serving classic ruskie and mushroom pierogi alongside borscht and golabki."
+ },
+ "370": {
+  "name": "Blanca",
+  "description": "A former two-Michelin-starred tasting-menu restaurant accessed through a secret entrance behind Roberta's, with just 13 open-kitchen bar seats, before closing in 2025."
+ },
+ "371": {
+  "name": "Peaches",
+  "description": "Part of the Peaches family of Bed-Stuy soul food restaurants, known since 2009 for Nashville-style hot chicken, shrimp and grits, and down-home Southern cooking with a modern touch."
+ },
+ "372": {
+  "name": "Oxalis",
+  "description": "A Michelin-starred New American tasting-menu restaurant from chef Nico Russell, a Daniel alum, offering multicourse and a la carte dining before closing in 2023."
+ },
+ "373": {
+  "name": "Amaranto",
+  "description": "Family-run Bushwick Mexican restaurant known for upscale, creative takes on classics -- flavorful enchiladas verdes, shrimp tacos, and standout mole and guacamole."
+ },
+ "374": {
+  "name": "Arepera Guacoco",
+  "description": "Mother-and-son-run Bushwick Venezuelan spot open since 2010, known for fresh-made arepas patted and griddled to order, filled with cheese, meat, or vegetables."
+ },
+ "375": {
+  "name": "China Garden",
+  "description": "A no-frills neighborhood Chinese takeout spot in Bushwick serving classic dishes like General Tso's chicken, lo mein, and hot and sour soup."
+ },
+ "376": {
+  "name": "Eim Dee Thai",
+  "description": "Family-owned Bushwick Thai spot known for everyday rice, noodle, and curry dishes, popular lunch specials, and items like green curry and crispy pork belly."
+ },
+ "377": {
+  "name": "Forever Thai",
+  "description": "A chic, modern Thai restaurant on Flushing Avenue serving traditional and updated Thai flavors with cocktails in a cozy Bushwick/East Williamsburg setting."
+ },
+ "378": {
+  "name": "Klom Klorm",
+  "description": "Low-key, brick-clad neighborhood Thai spot on Wyckoff Avenue known for satay, curries, and Bangkok-style dishes in a cozy, welcoming space."
+ },
+ "379": {
+  "name": "Knickerbocker Bagel",
+  "description": "The only shop in Bushwick hand-rolling and boiling its own bagels, known for a satisfying crackly crust and classic breakfast sandwiches on Knickerbocker Avenue."
+ },
+ "380": {
+  "name": "Lucys Vietnamese",
+  "description": "Chef Johnny Huynh's Bushwick Vietnamese kitchen, known for 14-hour smoked brisket pho, banh mi piled with brisket instead of cold cuts, and vegan mushroom pho."
+ },
+ "381": {
+  "name": "Otis",
+  "description": "Neighborhood New American restaurant in a former 1914 Bushwick tailor shop, known for shareable plates like burrata and mussels, cocktails, and warm ambiance."
+ },
+ "382": {
+  "name": "Rolo",
+  "description": "Wood-fired grill restaurant from Gramercy Tavern alums, known for a double cheeseburger with grilled onions, dry-aged steaks by the ounce, and a well-loved meatball parm sandwich."
+ },
+ "383": {
+  "name": "Taqueria Santa Fe",
+  "description": "A casual Bushwick taqueria serving Mexico City-style regional Mexican cooking, known for barbacoa tacos, black bean soup, and fast, friendly counter service."
+ },
+ "384": {
+  "name": "Aska",
+  "description": "Two-Michelin-starred Nordic tasting-menu restaurant from chef Fredrik Berselius, set in a candlelit 1860s warehouse under the Williamsburg Bridge with a 12-to-14-course menu."
+ },
+ "385": {
+  "name": "Francie",
+  "description": "Michelin-starred French-Italian brasserie in a converted limestone bank on Broadway, known for 30-day dry-aged Rohan duck and white-blazered waiters carrying dramatic platters."
+ },
+ "386": {
+  "name": "Meadowsweet",
+  "description": "Michelin-starred Williamsburg restaurant from chef Polo Dobkin, known for seasonal, Mediterranean-inflected American cooking, handmade pastas, and a stylish industrial dining room."
+ },
+ "387": {
+  "name": "Chez Ma Tante",
+  "description": "French-inspired Greenpoint bistro known for thick, fluffy brunch pancakes with cultured butter, a seasonal dinner tasting menu, and a well-loved natural wine list."
+ },
+ "388": {
+  "name": "Taku Sando",
+  "description": "Greenpoint counter serving Japanese craft sandwiches on house-baked shokupan milk bread, built around katsu fillings for a quick lunch or dinner."
+ },
+ "389": {
+  "name": "Third Falcon",
+  "description": "Cozy French bistro known for oysters, roast chicken, and chocolate mousse, since reworked into a $48 three-course prix-fixe menu under the name Little Falcon."
+ },
+ "390": {
+  "name": "Sofreh",
+  "description": "Chef Nasim Alikhani's celebrated Persian restaurant, known for small, beautiful plates painted with housemade yogurt, herbs, and pomegranate rather than big kebab platters."
+ },
+ "391": {
+  "name": "Cafe Mado",
+  "description": "From the team behind Michelin-starred Oxalis, a neighborhood cafe rooted in French and Italian Riviera cooking, serving house-baked bread and pasta by day and a refined dinner menu by night."
+ },
+ "392": {
+  "name": "Cafe Kestrel",
+  "description": "Tiny 20-seat Red Hook restaurant with white-tiled floors and lace curtains, praised by the Times and New Yorker for warm, deeply satisfying Southern European-inflected cooking."
+ },
+ "393": {
+  "name": "Aska",
+  "description": "Two-Michelin-starred Nordic tasting-menu restaurant from chef Fredrik Berselius, set in a candlelit 1860s warehouse under the Williamsburg Bridge, drawing on Northeastern seasonal ingredients."
+ },
+ "394": {
+  "name": "A&A Bake and Doubles",
+  "description": "James Beard Award-winning Trinidadian counter-service institution in Bed-Stuy, known for its addictive doubles, curry chicken roti, and fry bake with saltfish."
+ },
+ "395": {
+  "name": "Court Street Grocers",
+  "description": "Carroll Gardens sandwich shop and specialty grocer behind a hot-pink door, known for its overstuffed Italian Combo and other well-loved deli sandwiches."
+ },
+ "396": {
+  "name": "Ewe's Delicious Treats",
+  "description": "A small, family-run Brooklyn spot named to the New York Times' 100 Best Restaurants list, known for Nigerian cooking like egusi soup, jollof rice, and pounded yam."
+ },
+ "397": {
+  "name": "Eyval",
+  "description": "Persian restaurant from chef Ali Saboor reimagining Iranian street food with a live-fire grill and full bar, praised by the New York Times for its charcoal-grilled kebabs."
+ },
+ "398": {
+  "name": "Gage & Tollner",
+  "description": "Landmarked Brooklyn institution dating to 1879, revived in 2021 under Victorian decor and gas lamps, known for oysters Rockefeller, chicken liver pate, and dry-aged steaks."
+ },
+ "399": {
+  "name": "Hainan Chicken House",
+  "description": "Sunset Park counter on the NYT's 100 Best list, built around one dish -- Hainanese chicken rice with three housemade dipping sauces and a fragrant golden broth."
+ },
+ "400": {
+  "name": "Laghman Express",
+  "description": "Bensonhurst noodle shop specializing in hand-pulled Uyghur laghman, plus Uzbek and Kazakh dishes like manti dumplings and plov, run out of a small, cash-friendly storefront."
+ },
+ "401": {
+  "name": "Randazzo's Clam Bar",
+  "description": "Sheepshead Bay seafood institution since 1963, known for red-sauce Italian classics, a raw bar, and fried calamari -- reportedly a favorite of Anthony Bourdain's."
+ },
+ "402": {
+  "name": "Sailor",
+  "description": "Fort Greene neighborhood bistro from chef April Bloomfield, known for elevated, comforting seafood-centric dishes and a deep, wide-ranging wine list."
+ },
+ "403": {
+  "name": "Village Caf\u00e9",
+  "description": "Gravesend Azerbaijani restaurant since 2013 in a converted car dealership, serving kutaby, kebabs, and multi-course banquet spreads blending Middle Eastern, Russian, and Ukrainian influences."
+ },
+ "404": {
+  "name": "Latelier",
+  "description": "Joel Robuchon's two-Michelin-starred French counter-dining concept, built around small, refined tasting plates showcasing pristine ingredients, inspired by Japanese dining rituals, before it closed in 2022."
+ },
+ "405": {
+  "name": "Tsukimi",
+  "description": "One-Michelin-starred East Village kaiseki restaurant from chef Takanori Akiyama, offering a meticulously paced multi-course Japanese tasting menu named for moon-viewing festivals."
+ },
+ "406": {
+  "name": "Tuome",
+  "description": "One-Michelin-starred East Village restaurant from chef Thomas Chen, known for Asian-inflected American small plates like octopus with pork XO sauce and Berkshire pork for two."
+ },
+ "407": {
+  "name": "Crown Shy",
+  "description": "Michelin-starred FiDi restaurant in the Art Deco 70 Pine Street tower, the late chef James Kent's solo debut known for pull-apart olive bread and gruyere fritters."
+ },
+ "408": {
+  "name": "Hole in the Wall",
+  "description": "Australian-inspired all-day cafe near the Seaport, known for its coffee, espresso martinis, and casual brunch-through-dinner menu in the Financial District."
+ },
+ "409": {
+  "name": "L'Appart",
+  "description": "A Michelin-starred French restaurant tucked inside the Le District market at Brookfield Place, designed to resemble a Parisian apartment; it closed in 2024."
+ },
+ "410": {
+  "name": "Kanoyama",
+  "description": "A well-regarded sushi restaurant with an \u00e0 la carte dining room and a separate omakase counter, known for quality imported fish; held a Michelin star until 2023."
+ },
+ "411": {
+  "name": "Noda",
+  "description": "A one-Michelin-star sushi restaurant built around an eight-seat counter, where chef Shigeyuki Tsunoda, trained in Tokyo's Ginza district, serves a twenty-course edomae omakase."
+ },
+ "412": {
+  "name": "Odo",
+  "description": "A two-Michelin-star kaiseki restaurant from chef Hiroki Odo, presenting seasonal multicourse Japanese dinners built on ingredients sourced from Japanese and East Coast producers."
+ },
+ "413": {
+  "name": "Koloman",
+  "description": "A contemporary European restaurant inside the Ace Hotel blending Viennese tradition with Parisian technique under chef Markus Glocker; named a best new restaurant by Esquire."
+ },
+ "414": {
+  "name": "Rao's",
+  "description": "An almost impossible-to-book East Harlem institution dating to 1896, with just ten tables largely 'owned' by longtime regulars, serving classic Southern Italian red-sauce cooking."
+ },
+ "415": {
+  "name": "Red Rooster",
+  "description": "Marcus Samuelsson's Lenox Avenue restaurant, opened in 2010, serving elevated soul and American comfort food alongside live music, named for a 1930s Harlem speakeasy."
+ },
+ "416": {
+  "name": "Sylvia's",
+  "description": "Harlem's landmark soul food restaurant, opened by Sylvia Woods in 1962, known for chicken and waffles and shrimp and grits, with a Wednesday gospel night that's drawn presidents and celebrities."
+ },
+ "417": {
+  "name": "Contra",
+  "description": "A tasting-menu restaurant on Orchard Street from chefs Jeremiah Stone and Fabi\u00e1n von Hauske Valtierra, known for a frequently changing seasonal menu and a well-regarded natural wine list."
+ },
+ "418": {
+  "name": "Pig and Butter",
+  "description": "A casual brunch spot on the Lower East Side serving American comfort food."
+ },
+ "419": {
+  "name": "YakitoriKono",
+  "description": "A Japanese yakitori restaurant on the Lower East Side specializing in skewered, charcoal-grilled chicken."
+ },
+ "420": {
+  "name": "Ai Fiori",
+  "description": "An elegant Italian restaurant from chef Michael White known for coastal, Riviera-inspired cooking and handmade pasta; held a Michelin star for years inside a Midtown hotel."
+ },
+ "421": {
+  "name": "Gabriel Kreuther",
+  "description": "Chef Gabriel Kreuther's elegant Alsatian-French restaurant near Bryant Park, long recognized with Michelin stars for refined dishes rooted in his native Alsace, including a well-known foie gras course."
+ },
+ "422": {
+  "name": "Hudson Grill",
+  "description": "A casual American restaurant near Hudson Yards."
+ },
+ "423": {
+  "name": "Kajitsu",
+  "description": "A Michelin-starred Japanese restaurant specializing in shojin ryori, the vegetable-focused, meat-free cuisine developed in Buddhist temple cooking, served as a multicourse tasting menu."
+ },
+ "424": {
+  "name": "Kochi",
+  "description": "A Michelin-starred Korean tasting-menu restaurant from chef Sung Anh, known for live-fire cooking techniques applied to a refined, multicourse menu."
+ },
+ "425": {
+  "name": "sushi AMANE",
+  "description": "An omakase sushi restaurant in Midtown East offering traditional nigiri in an intimate counter setting."
+ },
+ "426": {
+  "name": "Sushi Ginza Onodera",
+  "description": "The New York outpost of the Tokyo-based Ginza Onodera sushi group, offering traditional Edomae-style omakase at an intimate counter."
+ },
+ "427": {
+  "name": "Sushi Yasuda",
+  "description": "A minimalist, purist sushi restaurant founded by Naomichi Yasuda near Grand Central, known for pristine nigiri and a no-frills approach that skips heavy sauces or specialty rolls."
+ },
+ "428": {
+  "name": "Tempura Matsui",
+  "description": "The New York outpost of a Michelin-starred Tokyo tempura restaurant, where a chef's-counter omakase menu presents lightly fried seasonal vegetables and seafood course by course."
+ },
+ "429": {
+  "name": "The Modern",
+  "description": "A two-Michelin-star restaurant beside MoMA's sculpture garden, serving modern, French-inflected American cuisine in an elegant room from Danny Meyer's Union Square Hospitality Group."
+ },
+ "430": {
+  "name": "Atomix",
+  "description": "An intimate, numbered-menu Korean tasting-menu restaurant from chefs Junghyun and Ellia Park, widely regarded as one of the city's top fine-dining rooms and ranked among the World's 50 Best."
+ },
+ "431": {
+  "name": "KYU",
+  "description": "A wood-fired, family-style Asian restaurant known for whole roasted chicken and shareable robata-grilled dishes, from the team behind Bunker Vietnamese."
+ },
+ "432": {
+  "name": "Banter",
+  "description": "A casual brunch restaurant in Noho."
+ },
+ "433": {
+  "name": "Two Hands",
+  "description": "An Australian-style all-day cafe known for avocado toast, brunch fare, and specialty coffee, part of a small chain with roots in Australia."
+ },
+ "434": {
+  "name": "Estela",
+  "description": "A Nolita small-plates restaurant from chef Ignacio Mattos, known for its beef tartare on grilled bread and a well-curated natural wine list in a narrow, always-busy upstairs room."
+ },
+ "435": {
+  "name": "The Butcher's Daughter",
+  "description": "A plant-based cafe billed as a 'vegetable slaughterhouse,' serving all-day vegetarian and vegan brunch, juices, and salads in a bright, plant-filled Nolita space."
+ },
+ "436": {
+  "name": "Hirohisa",
+  "description": "An intimate Soho restaurant serving multicourse Japanese kaiseki-style tasting menus, recognized with a Michelin star for its refined, seasonal cooking."
+ },
+ "437": {
+  "name": "Vestry",
+  "description": "A seafood restaurant in Soho."
+ },
+ "438": {
+  "name": "Fiat Caf\u00e9",
+  "description": "A casual Italian cafe in Soho known for brunch fare."
+ },
+ "439": {
+  "name": "Atera",
+  "description": "A former two-Michelin-star tasting-menu restaurant in Tribeca known for avant-garde, ingredient-driven cooking served at a communal chef's counter, before it closed in 2022."
+ },
+ "440": {
+  "name": "Jungsik",
+  "description": "An elegant Tribeca restaurant from chef Jungsik Yim reinterpreting Korean cuisine through a modern, French-influenced fine-dining lens; has held two Michelin stars."
+ },
+ "441": {
+  "name": "L'a Abeille",
+  "description": "A one-Michelin-star Tribeca restaurant blending French technique with Japanese ingredients under chef Mitsunobu Nishida, paired with an adjoining patisserie serving pastries and viennoiserie."
+ },
+ "442": {
+  "name": "Sushi of Gari",
+  "description": "A sushi restaurant known for chef's-choice omakase with inventive, sauce-driven preparations that diverge from traditional nigiri, originally opened by chef Masatoshi 'Gari' Sugio."
+ },
+ "443": {
+  "name": "Aquavit",
+  "description": "A Scandinavian fine-dining restaurant known for Nordic tasting menus built around dishes like gravlax and herring; chef Emma Bengtsson has been recognized with multiple Michelin stars."
+ },
+ "444": {
+  "name": "Benihana",
+  "description": "The original Japanese teppanyaki chain, founded in 1964 by Rocky Aoki, known for hibachi chefs performing tableside knife tricks and the classic onion-volcano flourish."
+ },
+ "445": {
+  "name": "Daniel",
+  "description": "Chef Daniel Boulud's flagship Upper East Side restaurant, a longtime pillar of formal French fine dining in New York and a repeat Michelin-starred favorite for special occasions."
+ },
+ "446": {
+  "name": "Le Jardinier",
+  "description": "A plant-forward French restaurant from the Jean-Georges Vongerichten group, built around vegetable-driven tasting menus rather than meat or fish as the centerpiece; has held a Michelin star."
+ },
+ "447": {
+  "name": "Mediterraneo",
+  "description": "A Mediterranean restaurant on the Upper East Side."
+ },
+ "448": {
+  "name": "Quality Italian",
+  "description": "Part of the Quality Branded restaurant group, known for playful, oversized riffs on Italian-American classics like chicken parm served upright on a stand."
+ },
+ "449": {
+  "name": "Quality Meats",
+  "description": "A modern steakhouse from the Quality Branded group, known for contemporary decor and creative touches like brown-butter bread service alongside classic steaks."
+ },
+ "450": {
+  "name": "Scalinatella",
+  "description": "A longstanding white-tablecloth Italian restaurant tucked into an Upper East Side townhouse basement, known for classic Northern Italian dishes and a loyal uptown following."
+ },
+ "451": {
+  "name": "Sushi Noz",
+  "description": "An intimate, high-end omakase counter from chef Nozomu Abe, among the pricier and more exclusive sushi experiences on the Upper East Side."
+ },
+ "452": {
+  "name": "Toloache",
+  "description": "An upscale Mexican restaurant from chef Julian Medina's restaurant group, known for tableside guacamole, tacos, and an extensive tequila and mezcal list."
+ },
+ "453": {
+  "name": "Hutong",
+  "description": "An upscale Northern Chinese restaurant known for Peking duck and dramatic, lantern-lit decor, part of a restaurant group with sister locations in Hong Kong and London."
+ },
+ "454": {
+  "name": "The East Pole",
+  "description": "A New American restaurant on the Upper East Side from the team behind The Fat Radish, known for seasonal, vegetable-forward cooking and a popular weekend brunch."
+ },
+ "455": {
+  "name": "Fiorello's",
+  "description": "A classic Italian trattoria across from Lincoln Center, popular with the pre-theater and concert crowd for thin-crust pizza, a raw bar, and old-school hospitality."
+ },
+ "456": {
+  "name": "Le Trois Chevaux",
+  "description": "A romantic French restaurant in the West Village from chef Angie Mar, formerly of The Beatrice Inn, known for opulent, meat-forward dishes and dramatic presentations."
+ },
+ "457": {
+  "name": "Moustache",
+  "description": "A longtime West Village favorite for Palestinian and Middle Eastern comfort food, especially its 'pitza' -- pita topped like a pizza -- alongside hummus and lamb dishes."
+ },
+ "458": {
+  "name": "Cafe Panino",
+  "description": "A casual West Village spot serving panini sandwiches."
+ },
+ "459": {
+  "name": "Jungsik",
+  "description": "An elegant Tribeca restaurant from chef Jungsik Yim reinterpreting Korean cuisine through a modern, French-influenced fine-dining lens; has held two Michelin stars."
+ },
+ "460": {
+  "name": "Chambers",
+  "description": "New American restaurant in Tribeca known for chef Jonathan Karis's seasonal small plates and Pascaline Lepeltier's sprawling wine program of over 2,000 bottles; named to the NYT's 100 Best Restaurants list."
+ },
+ "461": {
+  "name": "Ho Foods",
+  "description": "Ten-seat East Village counter known for Taiwanese beef noodle soup made with pasture-raised beef, house-fermented mustard greens, and a 24-hour bone broth; frequently cited among the city's best bowls."
+ },
+ "462": {
+  "name": "Kisa",
+  "description": "Lower East Side Korean diner modeled on 1980s 'kisa sikdang' driver's restaurants: pick one entree, like bulgogi or bibimbap, and get rice, soup, and bottomless rotating banchan."
+ },
+ "463": {
+  "name": "Borgo",
+  "description": "Wood-fired, Tuscan-leaning trattoria from restaurateur Andrew Tarlow's team, his first Manhattan spot, known for a timballo di anelletti pasta bake and hearth-fired focaccia in a candlelit dining room."
+ },
+ "464": {
+  "name": "Bridges",
+  "description": "Michelin-starred New American restaurant in Chinatown, in the space that housed dim sum institution Hop Shing for decades, from chef Sam Lawrence (ex-Estela), known for a Comt\u00e9-chanterelle tart and sea urchin custard."
+ },
+ "465": {
+  "name": "Bungalow",
+  "description": "Elaborate Indian restaurant from Michelin-starred chef Vikas Khanna, set in a jewel-toned, members'-club-style room, spanning regional dishes and family recipes; earned three stars from the New York Times."
+ },
+ "466": {
+  "name": "Attoboy",
+  "description": "Industrial-leaning Flatiron Korean spot from chef Junghyun 'JP' Park and Ellia Park, serving an approachable four-course prix fixe with dishes like kimchi-brined fried chicken and inventive seafood plates."
+ },
+ "467": {
+  "name": "Kabawa",
+  "description": "Caribbean fine-dining restaurant from chef Paul Carmichael in the former Momofuku Ko space, serving a prix fixe of dishes like roti, cassava dumplings, and jerk duck sausage; named a top U.S. restaurant by Food & Wine."
+ },
+ "468": {
+  "name": "Ha's Snack Bar",
+  "description": "Tiny, hard-to-book Lower East Side wine bar where chefs Anthony Ha and Sadie Mae Burns-Ha filter French bistro classics through a Vietnamese lens, with dishes like pate chaud and tamarind-butter snails."
+ },
+ "469": {
+  "name": "Sushi Sho",
+  "description": "Three-Michelin-starred Edomae sushi counter near Bryant Park from chef Keiji Nakazawa, relocated from Waikiki; the first NYC sushi restaurant to reach three stars since Masa, with just ten seats."
+ },
+ "470": {
+  "name": "Cho Dang Gol",
+  "description": "Longtime Midtown Korean spot serving handmade tofu since 1997 in the style of a Korean coastal village, especially prized for its soondubu jjigae; a Michelin Bib Gourmand pick."
+ },
+ "471": {
+  "name": "Cocina Consuelo",
+  "description": "Tiny, walk-in-only Hamilton Heights spot from chef Karina Garc\u00eda and husband Lalo Rodr\u00edguez, serving Mexican dishes rooted in his grandmother's recipes, including birria-topped bone marrow and masa pancakes."
+ },
+ "472": {
+  "name": "Dhamaka",
+  "description": "Lower East Side restaurant from Unapologetic Foods (Chintan Pandya and Roni Mazumdar) serving bold regional Indian dishes rarely found stateside, including a noted braised rabbit; landed on the NYT's 100 Best list."
+ },
+ "473": {
+  "name": "Four Twenty Five",
+  "description": "Jean-Georges Vongerichten and Jonathan Benno's soaring Park Avenue dining room, pairing French, Italian, and Asian influences in dishes like kampachi with aji amarillo and handmade rabbit agnolotti."
+ },
+ "474": {
+  "name": "Frenchette",
+  "description": "Classic Tribeca brasserie from chefs Riad Nasr and Lee Hanson, known for duck frites, roast chicken, and a deep natural wine list; won the James Beard Award for Best New Restaurant."
+ },
+ "475": {
+  "name": "Great N.Y. Noodletown",
+  "description": "No-frills, cash-only Chinatown institution open since 1981, serving classic Cantonese roast meats with ginger-scallion sauce and shrimp wonton soup; a longtime late-night favorite among chefs."
+ },
+ "476": {
+  "name": "Houseman",
+  "description": "Neighborhood New American spot in Hudson Square from chef-owner Ned Baldwin (ex-Prune), known for a thick burger and roast chicken in a cozy room with reclaimed bowling-alley maple tables."
+ },
+ "477": {
+  "name": "King",
+  "description": "South Village bistro from chefs Clare de Boer and Jess Shadbolt (both ex-River Caf\u00e9 London), serving a daily-changing, greenmarket-driven menu of Southern French and Italian dishes like panisse and house-made ravioli."
+ },
+ "478": {
+  "name": "Le Veau d'Or",
+  "description": "New York's oldest French bistro, open since 1937 and revived in 2024 by Frenchette's Riad Nasr and Lee Hanson; fifteen tables serving Escoffier-inspired classics like t\u00eate de veau."
+ },
+ "479": {
+  "name": "Little Myanmar",
+  "description": "Family-run East Village Burmese spot known for tea leaf salad, yellow noodle salad, and Burmese pancakes; largely halal with numerous vegan options on a surprisingly large menu."
+ },
+ "480": {
+  "name": "Lola's",
+  "description": "Chef Suzanne Cupps's (Gramercy Tavern, Untitled) first solo restaurant near the Flatiron Building, blending Southern and pan-Asian influences and named for her Filipino grandmother, in a jade-tiled dining room."
+ },
+ "481": {
+  "name": "M\u1eafm",
+  "description": "Lower East Side Vietnamese spot specializing in Central Vietnamese food, known for b\u00fan \u0111\u1eadu m\u1eafm t\u00f4m and a ph\u1edf praised as among the city's best; low-stool, communal seating."
+ },
+ "482": {
+  "name": "Okdongsik",
+  "description": "NYC outpost of chef Ok Dongsik's Michelin Bib Gourmand Seoul restaurant, built around one dish, dwaeji gukbap (pork rib and rice soup), plus kimchi mandu; hides the speakeasy bar George Bang Bang inside."
+ },
+ "483": {
+  "name": "Raf's",
+  "description": "A French-Italian restaurant in Noho."
+ },
+ "484": {
+  "name": "Raku",
+  "description": "A Japanese restaurant in the East Village."
+ },
+ "485": {
+  "name": "Shukette",
+  "description": "A Middle Eastern restaurant in Chelsea."
+ },
+ "486": {
+  "name": "Sushi Ouji",
+  "description": "A sushi restaurant in Soho."
+ },
+ "487": {
+  "name": "Txikito",
+  "description": "A Spanish restaurant in Chelsea."
+ },
+ "488": {
+  "name": "Una Pizza Napoletana",
+  "description": "A pizza restaurant on the Lower East Side."
+ },
+ "489": {
+  "name": "Yoon Haeundae Galbi",
+  "description": "A Korean restaurant in Midtown West."
+ },
+ "490": {
+  "name": "White Bear",
+  "description": "A Chinese restaurant in Flushing, Queens."
+ },
+ "491": {
+  "name": "Xie Bao",
+  "description": "A Chinese restaurant in Flushing, Queens."
+ },
+ "492": {
+  "name": "Szechuan Mountain House",
+  "description": "A Sichuan Chinese restaurant in Flushing, Queens."
+ },
+ "493": {
+  "name": "Alley 41",
+  "description": "A Chinese restaurant in Flushing, Queens."
+ },
+ "494": {
+  "name": "Old Sport",
+  "description": "A halal Chinese restaurant in Forest Hills, Queens."
+ },
+ "495": {
+  "name": "Levant",
+  "description": "A Middle Eastern restaurant in Astoria, Queens."
+ },
+ "496": {
+  "name": "Temple Canteem",
+  "description": "An Indian restaurant in Flushing, Queens."
+ },
+ "497": {
+  "name": "Zaab Zaab",
+  "description": "A Thai restaurant in Elmhurst, Queens."
+ },
+ "498": {
+  "name": "Trinciti Roti Shop",
+  "description": "A Trinidadian restaurant in South Ozone, Queens."
+ },
+ "499": {
+  "name": "Don Peppe",
+  "description": "An Italian restaurant in South Ozone Park, Queens."
+ },
+ "500": {
+  "name": "Hellbender",
+  "description": "A Mexican restaurant in Ridgewood, Queens."
+ },
+ "501": {
+  "name": "Salty Lunch Lady's",
+  "description": "A sandwich shop in Ridgewood, Queens."
+ },
+ "502": {
+  "name": "Taiwanese Gourmet",
+  "description": "A Taiwanese restaurant in Elmhurst, Queens."
+ },
+ "503": {
+  "name": "Enoteca Maria / Nonnas",
+  "description": "A Staten Island restaurant built around a rotating cast of home-cooking grandmothers from different world cuisines, per its own 'nonnas of the world' concept."
+ },
+ "504": {
+  "name": "Shaw-nae\u2019s House",
+  "description": "A soul food restaurant in Staten Island."
+ },
+ "505": {
+  "name": "Lawkruwana",
+  "description": "A Sri Lankan restaurant in Staten Island."
+ }
+}

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Directory — WHERE.JP.GOES.NY</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⭐️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<!-- Analytics: free at https://www.goatcounter.com — sign up, then replace WHEREJPGOESNY below with your own site code -->
+<script data-goatcounter="https://WHEREJPGOESNY.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<style>
+  .filter-bar {
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    padding: 18px 0;
+  }
+  .filter-bar select, .filter-bar input[type="search"] { min-width: 140px; }
+  #dir-search { flex: 1; min-width: 200px; }
+  #dir-count { color: var(--ink-faint); font-size: 0.88rem; margin-bottom: 14px; }
+  #load-more-wrap { text-align: center; padding: 28px 0; }
+</style>
+</head>
+<body data-page="directory">
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="star">★</span>WHERE.JP.GOES.NY</a>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    <div class="nav-links">
+      <a href="index.html" data-page="home">Home</a>
+      <a href="map.html" data-page="map">Map</a>
+      <a href="guides.html" data-page="guides">Guides</a>
+      <a href="quiz.html" data-page="quiz">Quiz</a>
+      <a href="directory.html" data-page="directory">All Spots</a>
+    </div>
+  </div>
+</nav>
+
+<header class="section-tight">
+  <div class="wrap">
+    <div class="eyebrow">Everything</div>
+    <h1>The full directory</h1>
+    <p class="lede">All 500+ spots, searchable and filterable. This is the raw list the map, guides, and quiz all pull from.</p>
+  </div>
+</header>
+
+<section class="section-tight">
+  <div class="wrap">
+    <div class="filter-bar">
+      <input type="search" id="dir-search" placeholder="Search by name or cuisine…">
+      <select id="dir-borough"><option value="">All boroughs</option></select>
+      <select id="dir-hood"><option value="">All neighborhoods</option></select>
+      <select id="dir-cost">
+        <option value="">Any budget</option>
+        <option value="1">$</option>
+        <option value="2">$$ and under</option>
+        <option value="3">$$$ and under</option>
+        <option value="4">$$$$ and under</option>
+        <option value="5">$$$$$</option>
+      </select>
+      <select id="dir-stars">
+        <option value="">Any rating</option>
+        <option value="5">5★ only</option>
+        <option value="4">4★ and up</option>
+        <option value="3">3★ and up</option>
+        <option value="2">2★ and up</option>
+        <option value="1">1★ and up</option>
+        <option value="unrated">Not yet rated</option>
+      </select>
+      <select id="dir-sort">
+        <option value="rating">Sort: top rated</option>
+        <option value="rec">Sort: most recommended</option>
+        <option value="name">Sort: name A–Z</option>
+        <option value="hood">Sort: neighborhood</option>
+      </select>
+    </div>
+    <div id="dir-count"></div>
+    <div class="grid grid-auto" id="dir-results"></div>
+    <div id="load-more-wrap"><button class="btn btn-outline" id="load-more">Show more</button></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>WHERE.JP.GOES.NY — one New Yorker's answer to "where should I eat?" <span class="faint" id="last-updated"></span></span>
+  </div>
+</footer>
+
+<script src="data/data.js"></script>
+<script src="js/util.js"></script>
+<script>
+  var boroughSel = document.getElementById('dir-borough');
+  var hoodSel = document.getElementById('dir-hood');
+  META.boroughs.forEach(function (b) {
+    boroughSel.innerHTML += '<option value="' + escapeHtml(b) + '">' + escapeHtml(b) + '</option>';
+  });
+
+  function refreshHoodOptions() {
+    var b = boroughSel.value;
+    var hoods = NEIGHBORHOODS.filter(function (n) { return !b || n.borough === b; })
+      .map(function (n) { return n.hood; }).sort();
+    var current = hoodSel.value;
+    hoodSel.innerHTML = '<option value="">All neighborhoods</option>' +
+      hoods.map(function (h) { return '<option value="' + escapeHtml(h) + '">' + escapeHtml(h) + '</option>'; }).join('');
+    if (hoods.indexOf(current) !== -1) hoodSel.value = current;
+  }
+  refreshHoodOptions();
+
+  var PAGE_SIZE = 24;
+  var shown = PAGE_SIZE;
+
+  function currentResults() {
+    var q = document.getElementById('dir-search').value.trim().toLowerCase();
+    var borough = boroughSel.value;
+    var hood = hoodSel.value;
+    var maxCost = document.getElementById('dir-cost').value ? parseInt(document.getElementById('dir-cost').value, 10) : null;
+    var starsFilter = document.getElementById('dir-stars').value;
+    var sortMode = document.getElementById('dir-sort').value;
+
+    var list = RESTAURANTS.filter(function (r) {
+      if (q && !((r.name && r.name.toLowerCase().indexOf(q) !== -1) || (r.type && r.type.toLowerCase().indexOf(q) !== -1))) return false;
+      if (borough && r.borough !== borough) return false;
+      if (hood && r.hood !== hood) return false;
+      if (maxCost && (!r.costLevel || r.costLevel > maxCost)) return false;
+      if (starsFilter === 'unrated' && r.rated) return false;
+      if (starsFilter && starsFilter !== 'unrated') {
+        var min = parseInt(starsFilter, 10);
+        if (!r.rated || r.stars < min) return false;
+      }
+      return true;
+    });
+
+    list.sort(function (a, b) {
+      if (sortMode === 'name') return a.name.localeCompare(b.name);
+      if (sortMode === 'hood') return a.hood.localeCompare(b.hood) || a.name.localeCompare(b.name);
+      if (sortMode === 'rec') return b.recScore - a.recScore;
+      var as = a.stars === null ? -1 : a.stars, bs = b.stars === null ? -1 : b.stars;
+      if (bs !== as) return bs - as;
+      return b.recScore - a.recScore;
+    });
+    return list;
+  }
+
+  function render() {
+    var list = currentResults();
+    document.getElementById('dir-count').textContent = list.length + ' spot' + (list.length === 1 ? '' : 's');
+    var slice = list.slice(0, shown);
+    document.getElementById('dir-results').innerHTML = slice.map(function (r) { return spotCardHtml(r); }).join('');
+    document.getElementById('load-more-wrap').style.display = list.length > shown ? '' : 'none';
+  }
+
+  document.getElementById('dir-search').addEventListener('input', function () { shown = PAGE_SIZE; render(); });
+  ['dir-cost', 'dir-stars', 'dir-sort'].forEach(function (id) {
+    document.getElementById(id).addEventListener('change', function () { shown = PAGE_SIZE; render(); });
+  });
+  boroughSel.addEventListener('change', function () { refreshHoodOptions(); shown = PAGE_SIZE; render(); });
+  hoodSel.addEventListener('change', function () { shown = PAGE_SIZE; render(); });
+  document.getElementById('load-more').addEventListener('click', function () { shown += PAGE_SIZE; render(); });
+
+  render();
+</script>
+</body>
+</html>

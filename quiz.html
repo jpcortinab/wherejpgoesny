@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiz — WHERE.JP.GOES.NY</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⭐️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<!-- Analytics: free at https://www.goatcounter.com — sign up, then replace WHEREJPGOESNY below with your own site code -->
+<script data-goatcounter="https://WHEREJPGOESNY.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<style>
+  .quiz-step { padding: 28px 0; border-bottom: 1px solid var(--line); }
+  .quiz-step:last-of-type { border-bottom: none; }
+  .quiz-step h3 { font-size: 1.05rem; margin-bottom: 4px; }
+  .quiz-step .step-num { color: var(--accent); font-family: var(--serif); font-weight: 700; margin-right: 6px; }
+  #cuisine-input { width: 100%; max-width: 420px; }
+  #results { margin-top: 12px; }
+  .result-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--ink); color: var(--paper);
+    font-family: var(--serif); font-weight: 700; font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+  .result-row { display: flex; gap: 12px; align-items: flex-start; }
+  .result-row .spot-card { flex: 1; }
+  .why-line { font-size: 0.82rem; color: var(--accent); font-weight: 600; margin-top: -2px; }
+  .share-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 4px 0 20px; }
+  #share-feedback { font-size: 0.85rem; font-weight: 600; color: var(--good); opacity: 0; transition: opacity 0.2s; }
+  #share-feedback.show { opacity: 1; }
+  .area-group { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line-strong); }
+  .area-label { font-size: 0.82rem; font-weight: 700; color: var(--ink-soft); margin-bottom: 8px; }
+</style>
+</head>
+<body data-page="quiz">
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="star">★</span>WHERE.JP.GOES.NY</a>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    <div class="nav-links">
+      <a href="index.html" data-page="home">Home</a>
+      <a href="map.html" data-page="map">Map</a>
+      <a href="guides.html" data-page="guides">Guides</a>
+      <a href="quiz.html" data-page="quiz">Quiz</a>
+      <a href="directory.html" data-page="directory">All Spots</a>
+    </div>
+  </div>
+</nav>
+
+<header class="section-tight">
+  <div class="wrap">
+    <div class="eyebrow">Two minutes, five picks</div>
+    <h1>What are you in the mood for?</h1>
+    <p class="lede">Answer what you care about — skip the rest. I'll hand back five spots worth going to.</p>
+  </div>
+</header>
+
+<section class="section-tight">
+  <div class="wrap" style="max-width: 780px;">
+    <div class="card" style="padding: 6px 28px;">
+
+      <div class="quiz-step">
+        <h3><span class="step-num">1</span>Where in the city?</h3>
+        <p class="muted" style="margin-bottom:12px;">Pick as many as you like. Leave blank for anywhere. Pick Manhattan or Brooklyn and I'll ask which part.</p>
+        <div class="choice-grid" id="q-borough"></div>
+        <div id="area-filters"></div>
+      </div>
+
+      <div class="quiz-step">
+        <h3><span class="step-num">2</span>What's the budget?</h3>
+        <p class="muted" style="margin-bottom:12px;">I'll show that price point and below.</p>
+        <div class="choice-grid" id="q-budget"></div>
+      </div>
+
+      <div class="quiz-step">
+        <h3><span class="step-num">3</span>What's the occasion?</h3>
+        <p class="muted" style="margin-bottom:12px;">Pick as many vibes as work.</p>
+        <div class="choice-grid" id="q-mood"></div>
+      </div>
+
+      <div class="quiz-step">
+        <h3><span class="step-num">4</span>Craving anything specific?</h3>
+        <p class="muted" style="margin-bottom:12px;">Optional — type a cuisine, or a few separated by commas.</p>
+        <input type="text" id="cuisine-input" list="cuisine-list" placeholder="e.g. Italian, Sushi, Tacos…">
+        <datalist id="cuisine-list"></datalist>
+      </div>
+
+      <div class="quiz-step" style="text-align:center; border-bottom:none;">
+        <button class="btn btn-primary" id="submit-quiz" style="font-size:1.05rem; padding:15px 30px;">Get my five ★</button>
+      </div>
+
+    </div>
+
+    <div id="results"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>WHERE.JP.GOES.NY — one New Yorker's answer to "where should I eat?" <span class="faint" id="last-updated"></span></span>
+  </div>
+</footer>
+
+<script src="data/data.js"></script>
+<script src="js/util.js"></script>
+<script>
+  function buildChoiceGrid(container, options, name, multiple) {
+    var el = document.getElementById(container);
+    el.innerHTML = options.map(function (opt) {
+      return '<label class="choice">' +
+        '<input type="' + (multiple ? 'checkbox' : 'radio') + '" name="' + name + '" value="' + escapeHtml(opt) + '">' +
+        '<span class="choice-face">' + escapeHtml(opt) + '</span>' +
+      '</label>';
+    }).join('');
+  }
+
+  var GENERAL_AREAS = {
+    'Manhattan': {
+      'Uptown': ['Upper East Side', 'Upper West Side', 'Harlem'],
+      'Midtown': ['Midtown West', 'Midtown East', 'Murray Hill', 'Hudson Yards', 'Rockefeller Center', 'Chelsea', 'Flatiron'],
+      'Downtown': ['West Village', 'Greenwich Village', 'East Village', 'Soho', 'Nolita', 'Tribeca', 'Noho', 'Chinatown', 'Lower East Side', 'FiDi', 'Hudson Square']
+    },
+    'Brooklyn': {
+      'North Brooklyn': ['Williamsburg', 'Greenpoint', 'Bushwick'],
+      'Downtown Brooklyn': ['Brooklyn Heights', 'DUMBO', 'Downtown Brooklyn', 'Fort Greene', 'Carroll Gardens', 'Red Hook'],
+      'Central Brooklyn': ['Bedford-Stuyvesant'],
+      'South Brooklyn': ['Sunset Park', 'Bensonhurst', 'Sheepshead Bay', 'Gravesend', 'New Lots']
+    }
+  };
+
+  function renderAreaFilters() {
+    var checkedBoroughs = getChecked('borough');
+    var preserved = {};
+    Object.keys(GENERAL_AREAS).forEach(function (b) { preserved[b] = getChecked('area-' + b); });
+
+    var html = '';
+    Object.keys(GENERAL_AREAS).forEach(function (b) {
+      if (checkedBoroughs.indexOf(b) === -1) return;
+      html += '<div class="area-group">' +
+        '<div class="area-label">Which part of ' + b + '?</div>' +
+        '<div class="choice-grid" id="q-area-' + b + '"></div>' +
+      '</div>';
+    });
+    document.getElementById('area-filters').innerHTML = html;
+
+    Object.keys(GENERAL_AREAS).forEach(function (b) {
+      if (checkedBoroughs.indexOf(b) === -1) return;
+      buildChoiceGrid('q-area-' + b, Object.keys(GENERAL_AREAS[b]), 'area-' + b, true);
+      preserved[b].forEach(function (v) { setChecked('area-' + b, v); });
+    });
+  }
+
+  buildChoiceGrid('q-borough', META.boroughs, 'borough', true);
+  document.getElementById('q-borough').addEventListener('change', renderAreaFilters);
+
+  var budgetOptions = ['$', '$$', '$$$', '$$$$', '$$$$$'];
+  buildChoiceGrid('q-budget', budgetOptions, 'budget', false);
+
+  var moodOptions = META.moods;
+  buildChoiceGrid('q-mood', moodOptions, 'mood', true);
+
+  document.getElementById('cuisine-list').innerHTML = META.types.map(function (t) {
+    return '<option value="' + escapeHtml(t) + '">';
+  }).join('');
+
+  function getChecked(name) {
+    return Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(function (i) { return i.value; });
+  }
+
+  function activeAreaSelections() {
+    var sel = {};
+    Object.keys(GENERAL_AREAS).forEach(function (b) {
+      var areas = getChecked('area-' + b);
+      if (areas.length) sel[b] = areas;
+    });
+    return sel;
+  }
+
+  function runQuiz(relaxLevel) {
+    var boroughs = getChecked('borough');
+    var maxCostLevel = budgetOptions.indexOf((document.querySelector('input[name="budget"]:checked') || {}).value) + 1;
+    var moods = getChecked('mood');
+    var cuisineRaw = document.getElementById('cuisine-input').value.trim();
+    var cuisines = cuisineRaw ? cuisineRaw.split(',').map(function (c) { return c.trim().toLowerCase(); }).filter(Boolean) : [];
+    var areaSel = activeAreaSelections();
+
+    var useBoroughs = relaxLevel < 5 && boroughs.length > 0;
+    var useArea = relaxLevel < 4 && Object.keys(areaSel).length > 0;
+    var useCost = relaxLevel < 3 && maxCostLevel > 0;
+    var useMood = relaxLevel < 2 && moods.length > 0;
+    var useCuisine = relaxLevel < 1 && cuisines.length > 0;
+
+    var pool = RESTAURANTS.filter(function (r) {
+      if (!r.rated || r.recScore < 0) return false;
+      if (useBoroughs && boroughs.indexOf(r.borough) === -1) return false;
+      if (useArea && areaSel[r.borough]) {
+        var map = GENERAL_AREAS[r.borough];
+        var inArea = areaSel[r.borough].some(function (a) { return (map[a] || []).indexOf(r.hood) !== -1; });
+        if (!inArea) return false;
+      }
+      if (useCost && (!r.costLevel || r.costLevel > maxCostLevel)) return false;
+      if (useMood && (!r.mood || moods.indexOf(r.mood) === -1)) return false;
+      if (useCuisine && !cuisines.some(function (c) { return r.type && r.type.toLowerCase().indexOf(c) !== -1; })) return false;
+      return true;
+    });
+
+    pool.sort(function (a, b) {
+      var scoreA = a.stars * 2 + a.recScore, scoreB = b.stars * 2 + b.recScore;
+      return scoreB - scoreA;
+    });
+
+    return { pool: pool, relaxLevel: relaxLevel, useCuisine: useCuisine, useMood: useMood, useCost: useCost, useArea: useArea, useBoroughs: useBoroughs };
+  }
+
+  function whyLine(r, ctx) {
+    var bits = [];
+    if (ctx.useBoroughs) bits.push(r.hood + ', ' + r.borough);
+    if (ctx.useCost) bits.push('fits your budget');
+    if (ctx.useMood) bits.push(r.mood.toLowerCase() + ' vibe');
+    if (ctx.useCuisine) bits.push(r.type);
+    if (!bits.length) bits.push('one of the best on the list');
+    return bits.join(' · ');
+  }
+
+  document.getElementById('submit-quiz').addEventListener('click', function () {
+    var relax = 0;
+    var result = runQuiz(relax);
+    var notes = [];
+    while (result.pool.length < 5 && relax < 5) {
+      relax++;
+      var before = result;
+      result = runQuiz(relax);
+      if (relax === 1 && before.useCuisine) notes.push('widened past your cuisine pick');
+      if (relax === 2 && before.useMood) notes.push('widened past your vibe pick');
+      if (relax === 3 && before.useCost) notes.push('widened past your budget');
+      if (relax === 4 && before.useArea) notes.push('widened past your area pick');
+      if (relax === 5 && before.useBoroughs) notes.push('widened past your neighborhood pick');
+    }
+
+    var top = result.pool.slice(0, 5);
+    var html = '<h2 style="margin-top:8px;">Your five</h2>';
+    if (notes.length) {
+      html += '<p class="faint">Not many exact matches, so I ' + notes.join(', then ') + ' to still get you five.</p>';
+    }
+    if (!top.length) {
+      html += '<p class="muted">Nothing matched — try loosening a filter.</p>';
+    } else {
+      html += '<div class="share-row">' +
+        '<button class="btn btn-outline" id="share-btn" type="button">🔗 Copy link to these five</button>' +
+        '<span id="share-feedback"></span>' +
+      '</div>';
+      html += top.map(function (r, i) {
+        return '<div class="result-row" style="margin-bottom:14px;">' +
+          '<span class="result-badge">' + (i + 1) + '</span>' +
+          '<div style="flex:1;">' +
+            '<div class="why-line">' + escapeHtml(whyLine(r, result)) + '</div>' +
+            spotCardHtml(r) +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+    var resultsEl = document.getElementById('results');
+    resultsEl.innerHTML = html;
+    resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    updateUrlFromState();
+  });
+
+  function shareParamsFromState() {
+    var params = new URLSearchParams();
+    var boroughs = getChecked('borough');
+    if (boroughs.length) params.set('b', boroughs.join(','));
+    var am = getChecked('area-Manhattan');
+    if (am.length) params.set('am', am.join(','));
+    var ab = getChecked('area-Brooklyn');
+    if (ab.length) params.set('ab', ab.join(','));
+    var budget = (document.querySelector('input[name="budget"]:checked') || {}).value;
+    if (budget) params.set('c', budget);
+    var moods = getChecked('mood');
+    if (moods.length) params.set('m', moods.join(','));
+    var cuisine = document.getElementById('cuisine-input').value.trim();
+    if (cuisine) params.set('q', cuisine);
+    return params;
+  }
+
+  function updateUrlFromState() {
+    var qs = shareParamsFromState().toString();
+    var newUrl = location.pathname + (qs ? '?' + qs : '');
+    history.replaceState(null, '', newUrl);
+  }
+
+  function setChecked(name, value) {
+    document.querySelectorAll('input[name="' + name + '"]').forEach(function (el) {
+      if (el.value === value) el.checked = true;
+    });
+  }
+
+  function applyStateFromParams(params) {
+    var b = params.get('b');
+    if (b) b.split(',').forEach(function (v) { setChecked('borough', v); });
+    renderAreaFilters();
+    var am = params.get('am');
+    if (am) am.split(',').forEach(function (v) { setChecked('area-Manhattan', v); });
+    var ab = params.get('ab');
+    if (ab) ab.split(',').forEach(function (v) { setChecked('area-Brooklyn', v); });
+    var c = params.get('c');
+    if (c) setChecked('budget', c);
+    var m = params.get('m');
+    if (m) m.split(',').forEach(function (v) { setChecked('mood', v); });
+    var q = params.get('q');
+    if (q) document.getElementById('cuisine-input').value = q;
+  }
+
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function showShareFeedback(msg) {
+    var el = document.getElementById('share-feedback');
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(function () { el.classList.remove('show'); }, 2500);
+  }
+
+  document.getElementById('results').addEventListener('click', function (e) {
+    if (e.target.id !== 'share-btn') return;
+    var url = location.origin + location.pathname + '?' + shareParamsFromState().toString();
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(url).then(function () {
+        showShareFeedback('Link copied ✓');
+      }, function () {
+        showShareFeedback(fallbackCopy(url) ? 'Link copied ✓' : url);
+      });
+    } else {
+      showShareFeedback(fallbackCopy(url) ? 'Link copied ✓' : url);
+    }
+  });
+
+  (function initFromUrl() {
+    var params = new URLSearchParams(location.search);
+    if (!params.toString()) return;
+    applyStateFromParams(params);
+    document.getElementById('submit-quiz').click();
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,507 @@
+[
+ {
+  "borough": "Manhattan",
+  "hood": "West Village",
+  "count": 44,
+  "topRating": 5,
+  "bestSpots": [
+   "4 Charles Prime Rib"
+  ],
+  "lat": 40.7358,
+  "lng": -74.0036
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Upper East Side",
+  "count": 39,
+  "topRating": 5,
+  "bestSpots": [
+   "Kappo Masa"
+  ],
+  "lat": 40.7736,
+  "lng": -73.9566
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Soho",
+  "count": 39,
+  "topRating": 4,
+  "bestSpots": [
+   "Blue Ribbon Brasserie"
+  ],
+  "lat": 40.7233,
+  "lng": -74.003
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Greenwich Village",
+  "count": 35,
+  "topRating": 4,
+  "bestSpots": [
+   "WSP Dosas",
+   "Babbo",
+   "Semma"
+  ],
+  "lat": 40.7336,
+  "lng": -74.0027
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "East Village",
+  "count": 34,
+  "topRating": 4,
+  "bestSpots": [
+   "Claud",
+   "Superiority Burger"
+  ],
+  "lat": 40.7265,
+  "lng": -73.9815
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Lower East Side",
+  "count": 33,
+  "topRating": 4,
+  "bestSpots": [
+   "Ernesto's"
+  ],
+  "lat": 40.715,
+  "lng": -73.9843
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Flatiron",
+  "count": 24,
+  "topRating": 5,
+  "bestSpots": [
+   "Eleven Madison Park"
+  ],
+  "lat": 40.741,
+  "lng": -73.9896
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Noho",
+  "count": 22,
+  "topRating": 3,
+  "bestSpots": [
+   "Fish Cheeks",
+   "Vic's",
+   "Il Bucco"
+  ],
+  "lat": 40.728,
+  "lng": -73.9925
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Chelsea",
+  "count": 20,
+  "topRating": 2,
+  "bestSpots": [
+   "Pastis",
+   "Los Mariscos",
+   "Chef's Table at Brooklyn Fare"
+  ],
+  "lat": 40.7465,
+  "lng": -74.0014
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Midtown East",
+  "count": 19,
+  "topRating": 4,
+  "bestSpots": [
+   "Amma"
+  ],
+  "lat": 40.755,
+  "lng": -73.9707
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Midtown West",
+  "count": 18,
+  "topRating": 5,
+  "bestSpots": [
+   "Le Bernadin",
+   "Marea"
+  ],
+  "lat": 40.76,
+  "lng": -73.988
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Nolita",
+  "count": 17,
+  "topRating": 4,
+  "bestSpots": [
+   "Emilio's Ballato"
+  ],
+  "lat": 40.7223,
+  "lng": -73.995
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Tribeca",
+  "count": 17,
+  "topRating": 4,
+  "bestSpots": [
+   "The Odeon"
+  ],
+  "lat": 40.7163,
+  "lng": -74.0086
+ },
+ {
+  "borough": "Brooklyn",
+  "hood": "Bushwick",
+  "count": 16,
+  "topRating": 2,
+  "bestSpots": [
+   "Ichiran"
+  ],
+  "lat": 40.6944,
+  "lng": -73.9213
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Upper West Side",
+  "count": 15,
+  "topRating": 4,
+  "bestSpots": [
+   "Masa",
+   "Jean Georges"
+  ],
+  "lat": 40.787,
+  "lng": -73.9754
+ },
+ {
+  "borough": "Brooklyn",
+  "hood": "Williamsburg",
+  "count": 14,
+  "topRating": 4,
+  "bestSpots": [
+   "The Four Horsemen"
+  ],
+  "lat": 40.7081,
+  "lng": -73.9571
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "FiDi",
+  "count": 11,
+  "topRating": 4,
+  "bestSpots": [
+   "Au Cheval",
+   "Nha Trang"
+  ],
+  "lat": 40.7075,
+  "lng": -74.0113
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Chinatown",
+  "count": 11,
+  "topRating": 3,
+  "bestSpots": [
+   "Joe's Shanghai",
+   "Peking Duck House",
+   "Golden Diner"
+  ],
+  "lat": 40.7158,
+  "lng": -73.997
+ },
+ {
+  "borough": "Brooklyn",
+  "hood": "Greenpoint",
+  "count": 10,
+  "topRating": 3,
+  "bestSpots": [
+   "Liilia",
+   "Mariscos El Submarino"
+  ],
+  "lat": 40.7305,
+  "lng": -73.9515
+ },
+ {
+  "borough": "Brooklyn",
+  "hood": "Brooklyn Heights",
+  "count": 9,
+  "topRating": 5,
+  "bestSpots": [
+   "Lucali's"
+  ],
+  "lat": 40.6958,
+  "lng": -73.9936
+ },
+ {
+  "borough": "Queens",
+  "hood": "Flushing",
+  "count": 7,
+  "topRating": 4,
+  "bestSpots": [
+   "Chongqing Lao Zao"
+  ],
+  "lat": 40.7654,
+  "lng": -73.8318
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Harlem",
+  "count": 6,
+  "topRating": 5,
+  "bestSpots": [
+   "Bangklyn"
+  ],
+  "lat": 40.8116,
+  "lng": -73.9465
+ },
+ {
+  "borough": "Brooklyn",
+  "hood": "DUMBO",
+  "count": 6,
+  "topRating": 2,
+  "bestSpots": [
+   "Chez Moi"
+  ],
+  "lat": 40.7033,
+  "lng": -73.9887
+ },
+ {
+  "borough": "Queens",
+  "hood": "Jackson Heights",
+  "count": 3,
+  "topRating": 4,
+  "bestSpots": [
+   "Dera",
+   "Mariscos El Submarino"
+  ],
+  "lat": 40.7556,
+  "lng": -73.883
+ },
+ {
+  "borough": "Queens",
+  "hood": "Long Island City",
+  "count": 3,
+  "topRating": 3,
+  "bestSpots": [
+   "Abuqir"
+  ],
+  "lat": 40.7447,
+  "lng": -73.9485
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Hudson Yards",
+  "count": 3,
+  "topRating": 0,
+  "bestSpots": [
+   "Electric Lemon",
+   "Little Spain"
+  ],
+  "lat": 40.7538,
+  "lng": -74.0022
+ },
+ {
+  "borough": "Brooklyn",
+  "hood": "Bedford-Stuyvesant",
+  "count": 3,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.6872,
+  "lng": -73.9418
+ },
+ {
+  "borough": "Staten Island",
+  "hood": "Staten Island",
+  "count": 3,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.5795,
+  "lng": -74.1502
+ },
+ {
+  "borough": "Brooklyn",
+  "hood": "Red Hook",
+  "count": 2,
+  "topRating": 5,
+  "bestSpots": [
+   "Red Hook Tavern"
+  ],
+  "lat": 40.6743,
+  "lng": -74.0107
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Rockefeller Center",
+  "count": 2,
+  "topRating": 3,
+  "bestSpots": [
+   "The Grill"
+  ],
+  "lat": 40.7587,
+  "lng": -73.9787
+ },
+ {
+  "borough": "Queens",
+  "hood": "Elmhurst",
+  "count": 2,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.7362,
+  "lng": -73.8801
+ },
+ {
+  "borough": "Queens",
+  "hood": "Ridgewood",
+  "count": 2,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.7043,
+  "lng": -73.9018
+ },
+ {
+  "borough": "Queens",
+  "hood": "Ozone",
+  "count": 1,
+  "topRating": 4,
+  "bestSpots": [
+   "Trinciti Roti Shop"
+  ],
+  "lat": 40.6803,
+  "lng": -73.837
+ },
+ {
+  "borough": "Bronx",
+  "hood": "Fordham Heights",
+  "count": 1,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.861,
+  "lng": -73.903
+ },
+ {
+  "borough": "Brooklyn",
+  "hood": "Carroll Gardens",
+  "count": 1,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.6799,
+  "lng": -73.9997
+ },
+ {
+  "borough": "Brooklyn",
+  "hood": "New Lots",
+  "count": 1,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.6656,
+  "lng": -73.8815
+ },
+ {
+  "borough": "Brooklyn",
+  "hood": "Downtown Brooklyn",
+  "count": 1,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.6913,
+  "lng": -73.9847
+ },
+ {
+  "borough": "Brooklyn",
+  "hood": "Sunset Park",
+  "count": 1,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.6459,
+  "lng": -74.0107
+ },
+ {
+  "borough": "Brooklyn",
+  "hood": "Bensonhurst",
+  "count": 1,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.6026,
+  "lng": -73.9954
+ },
+ {
+  "borough": "Brooklyn",
+  "hood": "Sheepshead Bay",
+  "count": 1,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.5946,
+  "lng": -73.9433
+ },
+ {
+  "borough": "Brooklyn",
+  "hood": "Fort Greene",
+  "count": 1,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.6896,
+  "lng": -73.9745
+ },
+ {
+  "borough": "Brooklyn",
+  "hood": "Gravesend",
+  "count": 1,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.5946,
+  "lng": -73.9738
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Murray Hill",
+  "count": 1,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.7479,
+  "lng": -73.9776
+ },
+ {
+  "borough": "Manhattan",
+  "hood": "Hudson Square",
+  "count": 1,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.7255,
+  "lng": -74.0089
+ },
+ {
+  "borough": "Queens",
+  "hood": "Forest Hills",
+  "count": 1,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.7196,
+  "lng": -73.8448
+ },
+ {
+  "borough": "Queens",
+  "hood": "Astoria",
+  "count": 1,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.7643,
+  "lng": -73.9235
+ },
+ {
+  "borough": "Queens",
+  "hood": "South Ozone",
+  "count": 1,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.6764,
+  "lng": -73.8093
+ },
+ {
+  "borough": "Queens",
+  "hood": "South Ozone Park",
+  "count": 1,
+  "topRating": null,
+  "bestSpots": [],
+  "lat": 40.6764,
+  "lng": -73.8103
+ }
+]

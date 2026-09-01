@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Map — WHERE.JP.GOES.NY</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⭐️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<link rel="stylesheet" href="css/style.css">
+<!-- Analytics: free at https://www.goatcounter.com — sign up, then replace WHEREJPGOESNY below with your own site code -->
+<script data-goatcounter="https://WHEREJPGOESNY.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<style>
+  .map-wrap { padding: 0; }
+  #map { height: 62vh; min-height: 420px; width: 100%; }
+  .map-shell { display: grid; grid-template-columns: 1fr 360px; gap: 0; align-items: stretch; }
+  .map-side {
+    border-left: 1px solid var(--line);
+    padding: 22px;
+    max-height: 62vh;
+    overflow-y: auto;
+    background: var(--paper-raised);
+  }
+  @media (max-width: 900px) {
+    .map-shell { grid-template-columns: 1fr; }
+    .map-side { border-left: none; border-top: 1px solid var(--line); max-height: none; }
+  }
+  .borough-filters { display: flex; gap: 8px; flex-wrap: wrap; padding: 16px 0; }
+  .borough-filters button {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 8px 14px;
+    border-radius: 100px;
+    border: 1.5px solid var(--line-strong);
+    background: var(--paper-raised);
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .borough-filters button.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .leaflet-popup-content-wrapper { border-radius: 12px; }
+  .map-legend {
+    display: flex; gap: 14px; flex-wrap: wrap; align-items: center;
+    font-size: 0.82rem; color: var(--ink-soft); padding: 4px 0 0;
+  }
+  .map-legend .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; margin-right: 5px; vertical-align: -1px; }
+</style>
+</head>
+<body data-page="map">
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="star">★</span>WHERE.JP.GOES.NY</a>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    <div class="nav-links">
+      <a href="index.html" data-page="home">Home</a>
+      <a href="map.html" data-page="map">Map</a>
+      <a href="guides.html" data-page="guides">Guides</a>
+      <a href="quiz.html" data-page="quiz">Quiz</a>
+      <a href="directory.html" data-page="directory">All Spots</a>
+    </div>
+  </div>
+</nav>
+
+<header class="section-tight">
+  <div class="wrap">
+    <div class="eyebrow">Explore</div>
+    <h1>The map</h1>
+    <p class="lede">Pins mark neighborhoods, not exact addresses — the spreadsheet this runs on tracks where a place is, not its street number. Circle size is how many spots I've tried there; color is how good the best one is.</p>
+    <div class="borough-filters" id="borough-filters"></div>
+    <div class="map-legend">
+      <span><span class="dot" style="background:#b8862f"></span>5★ somewhere in the hood</span>
+      <span><span class="dot" style="background:#c17a3a"></span>4★</span>
+      <span><span class="dot" style="background:#8c8474"></span>3★</span>
+      <span><span class="dot" style="background:#a3a89a"></span>1-2★</span>
+      <span><span class="dot" style="background:#d8cbb0"></span>unrated / to-try</span>
+    </div>
+  </div>
+</header>
+
+<section class="map-wrap section-tight">
+  <div class="wrap" style="padding:0;">
+    <div class="card map-shell">
+      <div id="map"></div>
+      <div class="map-side" id="map-side">
+        <p class="muted">Click a pin to see what's good there.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>WHERE.JP.GOES.NY — one New Yorker's answer to "where should I eat?" <span class="faint" id="last-updated"></span></span>
+    <a href="guides.html" class="muted">Prefer a plain list? See the neighborhood guides →</a>
+  </div>
+</footer>
+
+<script src="data/data.js"></script>
+<script src="js/util.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+  var map = L.map('map', { scrollWheelZoom: false }).setView([40.735, -73.95], 11);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+    maxZoom: 18
+  }).addTo(map);
+
+  function colorFor(topRating) {
+    if (topRating === null || topRating === undefined) return '#d8cbb0';
+    if (topRating >= 5) return '#b8862f';
+    if (topRating === 4) return '#c17a3a';
+    if (topRating === 3) return '#8c8474';
+    return '#a3a89a';
+  }
+
+  function radiusFor(count) {
+    return 6 + Math.min(count, 40) * 0.55;
+  }
+
+  var markers = [];
+
+  NEIGHBORHOODS.forEach(function (n) {
+    if (n.lat === null) return;
+    var m = L.circleMarker([n.lat, n.lng], {
+      radius: radiusFor(n.count),
+      color: colorFor(n.topRating),
+      weight: 1.5,
+      fillColor: colorFor(n.topRating),
+      fillOpacity: 0.55
+    }).addTo(map);
+    m.borough = n.borough;
+    m.on('click', function () { showHood(n); });
+    m.bindTooltip(n.hood + ', ' + n.borough + ' &middot; ' + n.count + ' spots', { direction: 'top' });
+    markers.push(m);
+  });
+
+  function showHood(n) {
+    var spots = RESTAURANTS.filter(function (r) { return r.borough === n.borough && r.hood === n.hood; });
+    spots.sort(function (a, b) {
+      var as = a.stars === null ? -1 : a.stars, bs = b.stars === null ? -1 : b.stars;
+      if (bs !== as) return bs - as;
+      return b.recScore - a.recScore;
+    });
+    var top = spots.slice(0, 8);
+    var html = '<div class="eyebrow">' + escapeHtml(n.borough) + '</div>' +
+      '<h2 style="margin-bottom:4px;">' + escapeHtml(n.hood) + '</h2>' +
+      '<p class="muted" style="margin-bottom:16px;">' + n.count + ' spots tracked here' +
+      (n.topRating !== null ? ' &middot; top rated ' + n.topRating + '★' : '') + '</p>';
+    html += top.map(function (s) { return spotCardHtml(s, { hideLocation: true }); }).join('<div style="height:10px"></div>');
+    if (spots.length > top.length) {
+      html += '<p class="faint" style="margin-top:12px;">+ ' + (spots.length - top.length) + ' more in ' + escapeHtml(n.hood) + '. See the <a href="guides.html">full guide</a>.</p>';
+    }
+    document.getElementById('map-side').innerHTML = html;
+  }
+
+  var boroughs = ['All'].concat(META.boroughs);
+  var filterBar = document.getElementById('borough-filters');
+  boroughs.forEach(function (b, i) {
+    var btn = document.createElement('button');
+    btn.textContent = b;
+    if (i === 0) btn.classList.add('active');
+    btn.addEventListener('click', function () {
+      filterBar.querySelectorAll('button').forEach(function (x) { x.classList.remove('active'); });
+      btn.classList.add('active');
+      markers.forEach(function (m) {
+        var show = b === 'All' || m.borough === b;
+        var el = m.getElement();
+        if (el) el.style.display = show ? '' : 'none';
+      });
+    });
+    filterBar.appendChild(btn);
+  });
+</script>
+</body>
+</html>
