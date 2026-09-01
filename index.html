@@ -25,6 +25,7 @@
       <a href="guides.html" data-page="guides">Guides</a>
       <a href="quiz.html" data-page="quiz">Quiz</a>
       <a href="directory.html" data-page="directory">All Spots</a>
+      <a href="edit.html" data-page="edit">Edit</a>
     </div>
   </div>
 </nav>
@@ -107,13 +108,19 @@
   </div>
 </footer>
 
-<script src="data/data.js"></script>
+<script src="js/shared-data-logic.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/data-live.js"></script>
 <script src="js/util.js"></script>
 <script>
-  document.getElementById('stat-total').textContent = META.totalCount;
-  document.getElementById('stat-hoods').textContent = NEIGHBORHOODS.length;
-  document.getElementById('stat-boroughs').textContent = META.boroughs.length;
-  document.getElementById('stat-rated').textContent = META.ratedCount;
+  document.addEventListener('data:ready', function () {
+    document.getElementById('stat-total').textContent = META.totalCount;
+    document.getElementById('stat-hoods').textContent = NEIGHBORHOODS.length;
+    document.getElementById('stat-boroughs').textContent = META.boroughs.length;
+    document.getElementById('stat-rated').textContent = META.ratedCount;
+  });
 </script>
 </body>
 </html>

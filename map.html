@@ -59,6 +59,7 @@
       <a href="guides.html" data-page="guides">Guides</a>
       <a href="quiz.html" data-page="quiz">Quiz</a>
       <a href="directory.html" data-page="directory">All Spots</a>
+      <a href="edit.html" data-page="edit">Edit</a>
     </div>
   </div>
 </nav>
@@ -97,7 +98,11 @@
   </div>
 </footer>
 
-<script src="data/data.js"></script>
+<script src="js/shared-data-logic.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/data-live.js"></script>
 <script src="js/util.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
@@ -121,21 +126,6 @@
 
   var markers = [];
 
-  NEIGHBORHOODS.forEach(function (n) {
-    if (n.lat === null) return;
-    var m = L.circleMarker([n.lat, n.lng], {
-      radius: radiusFor(n.count),
-      color: colorFor(n.topRating),
-      weight: 1.5,
-      fillColor: colorFor(n.topRating),
-      fillOpacity: 0.55
-    }).addTo(map);
-    m.borough = n.borough;
-    m.on('click', function () { showHood(n); });
-    m.bindTooltip(n.hood + ', ' + n.borough + ' &middot; ' + n.count + ' spots', { direction: 'top' });
-    markers.push(m);
-  });
-
   function showHood(n) {
     var spots = RESTAURANTS.filter(function (r) { return r.borough === n.borough && r.hood === n.hood; });
     spots.sort(function (a, b) {
@@ -155,22 +145,39 @@
     document.getElementById('map-side').innerHTML = html;
   }
 
-  var boroughs = ['All'].concat(META.boroughs);
-  var filterBar = document.getElementById('borough-filters');
-  boroughs.forEach(function (b, i) {
-    var btn = document.createElement('button');
-    btn.textContent = b;
-    if (i === 0) btn.classList.add('active');
-    btn.addEventListener('click', function () {
-      filterBar.querySelectorAll('button').forEach(function (x) { x.classList.remove('active'); });
-      btn.classList.add('active');
-      markers.forEach(function (m) {
-        var show = b === 'All' || m.borough === b;
-        var el = m.getElement();
-        if (el) el.style.display = show ? '' : 'none';
-      });
+  document.addEventListener('data:ready', function () {
+    NEIGHBORHOODS.forEach(function (n) {
+      if (n.lat === null) return;
+      var m = L.circleMarker([n.lat, n.lng], {
+        radius: radiusFor(n.count),
+        color: colorFor(n.topRating),
+        weight: 1.5,
+        fillColor: colorFor(n.topRating),
+        fillOpacity: 0.55
+      }).addTo(map);
+      m.borough = n.borough;
+      m.on('click', function () { showHood(n); });
+      m.bindTooltip(n.hood + ', ' + n.borough + ' &middot; ' + n.count + ' spots', { direction: 'top' });
+      markers.push(m);
     });
-    filterBar.appendChild(btn);
+
+    var boroughs = ['All'].concat(META.boroughs);
+    var filterBar = document.getElementById('borough-filters');
+    boroughs.forEach(function (b, i) {
+      var btn = document.createElement('button');
+      btn.textContent = b;
+      if (i === 0) btn.classList.add('active');
+      btn.addEventListener('click', function () {
+        filterBar.querySelectorAll('button').forEach(function (x) { x.classList.remove('active'); });
+        btn.classList.add('active');
+        markers.forEach(function (m) {
+          var show = b === 'All' || m.borough === b;
+          var el = m.getElement();
+          if (el) el.style.display = show ? '' : 'none';
+        });
+      });
+      filterBar.appendChild(btn);
+    });
   });
 </script>
 </body>

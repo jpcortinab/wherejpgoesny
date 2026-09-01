@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Edit — WHERE.JP.GOES.NY</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⭐️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  #login-view { max-width: 380px; margin: 0 auto; }
+  #login-view label { display: block; font-weight: 600; font-size: 0.88rem; margin: 14px 0 6px; }
+  #login-view input { width: 100%; }
+  #login-error { color: var(--bad); font-size: 0.88rem; margin-top: 10px; min-height: 1.2em; }
+
+  .edit-shell { display: grid; grid-template-columns: 360px 1fr; gap: 24px; align-items: start; }
+  @media (max-width: 900px) { .edit-shell { grid-template-columns: 1fr; } }
+
+  #edit-list { max-height: 74vh; overflow-y: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper-raised); }
+  #edit-search { width: 100%; margin-bottom: 10px; }
+  .edit-row {
+    display: flex; justify-content: space-between; align-items: center; gap: 8px;
+    padding: 10px 14px; border-bottom: 1px solid var(--line); cursor: pointer; font-size: 0.9rem;
+  }
+  .edit-row:last-child { border-bottom: none; }
+  .edit-row:hover { background: var(--neutral-soft); }
+  .edit-row.active { background: var(--accent-soft); }
+  .edit-row .er-name { font-weight: 600; }
+  .edit-row .er-meta { color: var(--ink-faint); font-size: 0.78rem; }
+
+  #edit-form-card { position: sticky; top: 84px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .field-row.single { grid-template-columns: 1fr; }
+  .field label { display: block; font-weight: 600; font-size: 0.82rem; margin-bottom: 5px; color: var(--ink-soft); }
+  .field input, .field select, .field textarea { width: 100%; font-family: var(--sans); }
+  .field textarea { min-height: 60px; resize: vertical; }
+  .field-check { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .field-check input { width: auto; }
+  #save-feedback { font-size: 0.88rem; font-weight: 600; min-height: 1.2em; margin-top: 8px; }
+  #save-feedback.ok { color: var(--good); }
+  #save-feedback.err { color: var(--bad); }
+  .form-actions { display: flex; gap: 10px; align-items: center; margin-top: 16px; flex-wrap: wrap; }
+</style>
+</head>
+<body data-page="edit">
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="star">★</span>WHERE.JP.GOES.NY</a>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    <div class="nav-links">
+      <a href="index.html" data-page="home">Home</a>
+      <a href="map.html" data-page="map">Map</a>
+      <a href="guides.html" data-page="guides">Guides</a>
+      <a href="quiz.html" data-page="quiz">Quiz</a>
+      <a href="directory.html" data-page="directory">All Spots</a>
+      <a href="edit.html" data-page="edit">Edit</a>
+    </div>
+  </div>
+</nav>
+
+<header class="section-tight">
+  <div class="wrap">
+    <div class="eyebrow">Just for you</div>
+    <h1>Edit the list</h1>
+    <p class="lede" id="edit-lede">Sign in to add or update ratings — changes go live for everyone immediately.</p>
+  </div>
+</header>
+
+<section class="section-tight">
+  <div class="wrap">
+
+    <div id="login-view">
+      <div class="card" style="padding: 24px 28px;">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" autocomplete="username">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" autocomplete="current-password">
+        <div style="margin-top:18px;">
+          <button class="btn btn-primary" id="login-btn" style="width:100%;">Sign in</button>
+        </div>
+        <div id="login-error"></div>
+      </div>
+    </div>
+
+    <div id="editor-view" class="hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <span class="muted" id="who-line"></span>
+        <button class="btn btn-outline" id="logout-btn">Sign out</button>
+      </div>
+
+      <div class="edit-shell">
+        <div>
+          <input type="search" id="edit-search" placeholder="Search to edit…">
+          <button class="btn btn-dark" id="new-btn" style="width:100%; margin-bottom:10px;">+ Add a new restaurant</button>
+          <div id="edit-list"></div>
+        </div>
+
+        <div class="card" id="edit-form-card" style="padding: 22px 26px;">
+          <h2 id="form-heading" style="margin-bottom:16px;">New restaurant</h2>
+          <form id="edit-form">
+            <div class="field-row">
+              <div class="field">
+                <label>Borough</label>
+                <select id="f-borough"></select>
+              </div>
+              <div class="field">
+                <label>Neighborhood</label>
+                <input type="text" id="f-hood" list="hood-list" placeholder="e.g. West Village">
+                <datalist id="hood-list"></datalist>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Name</label>
+                <input type="text" id="f-name">
+              </div>
+              <div class="field">
+                <label>Cuisine / type</label>
+                <input type="text" id="f-type" list="type-list" placeholder="e.g. Italian">
+                <datalist id="type-list"></datalist>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Stars</label>
+                <select id="f-stars">
+                  <option value="">Not yet rated</option>
+                  <option value="0">0 — Poor</option>
+                  <option value="1">1 — Fair</option>
+                  <option value="2">2 — Good</option>
+                  <option value="3">3 — Very good</option>
+                  <option value="4">4 — Excellent</option>
+                  <option value="5">5 — Extraordinary</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Cost</label>
+                <select id="f-cost">
+                  <option value="">—</option>
+                  <option value="$">$</option>
+                  <option value="$$">$$</option>
+                  <option value="$$$">$$$</option>
+                  <option value="$$$$">$$$$</option>
+                  <option value="$$$$$">$$$$$</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Mood</label>
+                <select id="f-mood">
+                  <option value="">—</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Recommend? (yes/no, with feeling)</label>
+                <input type="text" id="f-rec" placeholder="e.g. YES!!! or MEH or NO">
+              </div>
+            </div>
+            <div class="field-row single">
+              <div class="field">
+                <label>Order this</label>
+                <input type="text" id="f-dos" placeholder="what to get">
+              </div>
+            </div>
+            <div class="field-row single">
+              <div class="field">
+                <label>Skip this</label>
+                <input type="text" id="f-donts" placeholder="what to avoid">
+              </div>
+            </div>
+            <div class="field-row single">
+              <div class="field">
+                <label>Reservation</label>
+                <input type="text" id="f-rez" placeholder="e.g. MUST, YES, walk-in fine">
+              </div>
+            </div>
+            <div class="field-row single">
+              <div class="field">
+                <label>Misc note</label>
+                <input type="text" id="f-misc">
+              </div>
+            </div>
+            <div class="field-check">
+              <input type="checkbox" id="f-toppick">
+              <label for="f-toppick" style="margin:0;">✦ Mofe (has that intangible swagger)</label>
+            </div>
+            <div class="field-row single">
+              <div class="field">
+                <label>Description (shown when someone clicks the name)</label>
+                <textarea id="f-description"></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="save-btn">Save</button>
+              <button type="button" class="btn btn-outline" id="delete-btn">Delete</button>
+              <span id="save-feedback"></span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>WHERE.JP.GOES.NY — one New Yorker's answer to "where should I eat?"</span>
+  </div>
+</footer>
+
+<script src="js/shared-data-logic.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/util.js"></script>
+<script>
+  var currentId = null; // null = "new restaurant" mode
+  var allRows = [];
+
+  function fieldVal(id) { return document.getElementById(id).value; }
+  function setFieldVal(id, v) { document.getElementById(id).value = v === null || v === undefined ? '' : v; }
+
+  function populateStaticOptions() {
+    var boroughSel = document.getElementById('f-borough');
+    ['Manhattan', 'Brooklyn', 'Queens', 'Bronx', 'Staten Island'].forEach(function (b) {
+      var o = document.createElement('option');
+      o.value = b; o.textContent = b;
+      boroughSel.appendChild(o);
+    });
+    var moodSel = document.getElementById('f-mood');
+    MOOD_OPTIONS.forEach(function (m) {
+      var o = document.createElement('option');
+      o.value = m; o.textContent = m;
+      moodSel.appendChild(o);
+    });
+  }
+
+  function populateDatalists() {
+    var hoods = Array.from(new Set(allRows.map(function (r) { return r.hood; }))).sort();
+    document.getElementById('hood-list').innerHTML = hoods.map(function (h) {
+      return '<option value="' + escapeHtml(h) + '">';
+    }).join('');
+    var types = Array.from(new Set(allRows.map(function (r) { return r.type; }).filter(Boolean))).sort();
+    document.getElementById('type-list').innerHTML = types.map(function (t) {
+      return '<option value="' + escapeHtml(t) + '">';
+    }).join('');
+  }
+
+  function renderList(filter) {
+    var q = (filter || '').trim().toLowerCase();
+    var rows = allRows.filter(function (r) {
+      return !q || (r.name || '').toLowerCase().indexOf(q) !== -1 || (r.hood || '').toLowerCase().indexOf(q) !== -1;
+    }).sort(function (a, b) { return (a.name || '').localeCompare(b.name || ''); });
+    var listEl = document.getElementById('edit-list');
+    listEl.innerHTML = rows.map(function (r) {
+      return '<div class="edit-row" data-id="' + r.id + '">' +
+        '<span class="er-name">' + escapeHtml(r.name) + '</span>' +
+        '<span class="er-meta">' + escapeHtml(r.hood) + (r.stars !== null ? ' · ' + r.stars + '★' : '') + '</span>' +
+      '</div>';
+    }).join('') || '<div style="padding:16px;" class="muted">No matches.</div>';
+
+    listEl.querySelectorAll('.edit-row').forEach(function (el) {
+      el.addEventListener('click', function () { loadIntoForm(parseInt(el.dataset.id, 10)); });
+    });
+  }
+
+  function loadIntoForm(id) {
+    currentId = id;
+    document.querySelectorAll('.edit-row').forEach(function (el) {
+      el.classList.toggle('active', parseInt(el.dataset.id, 10) === id);
+    });
+    var r = allRows.find(function (x) { return x.id === id; });
+    document.getElementById('form-heading').textContent = 'Editing: ' + r.name;
+    setFieldVal('f-borough', r.borough);
+    setFieldVal('f-hood', r.hood);
+    setFieldVal('f-name', r.name);
+    setFieldVal('f-type', r.type);
+    setFieldVal('f-stars', r.stars === null ? '' : r.stars);
+    setFieldVal('f-cost', r.cost);
+    setFieldVal('f-mood', r.mood);
+    setFieldVal('f-rec', r.rec);
+    setFieldVal('f-dos', r.dos);
+    setFieldVal('f-donts', r.donts);
+    setFieldVal('f-rez', r.rez);
+    setFieldVal('f-misc', r.misc);
+    document.getElementById('f-toppick').checked = !!r.topPick;
+    setFieldVal('f-description', r.description);
+    document.getElementById('delete-btn').classList.remove('hidden');
+    clearFeedback();
+  }
+
+  function resetForm() {
+    currentId = null;
+    document.querySelectorAll('.edit-row').forEach(function (el) { el.classList.remove('active'); });
+    document.getElementById('form-heading').textContent = 'New restaurant';
+    document.getElementById('edit-form').reset();
+    document.getElementById('delete-btn').classList.add('hidden');
+    clearFeedback();
+  }
+
+  function clearFeedback() {
+    var el = document.getElementById('save-feedback');
+    el.textContent = '';
+    el.className = '';
+  }
+
+  function showFeedback(msg, ok) {
+    var el = document.getElementById('save-feedback');
+    el.textContent = msg;
+    el.className = ok ? 'ok' : 'err';
+  }
+
+  function formToPayload() {
+    var starsRaw = fieldVal('f-stars');
+    return {
+      borough: fieldVal('f-borough'),
+      hood: fieldVal('f-hood').trim(),
+      name: fieldVal('f-name').trim(),
+      type: fieldVal('f-type').trim() || null,
+      stars: starsRaw === '' ? null : parseInt(starsRaw, 10),
+      cost: fieldVal('f-cost') || null,
+      mood: fieldVal('f-mood') || null,
+      rec: fieldVal('f-rec').trim() || null,
+      dos: fieldVal('f-dos').trim() || null,
+      donts: fieldVal('f-donts').trim() || null,
+      rez: fieldVal('f-rez').trim() || null,
+      misc: fieldVal('f-misc').trim() || null,
+      top_pick: document.getElementById('f-toppick').checked,
+      description: fieldVal('f-description').trim() || null,
+      description_source: fieldVal('f-description').trim() ? 'manual' : 'generic'
+    };
+  }
+
+  function refreshRows() {
+    return window.sb.from('restaurants').select('*').order('name').then(function (res) {
+      if (res.error) throw res.error;
+      allRows = res.data.map(function (row) {
+        return {
+          id: row.id, borough: row.borough, hood: row.hood, name: row.name, type: row.type,
+          stars: row.stars, cost: row.cost, mood: row.mood, rec: row.rec, dos: row.dos,
+          donts: row.donts, rez: row.rez, misc: row.misc, topPick: !!row.top_pick,
+          description: row.description
+        };
+      });
+      populateDatalists();
+      renderList(document.getElementById('edit-search').value);
+    });
+  }
+
+  document.getElementById('edit-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var payload = formToPayload();
+    if (!payload.borough || !payload.hood || !payload.name) {
+      showFeedback('Borough, neighborhood, and name are required.', false);
+      return;
+    }
+    var wasNew = currentId === null;
+    var query = wasNew
+      ? window.sb.from('restaurants').insert(payload).select()
+      : window.sb.from('restaurants').update(payload).eq('id', currentId).select();
+
+    query.then(function (res) {
+      if (res.error) throw res.error;
+      var savedId = wasNew ? res.data[0].id : currentId;
+      return refreshRows().then(function () {
+        loadIntoForm(savedId);
+        showFeedback(wasNew ? 'Added ✓' : 'Saved ✓', true);
+      });
+    }).catch(function (err) {
+      showFeedback('Error: ' + (err.message || err), false);
+    });
+  });
+
+  document.getElementById('delete-btn').addEventListener('click', function () {
+    if (currentId === null) return;
+    var r = allRows.find(function (x) { return x.id === currentId; });
+    if (!confirm('Delete "' + (r ? r.name : 'this restaurant') + '"? This can\'t be undone.')) return;
+    window.sb.from('restaurants').delete().eq('id', currentId).then(function (res) {
+      if (res.error) throw res.error;
+      return refreshRows().then(function () {
+        resetForm();
+        showFeedback('Deleted.', true);
+      });
+    }).catch(function (err) {
+      showFeedback('Error: ' + (err.message || err), false);
+    });
+  });
+
+  document.getElementById('new-btn').addEventListener('click', resetForm);
+  document.getElementById('edit-search').addEventListener('input', function (e) { renderList(e.target.value); });
+
+  function showEditor(session) {
+    document.getElementById('login-view').classList.add('hidden');
+    document.getElementById('editor-view').classList.remove('hidden');
+    document.getElementById('who-line').textContent = 'Signed in as ' + session.user.email;
+    populateStaticOptions();
+    refreshRows().then(resetForm);
+  }
+
+  function showLogin() {
+    document.getElementById('login-view').classList.remove('hidden');
+    document.getElementById('editor-view').classList.add('hidden');
+  }
+
+  document.getElementById('login-btn').addEventListener('click', function () {
+    var email = fieldVal('login-email').trim();
+    var password = fieldVal('login-password');
+    document.getElementById('login-error').textContent = '';
+    window.sb.auth.signInWithPassword({ email: email, password: password }).then(function (res) {
+      if (res.error) {
+        document.getElementById('login-error').textContent = res.error.message;
+      }
+    });
+  });
+
+  document.getElementById('logout-btn').addEventListener('click', function () {
+    window.sb.auth.signOut();
+  });
+
+  window.sb.auth.onAuthStateChange(function (event, session) {
+    if (session) showEditor(session); else showLogin();
+  });
+
+  window.sb.auth.getSession().then(function (res) {
+    if (res.data.session) showEditor(res.data.session); else showLogin();
+  });
+</script>
+</body>
+</html>
