@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drops — WHERE.JP.GOES.NY</title>
+<meta name="description" content="Know exactly when NYC restaurants release reservations for the night you want.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⭐️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<!-- Analytics: free at https://www.goatcounter.com — sign up, then replace WHEREJPGOESNY below with your own site code -->
+<script data-goatcounter="https://WHEREJPGOESNY.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<style>
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.drops-wrap{max-width:640px}
+.tz-note{font-size:14px;color:var(--ink-faint);margin-bottom:20px}
+.link{font-size:14px;color:var(--accent);text-decoration:underline;text-underline-offset:3px;cursor:pointer;background:none;border:none;font-family:inherit}
+
+/* date bar */
+.datebar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:13px 14px;background:var(--neutral-soft);
+  border:1px solid var(--line);border-radius:var(--radius-sm);margin-bottom:24px}
+.datebar label{font-size:14px;color:var(--ink-soft);white-space:nowrap}
+.datebar input{background:var(--paper-raised);border:1px solid var(--line-strong);color:var(--ink);
+  padding:8px 10px;border-radius:3px;flex:1;min-width:150px}
+
+/* hero */
+.hero{padding-bottom:24px;border-bottom:1px solid var(--line)}
+.hero-name{font-family:var(--serif);font-weight:700;font-size:28px;line-height:1.15;letter-spacing:-.01em;margin-bottom:14px}
+.clock{font-family:var(--serif);font-weight:700;font-size:52px;line-height:1;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;color:var(--gold);margin-bottom:12px}
+.clock.text{font-size:28px;letter-spacing:-.02em}
+.clock.imminent{color:var(--bad);animation:breathe 1.6s ease-in-out infinite}
+.clock.open{color:var(--good)}
+.clock.cold{color:var(--ink-soft)}
+@keyframes breathe{50%{opacity:.55}}
+@media (prefers-reduced-motion:reduce){.clock.imminent{animation:none}}
+.hero-facts{font-size:15.5px;color:var(--ink-soft);margin-bottom:18px;line-height:1.5}
+.hero-facts b{color:var(--ink);font-weight:600}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+/* controls */
+.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:22px 0 4px}
+.seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:var(--radius-sm);overflow:hidden}
+.seg button{padding:8px 14px;font-size:14px;color:var(--ink-soft);font-family:var(--sans)}
+.seg button[aria-pressed="true"]{background:var(--neutral-soft);color:var(--ink)}
+.party-label{font-size:14px;color:var(--ink-soft)}
+.hint{font-size:14.5px;color:var(--ink-soft);margin:14px 0 2px}
+
+/* rows */
+.row{display:grid;grid-template-columns:1fr auto;gap:5px 14px;padding:18px 0;
+  border-bottom:1px solid var(--line);align-items:baseline;cursor:pointer}
+.row:hover .row-name,.row:active .row-name{color:var(--accent)}
+.row.stale .row-name,.row.stale .row-meta,.row.stale .row-time{color:var(--ink-faint)}
+.row-name{font-family:var(--serif);font-weight:600;font-size:19px;letter-spacing:-.01em}
+.row-meta{grid-column:1;font-size:15px;color:var(--ink-soft)}
+.row-time{grid-row:1/3;grid-column:2;text-align:right;font-variant-numeric:tabular-nums;font-weight:600;font-size:16px;white-space:nowrap;color:var(--ink)}
+.row-time small{display:block;font-weight:400;font-size:14px;color:var(--ink-soft);margin-top:3px}
+.row-edit{grid-column:2;justify-self:end;font-size:13px;color:var(--ink-soft);text-decoration:underline;text-underline-offset:3px;background:none;border:none;font-family:inherit;cursor:pointer}
+.tag{display:inline-block;font-size:13px;padding:2px 7px;border:1px solid var(--line-strong);border-radius:2px;color:var(--ink-soft);margin-left:6px;vertical-align:1px}
+.tag.wine{border-color:#C0A3AB;color:#8A3D53}
+.tag.hard{border-color:#D3A0A6;color:var(--bad)}
+@media (prefers-color-scheme: dark) {
+  .tag.wine{border-color:#7a4a58;color:#e0a8bb}
+}
+
+/* form */
+.panel{background:var(--neutral-soft);border:1px solid var(--line-strong);border-radius:var(--radius);padding:18px;margin-top:18px}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:14px;color:var(--ink-soft);margin-bottom:5px}
+.field input,.field select{width:100%;background:var(--paper-raised);border:1px solid var(--line-strong);color:var(--ink);padding:9px 11px;border-radius:3px;font-family:var(--sans)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.days-picker{display:flex;gap:5px;flex-wrap:wrap}
+.days-picker button{border:1px solid var(--line-strong);border-radius:3px;padding:6px 10px;font-size:13px;color:var(--ink-soft);font-family:var(--sans)}
+.days-picker button[aria-pressed="true"]{background:var(--bad);border-color:var(--bad);color:#fff}
+.note{font-size:14.5px;color:var(--ink-soft);line-height:1.5;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+.empty{padding:24px 0;color:var(--ink-soft);font-size:14px}
+</style>
+</head>
+<body data-page="drops">
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="star">★</span>WHERE.JP.GOES.NY</a>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    <div class="nav-links">
+      <a href="index.html" data-page="home">Home</a>
+      <a href="map.html" data-page="map">Map</a>
+      <a href="guides.html" data-page="guides">Guides</a>
+      <a href="quiz.html" data-page="quiz">Quiz</a>
+      <a href="directory.html" data-page="directory">All Spots</a>
+      <a href="drops.html" data-page="drops">Drops</a>
+      <a href="edit.html" data-page="edit">Edit</a>
+    </div>
+  </div>
+</nav>
+
+<header class="section-tight">
+  <div class="wrap drops-wrap">
+    <div class="eyebrow">Reservation drop times</div>
+    <h1>Drop Watch</h1>
+    <p class="lede">Know exactly when NYC restaurants release reservations for the night you want.</p>
+    <p class="tz-note">All times Eastern. Your list is saved to this browser only.</p>
+  </div>
+</header>
+
+<section class="section-tight">
+  <div class="wrap drops-wrap">
+
+    <div class="datebar">
+      <label for="targetDate">I want a table on</label>
+      <input type="date" id="targetDate">
+      <button class="link" id="clearDate">any night</button>
+    </div>
+
+    <div id="hero" class="hero"></div>
+
+    <div class="controls">
+      <span class="party-label">Booking for</span>
+      <div class="seg" id="partySeg">
+        <button data-party="2" aria-pressed="true">2</button>
+        <button data-party="4" aria-pressed="false">4</button>
+        <button data-party="6" aria-pressed="false">6</button>
+      </div>
+    </div>
+
+    <div id="queue"></div>
+
+    <div class="section-head" style="display:flex;justify-content:space-between;align-items:baseline;margin:30px 0 2px;">
+      <h2 style="font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:-.01em;">Your list</h2>
+      <button class="link" id="addToggle">Add a restaurant</button>
+    </div>
+
+    <div id="addPanel" class="panel hidden">
+      <div class="field">
+        <label for="f-name">Restaurant</label>
+        <input id="f-name" placeholder="Where are you trying to get in?">
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label for="f-days">Books this many days out</label>
+          <input id="f-days" type="number" min="0" max="120" value="30">
+        </div>
+        <div class="field">
+          <label for="f-time">Drop time (ET)</label>
+          <input id="f-time" type="time" value="10:00">
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label for="f-platform">Platform</label>
+          <select id="f-platform">
+            <option>Resy</option><option>OpenTable</option><option>Tock</option>
+            <option>SevenRooms</option><option>Phone</option><option>Email</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-max">Max party online</label>
+          <input id="f-max" type="number" min="1" max="20" value="6">
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-url">Booking link (optional)</label>
+        <input id="f-url" placeholder="https://resy.com/...">
+      </div>
+      <div class="field">
+        <label>No drop on these days</label>
+        <div class="days-picker" id="f-skip">
+          <button data-d="0" aria-pressed="false">Sun</button>
+          <button data-d="1" aria-pressed="false">Mon</button>
+          <button data-d="2" aria-pressed="false">Tue</button>
+          <button data-d="3" aria-pressed="false">Wed</button>
+          <button data-d="4" aria-pressed="false">Thu</button>
+          <button data-d="5" aria-pressed="false">Fri</button>
+          <button data-d="6" aria-pressed="false">Sat</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>At the drop moment</label>
+        <div class="days-picker">
+          <button id="f-hard" aria-pressed="false">Gone in seconds, even if I'm on time</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:9px;margin-top:16px;align-items:center">
+        <button class="btn btn-dark" id="saveBtn">Save to list</button>
+        <button class="btn btn-outline" id="cancelBtn">Cancel</button>
+        <button class="link" id="deleteBtn" style="margin-left:auto;color:var(--bad);display:none">Remove</button>
+      </div>
+    </div>
+
+    <div class="note">
+      Drop times were cross-checked against two monitoring services, and where they disagreed the more
+      recent one won. Restaurants change policy without announcing it, so these drift. Anything marked <span class="tag">unconfirmed</span> is worth checking on the venue's
+      own page before you set an alarm by it. <span class="tag hard">gone in seconds</span> is a note about
+      the restaurant, not about your date — it flags rooms that reportedly sell out faster than a click can
+      land, so plan on cancellations even if you show up for the drop on time. Tap any restaurant to correct
+      any of this; your edits are saved.
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>WHERE.JP.GOES.NY — one New Yorker's answer to "where should I eat?"</span>
+  </div>
+</footer>
+
+<script src="js/util.js"></script>
+<script>
+const KEY  = 'dropwatch:nyc:v1';
+const SKEY = 'dropwatch:nyc:settings';
+
+const SEED_VERSION = 2;
+const SEED = [
+  /* midnight ET */
+  {n:"Balthazar",             d:30, t:"00:00", p:"Resy",       mx:8, nb:"SoHo"},
+  {n:"Casa Mono",             d:30, t:"00:00", p:"OpenTable",  mx:6, nb:"Union Square", wine:true},
+  {n:"Cecchi's",              d:28, t:"00:00", p:"Resy",       mx:6, nb:"Greenwich Village"},
+  {n:"Double Chicken Please", d:6,  t:"00:00", p:"Resy",       mx:4, nb:"Lower East Side"},
+  {n:"Golden Diner",          d:30, t:"00:00", p:"Resy",       mx:6, nb:"Lower East Side"},
+  {n:"Il Leone",              d:20, t:"00:00", p:"Resy",       mx:6, nb:"Park Slope"},
+  {n:"Jeju Noodle Bar",       d:44, t:"00:00", p:"Resy",       mx:4, nb:"West Village", hard:true},
+  {n:"Jua",                   d:21, t:"00:00", p:"Resy",       mx:6, nb:"Flatiron"},
+  {n:"Kabawa",                d:14, t:"00:00", p:"OpenTable",  mx:6, nb:"East Village"},
+  {n:"Kono",                  d:20, t:"00:00", p:"Resy",       mx:4, nb:"Bowery"},
+  {n:"Minetta Tavern",        d:30, t:"00:00", p:"Resy",       mx:6, nb:"Greenwich Village"},
+  {n:"Thai Diner",            d:29, t:"00:00", p:"Resy",       mx:6, nb:"Nolita"},
+  /* early morning */
+  {n:"The Four Horsemen",     d:29, t:"07:00", p:"Resy",       mx:4, nb:"Williamsburg", wine:true},
+  {n:"I Cavallini",           d:14, t:"08:00", p:"Resy",       mx:4, nb:"Williamsburg", wine:true},
+  /* 9am */
+  {n:"4 Charles Prime Rib",   d:21, t:"09:00", p:"Resy",       mx:4, nb:"West Village", hard:true},
+  {n:"Au Cheval",             d:21, t:"09:00", p:"Resy",       mx:6, nb:"Tribeca"},
+  {n:"Claud",                 d:14, t:"09:00", p:"Resy",       mx:4, nb:"East Village", wine:true},
+  {n:"Dhamaka",               d:7,  t:"09:00", p:"SevenRooms", mx:6, nb:"Essex Market"},
+  {n:"Don Angie",             d:7,  t:"09:00", p:"OpenTable",  mx:4, nb:"West Village"},
+  {n:"Golden Steer",          d:45, t:"09:00", p:"OpenTable",  mx:6, nb:"Greenwich Village"},
+  {n:"L'Artusi",              d:14, t:"09:00", p:"Resy",       mx:6, nb:"West Village"},
+  {n:"Le Veau d'Or",          d:14, t:"09:00", p:"SevenRooms", mx:6, nb:"Upper East Side"},
+  {n:"Monkey Bar",            d:21, t:"09:00", p:"Resy",       mx:6, nb:"Midtown East"},
+  {n:"Naks",                  d:7,  t:"09:00", p:"SevenRooms", mx:6, nb:"East Village"},
+  {n:"Oriana",                d:14, t:"09:00", p:"Resy",       mx:6, nb:"Nolita"},
+  {n:"Penny",                 d:14, t:"09:00", p:"Resy",       mx:4, nb:"East Village", wine:true},
+  {n:"Semma",                 d:15, t:"09:00", p:"SevenRooms", mx:6, nb:"West Village"},
+  {n:"The Eighty Six",        d:14, t:"09:00", p:"SevenRooms", mx:6, nb:"Greenwich Village"},
+  {n:"Theodora",              d:30, t:"09:00", p:"Resy",       mx:6, nb:"Fort Greene"},
+  {n:"Una Pizza Napoletana",  d:14, t:"09:00", p:"OpenTable",  mx:6, nb:"Lower East Side"},
+  /* 10am — the traffic jam */
+  {n:"Buvette",               d:13, t:"10:00", p:"Resy",       mx:4, nb:"West Village"},
+  {n:"Carbone",               d:30, t:"10:00", p:"Resy",       mx:6, nb:"Greenwich Village"},
+  {n:"Chez Fifi",             d:21, t:"10:00", p:"SevenRooms", mx:6, nb:"Upper East Side"},
+  {n:"COQODAQ",               d:14, t:"10:00", p:"Resy",       mx:6, nb:"Flatiron"},
+  {n:"COTE",                  d:30, t:"10:00", p:"Resy",       mx:6, nb:"Flatiron"},
+  {n:"COTE 550",              d:14, t:"10:00", p:"Resy",       mx:6, nb:"Midtown East"},
+  {n:"Forsythia",             d:14, t:"10:00", p:"Resy",       mx:6, nb:"Lower East Side"},
+  {n:"I Sodi",                d:13, t:"10:00", p:"Resy",       mx:4, nb:"West Village", hard:true},
+  {n:"Laser Wolf",            d:21, t:"10:00", p:"Resy",       mx:6, nb:"Williamsburg"},
+  {n:"Lilia",                 d:28, t:"10:00", p:"Resy",       mx:4, nb:"Williamsburg"},
+  {n:"Roscioli",              d:14, t:"10:00", p:"OpenTable",  mx:6, nb:"NoHo"},
+  {n:"Somssi",                d:14, t:"10:00", p:"Resy",       mx:6, nb:"Greenwich Village"},
+  {n:"The Polo Bar",          d:30, t:"10:00", p:"Resy",       mx:6, nb:"Midtown East"},
+  {n:"Torrisi",               d:30, t:"10:00", p:"Resy",       mx:6, nb:"Nolita"},
+  {n:"Via Carota",            d:30, t:"10:00", p:"Resy",       mx:6, nb:"West Village"},
+  /* late morning */
+  {n:"Bungalow",              d:20, t:"11:00", p:"Resy",       mx:6, nb:"East Village", skip:[2]},
+  {n:"Jungsik",               d:30, t:"11:00", p:"Tock",       mx:6, nb:"Tribeca"},
+  /* noon — the soft spot */
+  {n:"Bridges",               d:20, t:"12:00", p:"Resy",       mx:6, nb:"Chinatown", wine:true},
+  {n:"Dame",                  d:21, t:"12:00", p:"Resy",       mx:6, nb:"Greenwich Village"},
+  {n:"Ha's Snack Bar",        d:20, t:"12:00", p:"Resy",       mx:4, nb:"Lower East Side", wine:true},
+  {n:"Ito",                   d:21, t:"12:00", p:"Resy",       mx:4, nb:"Tribeca"},
+  {n:"Tatiana",               d:27, t:"12:00", p:"Resy",       mx:6, nb:"Lincoln Center"}
+].map((r,i)=>({
+  id:"seed"+i, name:r.n, windowDays:r.d, dropTime:r.t, platform:r.p,
+  maxParty:r.mx, hood:r.nb, skipDays:r.skip||[], url:"",
+  wine:!!r.wine, hard:!!r.hard, confirmed:false
+}));
+
+let data = [];
+let cfg = { watchId:null, targetDate:null, party:2 };
+let editingId = null;
+
+/* ── time math ───────────────────────── */
+function nextDrop(r, now){
+  const [h,m] = r.dropTime.split(':').map(Number);
+  for(let i=0;i<21;i++){
+    const c = new Date(now); c.setDate(c.getDate()+i); c.setHours(h,m,0,0);
+    if(c > now && !(r.skipDays||[]).includes(c.getDay())) return c;
+  }
+  return null;
+}
+function parseDate(s){ const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); }
+function dropForTarget(r, target){
+  const [h,m] = r.dropTime.split(':').map(Number);
+  const d = new Date(target); d.setDate(d.getDate()-r.windowDays); d.setHours(h,m,0,0);
+  return d;
+}
+/* One entry point. With a date set, everything counts to THAT date's release. */
+function dropInfo(r, now){
+  if(cfg.targetDate){
+    const target = parseDate(cfg.targetDate);
+    const at = dropForTarget(r, target);
+    const skipped = (r.skipDays||[]).includes(at.getDay());
+    return { at, target, skipped, past: at <= now, dated:true };
+  }
+  const at = nextDrop(r, now);
+  return at ? { at, target:releaseDate(at,r.windowDays), skipped:false, past:false, dated:false } : null;
+}
+function releaseDate(dropMoment, windowDays){
+  const d = new Date(dropMoment); d.setDate(d.getDate()+windowDays); return d;
+}
+function countdown(ms){
+  if(ms<0) return '00:00:00';
+  const s=Math.floor(ms/1000), d=Math.floor(s/86400);
+  const hh=String(Math.floor(s%86400/3600)).padStart(2,'0');
+  const mm=String(Math.floor(s%3600/60)).padStart(2,'0');
+  const ss=String(s%60).padStart(2,'0');
+  return (d>0? d+'d ':'') + hh+':'+mm+':'+ss;
+}
+function shortGap(ms){
+  const s=Math.floor(ms/1000), d=Math.floor(s/86400), h=Math.floor(s%86400/3600), m=Math.floor(s%3600/60);
+  if(d>0) return d+'d '+h+'h';
+  if(h>0) return h+'h '+m+'m';
+  return m+'m';
+}
+const DFMT = {weekday:'short', month:'short', day:'numeric'};
+const clock12 = t => {
+  const [h,m]=t.split(':').map(Number);
+  const ap = h<12?'am':'pm', hr = h%12===0?12:h%12;
+  return hr + (m? ':'+String(m).padStart(2,'0'):'') + ap;
+};
+
+/* ── storage ─────────────────────────── */
+/* Standalone build: saves to this browser's storage, so it works on any host. */
+async function load(){
+  try{ const raw=localStorage.getItem(KEY); data = raw?JSON.parse(raw):SEED; if(!raw) save(); }
+  catch(e){ data = SEED; }
+}
+async function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(data)); }
+  catch(e){ console.error('Could not save your list', e); }
+}
+async function loadCfg(){
+  try{ const raw=localStorage.getItem(SKEY); if(raw) cfg=Object.assign(cfg,JSON.parse(raw)); }
+  catch(e){}
+}
+async function saveCfg(){
+  try{ localStorage.setItem(SKEY, JSON.stringify(cfg)); }
+  catch(e){ console.error('Could not save your settings', e); }
+}
+
+/* Refresh the seeded entries without touching anything you added or corrected. */
+function migrate(){
+  if(cfg.seedVersion === SEED_VERSION) return false;
+  const mine = data.filter(r => String(r.id).startsWith('u') || r.confirmed);
+  const taken = new Set(mine.map(r => r.name.trim().toLowerCase()));
+  data = mine.concat(SEED.filter(r => !taken.has(r.name.trim().toLowerCase())));
+  cfg.seedVersion = SEED_VERSION;
+  return true;
+}
+
+/* ── rendering ───────────────────────── */
+function visible(){ return data.filter(r => !r.maxParty || r.maxParty >= cfg.party); }
+function tags(r){
+  let t='';
+  if(r.wine) t+='<span class="tag wine">wine list</span>';
+  if(r.hard) t+='<span class="tag hard">gone in seconds</span>';
+  if(!r.confirmed) t+='<span class="tag">unconfirmed</span>';
+  return t;
+}
+function ranked(now){
+  return visible().map(r=>({r, i:dropInfo(r,now)})).filter(x=>x.i)
+    .sort((a,b)=> (a.i.past-b.i.past) || (a.i.at-b.i.at));
+}
+function heroPick(now){
+  const list = ranked(now);
+  if(!list.length) return null;
+  return (cfg.watchId && list.find(x=>x.r.id===cfg.watchId)) || list[0];
+}
+
+function renderHero(){
+  const now = new Date();
+  const pick = heroPick(now);
+  const el = document.getElementById('hero');
+  if(!pick){ el.innerHTML='<div class="empty">Nothing on your list takes a party of '+cfg.party+'.</div>'; return; }
+
+  const {r, i} = pick;
+  const pinned = r.id === cfg.watchId;
+  const url = r.url || 'https://resy.com/cities/new-york-ny/search?query=' + encodeURIComponent(r.name);
+
+  let clock, cls, facts;
+  if(i.skipped){
+    clock = 'No drop that day'; cls='text cold';
+    facts = r.name + ' does not release on ' + i.at.toLocaleDateString(undefined,{weekday:'long'}) +
+            's, so your <b>' + i.target.toLocaleDateString(undefined,DFMT) + '</b> may open on a neighbouring day. Worth confirming.';
+  } else if(i.past){
+    clock = 'Already open'; cls='text open';
+    facts = 'Booking for <b>' + i.target.toLocaleDateString(undefined,DFMT) + '</b> opened ' +
+            i.at.toLocaleDateString(undefined,DFMT) + '. Check for cancellations or set Notify.';
+  } else {
+    const ms = i.at - now;
+    clock = countdown(ms); cls = ms < 3600000 ? 'imminent' : '';
+    facts = i.dated
+      ? 'Be online <b>' + i.at.toLocaleDateString(undefined,DFMT) + ' at ' + clock12(r.dropTime) +
+        '</b> for your table on ' + i.target.toLocaleDateString(undefined,DFMT)
+      : clock12(r.dropTime) + ' on ' + i.at.toLocaleDateString(undefined,DFMT) +
+        ' &nbsp;releases <b>' + i.target.toLocaleDateString(undefined,DFMT) + '</b>';
+  }
+
+  el.innerHTML =
+    '<div class="eyebrow">' + (pinned
+      ? 'Watching &nbsp;<button class="link" data-unwatch="1">show soonest instead</button>'
+      : (cfg.targetDate ? 'Opens first for your date' : 'Next drop')) + '</div>' +
+    '<div class="hero-name">' + r.name + tags(r) + '</div>' +
+    '<div class="clock ' + cls + '">' + clock + '</div>' +
+    '<div class="hero-facts">' + facts + '</div>' +
+    '<div class="hero-actions">' +
+      '<a class="btn btn-dark" href="' + url + '" target="_blank" rel="noopener">Open ' + r.platform + '</a>' +
+      '<button class="btn btn-outline" data-edit="' + r.id + '">Fix the details</button>' +
+    '</div>';
+}
+
+function renderQueue(){
+  const now = new Date();
+  const hero = heroPick(now);
+  const list = ranked(now).filter(x=>!hero || x.r.id!==hero.r.id);
+  const el = document.getElementById('queue');
+  if(!list.length){ el.innerHTML='<div class="empty">Add a few more places and they will queue up here.</div>'; return; }
+
+  el.innerHTML = '<div class="hint">Tap any restaurant to put its countdown up top.</div>' + list.map(({r,i})=>{
+    let big, small;
+    if(i.skipped){ big='—'; small='no drop that day'; }
+    else if(i.past){ big='open'; small='window passed'; }
+    else { big = shortGap(i.at-now); small = (i.dated?'be online ':'books ') + i.at.toLocaleDateString(undefined,{month:'short',day:'numeric'}); }
+    return '<div class="row' + (i.past||i.skipped?' stale':'') + '" data-watch="' + r.id + '">' +
+      '<div class="row-name">' + r.name + tags(r) + '</div>' +
+      '<div class="row-meta">' + clock12(r.dropTime) + ' &nbsp;' + r.windowDays + ' days out &nbsp;' + (r.hood||'') + '</div>' +
+      '<div class="row-time">' + big + '<small>' + small + '</small></div>' +
+      '<button class="row-edit" data-edit="' + r.id + '">edit</button>' +
+    '</div>';
+  }).join('');
+}
+
+function renderAll(){ renderHero(); renderQueue(); }
+
+/* ── form ────────────────────────────── */
+function openForm(id){
+  editingId = id || null;
+  const p = document.getElementById('addPanel');
+  p.classList.remove('hidden');
+  const del = document.getElementById('deleteBtn');
+  const skipBtns = document.querySelectorAll('#f-skip button');
+  const g = k => document.getElementById(k);
+  if(id){
+    const r = data.find(x=>x.id===id);
+    g('f-name').value=r.name; g('f-days').value=r.windowDays; g('f-time').value=r.dropTime;
+    g('f-platform').value=r.platform; g('f-max').value=r.maxParty||6; g('f-url').value=r.url||'';
+    skipBtns.forEach(b=>b.setAttribute('aria-pressed',(r.skipDays||[]).includes(+b.dataset.d)));
+    g('f-hard').setAttribute('aria-pressed', !!r.hard);
+    del.style.display='block';
+  }else{
+    g('f-name').value=''; g('f-days').value=30; g('f-time').value='10:00';
+    g('f-platform').value='Resy'; g('f-max').value=6; g('f-url').value='';
+    skipBtns.forEach(b=>b.setAttribute('aria-pressed','false'));
+    g('f-hard').setAttribute('aria-pressed','false');
+    del.style.display='none';
+  }
+  p.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+function closeForm(){ document.getElementById('addPanel').classList.add('hidden'); editingId=null; }
+
+document.getElementById('saveBtn').onclick = ()=>{
+  const name = document.getElementById('f-name').value.trim();
+  if(!name){ document.getElementById('f-name').focus(); return; }
+  const skip = [...document.querySelectorAll('#f-skip button')]
+    .filter(b=>b.getAttribute('aria-pressed')==='true').map(b=>+b.dataset.d);
+  const fields = {
+    name,
+    windowDays:+document.getElementById('f-days').value,
+    dropTime:document.getElementById('f-time').value,
+    platform:document.getElementById('f-platform').value,
+    maxParty:+document.getElementById('f-max').value,
+    url:document.getElementById('f-url').value.trim(),
+    skipDays:skip, confirmed:true,
+    hard: document.getElementById('f-hard').getAttribute('aria-pressed')==='true'
+  };
+  if(editingId) Object.assign(data.find(x=>x.id===editingId), fields);
+  else data.push({id:'u'+Date.now(), hood:'', wine:false, hard:false, ...fields});
+  save(); closeForm(); renderAll();
+};
+document.getElementById('cancelBtn').onclick = closeForm;
+document.getElementById('deleteBtn').onclick = ()=>{
+  data = data.filter(x=>x.id!==editingId);
+  if(cfg.watchId===editingId){ cfg.watchId=null; saveCfg(); }
+  save(); closeForm(); renderAll();
+};
+document.getElementById('addToggle').onclick = ()=>openForm(null);
+[...document.querySelectorAll('#f-skip button'), document.getElementById('f-hard')].forEach(b=>{
+  b.onclick = ()=>b.setAttribute('aria-pressed', b.getAttribute('aria-pressed')==='true'?'false':'true');
+});
+
+/* ── interaction ─────────────────────── */
+document.body.addEventListener('click', e=>{
+  const ed = e.target.closest('[data-edit]');
+  if(ed){ openForm(ed.dataset.edit); return; }
+  if(e.target.closest('[data-unwatch]')){ cfg.watchId=null; saveCfg(); renderAll(); return; }
+  const w = e.target.closest('[data-watch]');
+  if(w){ cfg.watchId=w.dataset.watch; saveCfg(); renderAll(); }
+});
+document.getElementById('partySeg').onclick = e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  cfg.party = +b.dataset.party;
+  [...e.currentTarget.children].forEach(c=>c.setAttribute('aria-pressed', c===b));
+  saveCfg(); renderAll();
+};
+document.getElementById('targetDate').onchange = e=>{
+  cfg.targetDate = e.target.value || null;
+  saveCfg(); renderAll();
+};
+document.getElementById('clearDate').onclick = ()=>{
+  cfg.targetDate = null;
+  document.getElementById('targetDate').value='';
+  saveCfg(); renderAll();
+};
+
+/* ── boot ────────────────────────────── */
+(async ()=>{
+  document.getElementById('hero').innerHTML = '<div class="empty">Loading your list…</div>';
+  await load(); await loadCfg();
+  if(migrate()){ save(); saveCfg(); }
+  const today = new Date();
+  document.getElementById('targetDate').min = today.toISOString().slice(0,10);
+  document.getElementById('targetDate').value = cfg.targetDate || '';
+  [...document.querySelectorAll('#partySeg button')]
+    .forEach(b=>b.setAttribute('aria-pressed', +b.dataset.party===cfg.party));
+  renderAll();
+  let tick=0;
+  setInterval(()=>{ renderHero(); if(++tick%30===0) renderQueue(); }, 1000);
+})();
+</script>
+</body>
+</html>
