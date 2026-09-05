@@ -32,6 +32,13 @@ function mapRow(row) {
 }
 
 function loadLiveData() {
+  if (!window.sb) {
+    // Supabase isn't wired up yet (see supabase-client.js) — use the static
+    // snapshot so the site still works, and switches over automatically
+    // once js/supabase-config.js has real values.
+    loadStaticFallback();
+    return;
+  }
   window.sb
     .from("restaurants")
     .select("*")
@@ -39,17 +46,33 @@ function loadLiveData() {
     .then(function (res) {
       if (res.error) throw res.error;
       var restaurants = res.data.map(mapRow);
-      var latest = restaurants.reduce(function (max, r) { return r.id > max ? r.id : max; }, 0);
       window.RESTAURANTS = restaurants;
       window.NEIGHBORHOODS = computeNeighborhoods(restaurants);
       window.META = computeMeta(restaurants, new Date().toISOString().slice(0, 10));
       document.dispatchEvent(new Event("data:ready"));
     })
     .catch(function (err) {
-      console.error("Failed to load live data:", err);
-      showDataErrorBanner();
-      document.dispatchEvent(new CustomEvent("data:error", { detail: err }));
+      console.error("Failed to load live data, falling back to static snapshot:", err);
+      loadStaticFallback();
     });
+}
+
+function loadStaticFallback() {
+  var script = document.createElement("script");
+  script.src = "data/data.js";
+  script.onload = function () {
+    // data.js defines RESTAURANTS/NEIGHBORHOODS/META as plain consts —
+    // mirror them onto window so code that reads window.RESTAURANTS also works.
+    window.RESTAURANTS = RESTAURANTS;
+    window.NEIGHBORHOODS = NEIGHBORHOODS;
+    window.META = META;
+    document.dispatchEvent(new Event("data:ready"));
+  };
+  script.onerror = function () {
+    showDataErrorBanner();
+    document.dispatchEvent(new CustomEvent("data:error"));
+  };
+  document.head.appendChild(script);
 }
 
 function showDataErrorBanner() {

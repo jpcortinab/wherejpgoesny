@@ -154,9 +154,9 @@
   "borough": "Brooklyn",
   "hood": "Bushwick",
   "count": 16,
-  "topRating": 2,
+  "topRating": 4,
   "bestSpots": [
-   "Ichiran"
+   "Rolo"
   ],
   "lat": 40.6944,
   "lng": -73.9213
@@ -382,8 +382,10 @@
   "borough": "Brooklyn",
   "hood": "Carroll Gardens",
   "count": 1,
-  "topRating": null,
-  "bestSpots": [],
+  "topRating": 1,
+  "bestSpots": [
+   "Court Street Grocers"
+  ],
   "lat": 40.6799,
   "lng": -73.9997
  },
@@ -436,8 +438,10 @@
   "borough": "Brooklyn",
   "hood": "Fort Greene",
   "count": 1,
-  "topRating": null,
-  "bestSpots": [],
+  "topRating": 3,
+  "bestSpots": [
+   "Sailor"
+  ],
   "lat": 40.6896,
   "lng": -73.9745
  },
@@ -454,8 +458,10 @@
   "borough": "Manhattan",
   "hood": "Murray Hill",
   "count": 1,
-  "topRating": null,
-  "bestSpots": [],
+  "topRating": 3,
+  "bestSpots": [
+   "Atomix"
+  ],
   "lat": 40.7479,
   "lng": -73.9776
  },
@@ -463,8 +469,10 @@
   "borough": "Manhattan",
   "hood": "Hudson Square",
   "count": 1,
-  "topRating": null,
-  "bestSpots": [],
+  "topRating": 0,
+  "bestSpots": [
+   "Houseman"
+  ],
   "lat": 40.7255,
   "lng": -74.0089
  },
@@ -481,8 +489,10 @@
   "borough": "Queens",
   "hood": "Astoria",
   "count": 1,
-  "topRating": null,
-  "bestSpots": [],
+  "topRating": 3,
+  "bestSpots": [
+   "Levant"
+  ],
   "lat": 40.7643,
   "lng": -73.9235
  },
@@ -490,8 +500,10 @@
   "borough": "Queens",
   "hood": "South Ozone",
   "count": 1,
-  "topRating": null,
-  "bestSpots": [],
+  "topRating": 4,
+  "bestSpots": [
+   "Trinciti Roti Shop"
+  ],
   "lat": 40.6764,
   "lng": -73.8093
  },

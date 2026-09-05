@@ -73,7 +73,14 @@
 <section class="section-tight">
   <div class="wrap">
 
-    <div id="login-view">
+    <div id="not-configured" class="hidden">
+      <div class="card" style="padding: 24px 28px; max-width: 480px; margin: 0 auto;">
+        <p class="muted">Live editing isn't connected yet — <code>js/supabase-config.js</code> still has placeholder values. Set up Supabase (see <code>supabase/schema.sql</code>) and fill in the project URL and anon key to turn this on.</p>
+        <p class="muted" style="margin-top:10px;">The rest of the site works fine in the meantime, using the last saved snapshot in <code>data/data.js</code>.</p>
+      </div>
+    </div>
+
+    <div id="login-view" class="hidden">
       <div class="card" style="padding: 24px 28px;">
         <label for="login-email">Email</label>
         <input type="email" id="login-email" autocomplete="username">
@@ -409,28 +416,33 @@
     document.getElementById('editor-view').classList.add('hidden');
   }
 
-  document.getElementById('login-btn').addEventListener('click', function () {
-    var email = fieldVal('login-email').trim();
-    var password = fieldVal('login-password');
-    document.getElementById('login-error').textContent = '';
-    window.sb.auth.signInWithPassword({ email: email, password: password }).then(function (res) {
-      if (res.error) {
-        document.getElementById('login-error').textContent = res.error.message;
-      }
+  if (window.sb) {
+    document.getElementById('login-btn').addEventListener('click', function () {
+      var email = fieldVal('login-email').trim();
+      var password = fieldVal('login-password');
+      document.getElementById('login-error').textContent = '';
+      window.sb.auth.signInWithPassword({ email: email, password: password }).then(function (res) {
+        if (res.error) {
+          document.getElementById('login-error').textContent = res.error.message;
+        }
+      });
     });
-  });
 
-  document.getElementById('logout-btn').addEventListener('click', function () {
-    window.sb.auth.signOut();
-  });
+    document.getElementById('logout-btn').addEventListener('click', function () {
+      window.sb.auth.signOut();
+    });
 
-  window.sb.auth.onAuthStateChange(function (event, session) {
-    if (session) showEditor(session); else showLogin();
-  });
+    window.sb.auth.onAuthStateChange(function (event, session) {
+      if (session) showEditor(session); else showLogin();
+    });
 
-  window.sb.auth.getSession().then(function (res) {
-    if (res.data.session) showEditor(res.data.session); else showLogin();
-  });
+    window.sb.auth.getSession().then(function (res) {
+      if (res.data.session) showEditor(res.data.session); else showLogin();
+    });
+  } else {
+    document.getElementById('not-configured').classList.remove('hidden');
+    document.getElementById('edit-lede').textContent = "Live editing isn't connected yet.";
+  }
 </script>
 </body>
 </html>
