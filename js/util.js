@@ -123,7 +123,7 @@ function setupLastUpdated() {
   el.textContent = '· list last updated ' + d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
 
-document.addEventListener('DOMContentLoaded', setupLastUpdated);
+document.addEventListener('data:ready', setupLastUpdated);
 
 document.addEventListener('DOMContentLoaded', setupNav);
 

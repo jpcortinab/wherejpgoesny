@@ -40,12 +40,6 @@
       <a class="btn btn-primary" href="quiz.html">Take the 2-minute quiz</a>
       <a class="btn btn-outline" href="map.html">Explore the map</a>
     </div>
-    <div class="stat-row">
-      <div class="stat"><b id="stat-total">—</b><span>Spots tracked</span></div>
-      <div class="stat"><b id="stat-hoods">—</b><span>Neighborhoods</span></div>
-      <div class="stat"><b id="stat-boroughs">—</b><span>Boroughs</span></div>
-      <div class="stat"><b id="stat-rated">—</b><span>Actually rated</span></div>
-    </div>
   </div>
 </header>
 
@@ -115,13 +109,5 @@
 <script src="js/supabase-client.js"></script>
 <script src="js/data-live.js"></script>
 <script src="js/util.js"></script>
-<script>
-  document.addEventListener('data:ready', function () {
-    document.getElementById('stat-total').textContent = META.totalCount;
-    document.getElementById('stat-hoods').textContent = NEIGHBORHOODS.length;
-    document.getElementById('stat-boroughs').textContent = META.boroughs.length;
-    document.getElementById('stat-rated').textContent = META.ratedCount;
-  });
-</script>
 </body>
 </html>
