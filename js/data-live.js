@@ -45,6 +45,12 @@ function loadLiveData() {
     .order("id")
     .then(function (res) {
       if (res.error) throw res.error;
+      if (!res.data.length) {
+        // Table exists and is reachable but hasn't been seeded yet — use the
+        // static snapshot rather than showing an empty site in the meantime.
+        loadStaticFallback();
+        return;
+      }
       var restaurants = res.data.map(mapRow);
       window.RESTAURANTS = restaurants;
       window.NEIGHBORHOODS = computeNeighborhoods(restaurants);
