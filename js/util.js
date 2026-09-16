@@ -40,6 +40,11 @@ function mofePillHtml(spot) {
   return '<span class="pill pill-accent" title="Mofe — an intangible swagger a place has, beyond the food">✦ Mofe</span>';
 }
 
+function closedPillHtml(spot) {
+  if (!spot.closed) return '';
+  return '<span class="pill pill-bad">Permanently closed</span>';
+}
+
 function spotCardHtml(spot, opts) {
   opts = opts || {};
   var notes = [];
@@ -58,7 +63,7 @@ function spotCardHtml(spot, opts) {
     : '';
 
   return (
-    '<div class="spot-card">' +
+    '<div class="spot-card' + (spot.closed ? ' spot-card-closed' : '') + '">' +
       '<div class="spot-top">' +
         '<div>' +
           '<h3 class="spot-name-toggle" tabindex="0" role="button" aria-expanded="false">' + escapeHtml(spot.name) + '<span class="toggle-arrow">›</span></h3>' +
@@ -72,7 +77,7 @@ function spotCardHtml(spot, opts) {
         (spot.cost ? '<span>&middot; ' + escapeHtml(spot.cost) + '</span>' : '') +
       '</div>' +
       '<div class="spot-tags">' +
-        recPillHtml(spot) + moodPillHtml(spot) + mofePillHtml(spot) +
+        closedPillHtml(spot) + recPillHtml(spot) + moodPillHtml(spot) + mofePillHtml(spot) +
       '</div>' +
       (notes.length ? '<div class="spot-notes">' + notes.join('') + '</div>' : '') +
     '</div>'

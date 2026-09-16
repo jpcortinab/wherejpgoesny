@@ -92,7 +92,7 @@ function computeNeighborhoods(restaurants) {
   });
   return Object.keys(byHood).map(function (key) {
     var g = byHood[key];
-    var rated = g.spots.filter(function (s) { return s.rated; });
+    var rated = g.spots.filter(function (s) { return s.rated && !s.closed; });
     var topRating = rated.length ? Math.max.apply(null, rated.map(function (s) { return s.stars; })) : null;
     var best = topRating !== null
       ? rated.filter(function (s) { return s.stars === topRating; }).sort(function (a, b) { return b.recScore - a.recScore; })

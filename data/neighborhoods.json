@@ -109,9 +109,11 @@
   "borough": "Manhattan",
   "hood": "Midtown East",
   "count": 19,
-  "topRating": 4,
+  "topRating": 3,
   "bestSpots": [
-   "Amma"
+   "Keens Steakhouse",
+   "Avra",
+   "Maloney & Porceli"
   ],
   "lat": 40.755,
   "lng": -73.9707

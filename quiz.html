@@ -201,7 +201,7 @@ document.addEventListener('data:ready', function () {
     var useCuisine = relaxLevel < 1 && cuisines.length > 0;
 
     var pool = RESTAURANTS.filter(function (r) {
-      if (!r.rated || r.recScore < 0) return false;
+      if (!r.rated || r.recScore < 0 || r.closed) return false;
       if (useBoroughs && boroughs.indexOf(r.borough) === -1) return false;
       if (useArea && areaSel[r.borough]) {
         var map = GENERAL_AREAS[r.borough];

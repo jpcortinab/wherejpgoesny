@@ -24,6 +24,7 @@ function mapRow(row) {
     rez: row.rez,
     misc: row.misc,
     topPick: !!row.top_pick,
+    closed: !!row.closed,
     description: row.description,
     descriptionSource: row.description_source || "generic",
     lat: row.lat !== undefined ? row.lat : coord[0],

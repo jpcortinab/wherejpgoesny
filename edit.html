@@ -196,6 +196,10 @@
               <input type="checkbox" id="f-toppick">
               <label for="f-toppick" style="margin:0;">✦ Mofe (has that intangible swagger)</label>
             </div>
+            <div class="field-check">
+              <input type="checkbox" id="f-closed">
+              <label for="f-closed" style="margin:0;">Permanently closed</label>
+            </div>
             <div class="field-row single">
               <div class="field">
                 <label>Description (shown when someone clicks the name)</label>
@@ -268,7 +272,7 @@
     var listEl = document.getElementById('edit-list');
     listEl.innerHTML = rows.map(function (r) {
       return '<div class="edit-row" data-id="' + r.id + '">' +
-        '<span class="er-name">' + escapeHtml(r.name) + '</span>' +
+        '<span class="er-name">' + escapeHtml(r.name) + (r.closed ? ' <span class="pill pill-bad" style="font-size:0.68rem;padding:1px 6px;">closed</span>' : '') + '</span>' +
         '<span class="er-meta">' + escapeHtml(r.hood) + (r.stars !== null ? ' · ' + r.stars + '★' : '') + '</span>' +
       '</div>';
     }).join('') || '<div style="padding:16px;" class="muted">No matches.</div>';
@@ -298,6 +302,7 @@
     setFieldVal('f-rez', r.rez);
     setFieldVal('f-misc', r.misc);
     document.getElementById('f-toppick').checked = !!r.topPick;
+    document.getElementById('f-closed').checked = !!r.closed;
     setFieldVal('f-description', r.description);
     document.getElementById('delete-btn').classList.remove('hidden');
     clearFeedback();
@@ -340,6 +345,7 @@
       rez: fieldVal('f-rez').trim() || null,
       misc: fieldVal('f-misc').trim() || null,
       top_pick: document.getElementById('f-toppick').checked,
+      closed: document.getElementById('f-closed').checked,
       description: fieldVal('f-description').trim() || null,
       description_source: fieldVal('f-description').trim() ? 'manual' : 'generic'
     };
@@ -353,7 +359,7 @@
           id: row.id, borough: row.borough, hood: row.hood, name: row.name, type: row.type,
           stars: row.stars, cost: row.cost, mood: row.mood, rec: row.rec, dos: row.dos,
           donts: row.donts, rez: row.rez, misc: row.misc, topPick: !!row.top_pick,
-          description: row.description
+          closed: !!row.closed, description: row.description
         };
       });
       populateDatalists();

@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 """
-Pushes the freshly-researched mood/cost values to the LIVE Supabase
-'restaurants' table — a plain UPDATE per row (mood + cost only), so there's
-no risk of tripping a NOT NULL constraint on unrelated columns.
+Pushes the freshly-researched mood/cost/closed values to the LIVE Supabase
+'restaurants' table — a plain UPDATE per row, so there's no risk of tripping
+a NOT NULL constraint on unrelated columns.
+
+IMPORTANT: run supabase/add_closed_column.sql in the Supabase SQL editor
+FIRST (one time) — this script will fail on every row otherwise, since the
+"closed" column won't exist yet.
 
 Run this yourself, locally — it needs your project's service_role key
 (Settings -> API), which is a real secret. Set it as an env var in your own
@@ -35,7 +39,9 @@ ok = 0
 failed = []
 for i, r in enumerate(restaurants, 1):
     url = f"{SUPABASE_URL.rstrip('/')}/rest/v1/restaurants?id=eq.{r['id']}"
-    body = json.dumps({"mood": r["mood"], "cost": r["cost"]}).encode("utf-8")
+    body = json.dumps({
+        "mood": r["mood"], "cost": r["cost"], "closed": r["closed"], "misc": r["misc"],
+    }).encode("utf-8")
     req = urllib.request.Request(url, data=body, method="PATCH", headers={
         "apikey": SERVICE_KEY,
         "Authorization": f"Bearer {SERVICE_KEY}",

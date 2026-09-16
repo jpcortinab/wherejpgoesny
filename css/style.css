@@ -235,6 +235,9 @@ p { margin: 0 0 1em; }
   gap: 8px;
 }
 
+.spot-card-closed { opacity: 0.6; }
+.spot-card-closed .spot-name-toggle { text-decoration: line-through; text-decoration-color: var(--ink-faint); }
+
 .spot-card .spot-top {
   display: flex;
   justify-content: space-between;
