@@ -13,38 +13,74 @@
 <script data-goatcounter="https://WHEREJPGOESNY.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <style>
   .map-wrap { padding: 0; }
-  #map { height: 62vh; min-height: 420px; width: 100%; }
-  .map-shell { display: grid; grid-template-columns: 1fr 360px; gap: 0; align-items: stretch; }
-  .map-side {
-    border-left: 1px solid var(--line);
-    padding: 22px;
-    max-height: 62vh;
-    overflow-y: auto;
-    background: var(--paper-raised);
-  }
-  @media (max-width: 900px) {
-    .map-shell { grid-template-columns: 1fr; }
-    .map-side { border-left: none; border-top: 1px solid var(--line); max-height: none; }
-  }
-  .borough-filters { display: flex; gap: 8px; flex-wrap: wrap; padding: 16px 0; }
-  .borough-filters button {
-    font-family: var(--sans);
-    font-weight: 700;
-    font-size: 0.85rem;
-    padding: 8px 14px;
-    border-radius: 100px;
-    border: 1.5px solid var(--line-strong);
-    background: var(--paper-raised);
-    color: var(--ink-soft);
-    cursor: pointer;
-  }
-  .borough-filters button.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .leaflet-popup-content-wrapper { border-radius: 12px; }
+
   .map-legend {
     display: flex; gap: 14px; flex-wrap: wrap; align-items: center;
-    font-size: 0.82rem; color: var(--ink-soft); padding: 4px 0 0;
+    font-size: 0.8rem; color: var(--ink-faint); padding: 10px 0 0;
   }
-  .map-legend .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; margin-right: 5px; vertical-align: -1px; }
+  .map-legend .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; vertical-align: -1px; }
+
+  .map-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr 340px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--paper-raised);
+  }
+  #map { height: 68vh; min-height: 460px; width: 100%; }
+
+  .map-filters {
+    border-right: 1px solid var(--line);
+    padding: 18px 16px;
+    max-height: 68vh;
+    overflow-y: auto;
+  }
+  .filter-section { padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .filter-section:first-child { padding-top: 0; }
+  .filter-section:last-of-type { border-bottom: none; }
+  .filter-section h3 {
+    font-family: var(--sans); font-size: 0.78rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint);
+    margin-bottom: 10px;
+  }
+  .facet-list { display: flex; flex-direction: column; gap: 2px; }
+  .facet-row {
+    display: flex; align-items: center; gap: 8px; cursor: pointer;
+    padding: 4px 2px; border-radius: 6px; font-size: 0.88rem;
+  }
+  .facet-row:hover { background: var(--neutral-soft); }
+  .facet-row input { flex-shrink: 0; }
+  .facet-row .facet-label { flex: 1; color: var(--ink); }
+  .facet-row .facet-count { color: var(--ink-faint); font-size: 0.8rem; }
+  .facet-row.facet-zero .facet-label,
+  .facet-row.facet-zero .facet-count { color: var(--ink-faint); }
+  #f-cuisine-search { width: 100%; margin-bottom: 8px; font-size: 0.85rem; padding: 7px 10px; }
+  .cuisine-scroll { max-height: 160px; overflow-y: auto; }
+  #clear-filters { width: 100%; margin-top: 4px; }
+  #active-count { font-size: 0.8rem; color: var(--ink-faint); margin-bottom: 4px; }
+
+  .map-detail {
+    border-left: 1px solid var(--line);
+    padding: 20px;
+    max-height: 68vh;
+    overflow-y: auto;
+  }
+
+  .mobile-filter-toggle { display: none; }
+
+  @media (max-width: 1150px) {
+    .map-layout { grid-template-columns: 220px 1fr; }
+    .map-detail { grid-column: 1 / -1; border-left: none; border-top: 1px solid var(--line); max-height: none; }
+  }
+  @media (max-width: 800px) {
+    .mobile-filter-toggle { display: inline-flex; margin-bottom: 12px; }
+    .map-layout { grid-template-columns: 1fr; }
+    .map-filters { display: none; border-right: none; border-bottom: 1px solid var(--line); max-height: none; }
+    .map-filters.open { display: block; }
+    #map { height: 52vh; }
+  }
 </style>
 </head>
 <body data-page="map">
@@ -69,25 +105,69 @@
   <div class="wrap">
     <div class="eyebrow">Explore</div>
     <h1>The map</h1>
-    <p class="lede">Pins mark neighborhoods, not exact addresses — the spreadsheet this runs on tracks where a place is, not its street number. Circle size is how many spots I've tried there; color is how good the best one is.</p>
-    <div class="borough-filters" id="borough-filters"></div>
+    <p class="lede">Pins mark neighborhoods, not exact addresses — the source list tracks where a place is, not its street number. Filter on the left, click a pin to see what's good there.</p>
     <div class="map-legend">
-      <span><span class="dot" style="background:#b8862f"></span>5★ somewhere in the hood</span>
+      <span><span class="dot" style="background:#b8862f"></span>5★ somewhere here</span>
       <span><span class="dot" style="background:#c17a3a"></span>4★</span>
       <span><span class="dot" style="background:#8c8474"></span>3★</span>
       <span><span class="dot" style="background:#a3a89a"></span>1-2★</span>
-      <span><span class="dot" style="background:#d8cbb0"></span>unrated / to-try</span>
+      <span><span class="dot" style="background:#d8cbb0"></span>unrated / no match</span>
     </div>
   </div>
 </header>
 
 <section class="map-wrap section-tight">
+  <div class="wrap" style="padding:0 24px;">
+    <button class="btn btn-outline mobile-filter-toggle" id="mobile-filter-toggle">Filters</button>
+  </div>
   <div class="wrap" style="padding:0;">
-    <div class="card map-shell">
+    <div class="map-layout">
+
+      <aside class="map-filters" id="map-filters">
+        <div id="active-count"></div>
+
+        <div class="filter-section">
+          <h3>Borough</h3>
+          <div class="facet-list" id="f-borough"></div>
+        </div>
+
+        <div class="filter-section">
+          <h3>Price</h3>
+          <div class="facet-list" id="f-cost"></div>
+        </div>
+
+        <div class="filter-section">
+          <h3>Rating</h3>
+          <div class="facet-list" id="f-rating"></div>
+        </div>
+
+        <div class="filter-section">
+          <h3>Vibe</h3>
+          <div class="facet-list" id="f-mood"></div>
+        </div>
+
+        <div class="filter-section">
+          <h3>Cuisine</h3>
+          <input type="search" id="f-cuisine-search" placeholder="Search cuisines…">
+          <div class="facet-list cuisine-scroll" id="f-cuisine"></div>
+        </div>
+
+        <div class="filter-section">
+          <div class="facet-row" style="padding-left:0;">
+            <input type="checkbox" id="f-hide-closed" checked>
+            <label class="facet-label" for="f-hide-closed" style="cursor:pointer;">Hide permanently closed</label>
+          </div>
+        </div>
+
+        <button class="btn btn-outline" id="clear-filters">Clear all filters</button>
+      </aside>
+
       <div id="map"></div>
-      <div class="map-side" id="map-side">
+
+      <aside class="map-detail" id="map-detail">
         <p class="muted">Click a pin to see what's good there.</p>
-      </div>
+      </aside>
+
     </div>
   </div>
 </section>
@@ -122,33 +202,230 @@
   }
 
   function radiusFor(count) {
-    return 6 + Math.min(count, 40) * 0.55;
+    return count > 0 ? 6 + Math.min(count, 40) * 0.55 : 4;
   }
 
-  var markers = [];
+  var markerByKey = {};
+  var selectedHoodKey = null;
+  var RATING_OPTIONS = [
+    { value: 0, label: 'Any rating' },
+    { value: 3, label: '3★ and up' },
+    { value: 4, label: '4★ and up' },
+    { value: 5, label: '5★ only' }
+  ];
 
-  function showHood(n) {
-    var spots = RESTAURANTS.filter(function (r) { return r.borough === n.borough && r.hood === n.hood; });
-    spots.sort(function (a, b) {
+  var state = {
+    boroughs: {},
+    costs: {},
+    moods: {},
+    cuisines: {},
+    minRating: 0,
+    hideClosed: true,
+    cuisineSearch: ''
+  };
+
+  function anySelected(obj) { return Object.keys(obj).some(function (k) { return obj[k]; }); }
+
+  function matchesFilters(r, exclude) {
+    if (state.hideClosed && r.closed) return false;
+    if (exclude !== 'borough' && anySelected(state.boroughs) && !state.boroughs[r.borough]) return false;
+    if (exclude !== 'cost' && anySelected(state.costs) && !state.costs[r.cost]) return false;
+    if (exclude !== 'mood' && anySelected(state.moods) && !state.moods[r.mood]) return false;
+    if (exclude !== 'cuisine' && anySelected(state.cuisines) && !state.cuisines[r.type]) return false;
+    if (exclude !== 'rating' && state.minRating > 0 && (!r.rated || r.stars < state.minRating)) return false;
+    return true;
+  }
+
+  function filteredPool() {
+    return RESTAURANTS.filter(function (r) { return matchesFilters(r, null); });
+  }
+
+  function renderCheckFacet(containerId, options, stateObj, exclude, formatCount) {
+    var el = document.getElementById(containerId);
+    var counts = {};
+    RESTAURANTS.forEach(function (r) {
+      if (!matchesFilters(r, exclude)) return;
+      var key = formatCount ? formatCount(r) : null;
+      if (key === null || key === undefined) return;
+      counts[key] = (counts[key] || 0) + 1;
+    });
+    el.innerHTML = options.map(function (opt) {
+      var n = counts[opt] || 0;
+      var checked = !!stateObj[opt];
+      var id = containerId + '-' + opt.replace(/[^a-z0-9]/gi, '');
+      return '<label class="facet-row' + (n === 0 && !checked ? ' facet-zero' : '') + '" for="' + id + '">' +
+        '<input type="checkbox" id="' + id + '" data-value="' + escapeHtml(opt) + '"' + (checked ? ' checked' : '') + '>' +
+        '<span class="facet-label">' + escapeHtml(opt) + '</span>' +
+        '<span class="facet-count">' + n + '</span>' +
+      '</label>';
+    }).join('');
+    el.querySelectorAll('input[type="checkbox"]').forEach(function (input) {
+      input.addEventListener('change', function () {
+        stateObj[input.dataset.value] = input.checked;
+        onFiltersChanged();
+      });
+    });
+  }
+
+  function renderCuisineFacet() {
+    var q = state.cuisineSearch.trim().toLowerCase();
+    var counts = {};
+    RESTAURANTS.forEach(function (r) {
+      if (!r.type) return;
+      if (!matchesFilters(r, 'cuisine')) return;
+      counts[r.type] = (counts[r.type] || 0) + 1;
+    });
+    var types = Object.keys(counts).filter(function (t) {
+      return !q || t.toLowerCase().indexOf(q) !== -1 || state.cuisines[t];
+    }).sort(function (a, b) {
+      if (!!state.cuisines[b] !== !!state.cuisines[a]) return state.cuisines[b] ? 1 : -1;
+      return counts[b] - counts[a];
+    }).slice(0, 40);
+
+    var el = document.getElementById('f-cuisine');
+    el.innerHTML = types.map(function (t) {
+      var checked = !!state.cuisines[t];
+      var id = 'f-cuisine-' + t.replace(/[^a-z0-9]/gi, '');
+      return '<label class="facet-row" for="' + id + '">' +
+        '<input type="checkbox" id="' + id + '" data-value="' + escapeHtml(t) + '"' + (checked ? ' checked' : '') + '>' +
+        '<span class="facet-label">' + escapeHtml(t) + '</span>' +
+        '<span class="facet-count">' + counts[t] + '</span>' +
+      '</label>';
+    }).join('') || '<p class="faint" style="font-size:0.85rem;">No cuisines match "' + escapeHtml(q) + '".</p>';
+    el.querySelectorAll('input[type="checkbox"]').forEach(function (input) {
+      input.addEventListener('change', function () {
+        state.cuisines[input.dataset.value] = input.checked;
+        onFiltersChanged();
+      });
+    });
+  }
+
+  function renderRatingFacet() {
+    var el = document.getElementById('f-rating');
+    el.innerHTML = RATING_OPTIONS.map(function (opt) {
+      var n = RESTAURANTS.filter(function (r) {
+        if (!matchesFilters(r, 'rating')) return false;
+        return opt.value === 0 || (r.rated && r.stars >= opt.value);
+      }).length;
+      var id = 'f-rating-' + opt.value;
+      var checked = state.minRating === opt.value;
+      return '<label class="facet-row' + (n === 0 && !checked ? ' facet-zero' : '') + '" for="' + id + '">' +
+        '<input type="radio" name="f-rating-radio" id="' + id + '" value="' + opt.value + '"' + (checked ? ' checked' : '') + '>' +
+        '<span class="facet-label">' + opt.label + '</span>' +
+        '<span class="facet-count">' + n + '</span>' +
+      '</label>';
+    }).join('');
+    el.querySelectorAll('input[type="radio"]').forEach(function (input) {
+      input.addEventListener('change', function () {
+        state.minRating = parseInt(input.value, 10);
+        onFiltersChanged();
+      });
+    });
+  }
+
+  function renderAllFacets() {
+    renderCheckFacet('f-borough', META.boroughs, state.boroughs, 'borough', function (r) { return r.borough; });
+    renderCheckFacet('f-cost', BUDGET_OPTIONS, state.costs, 'cost', function (r) { return r.cost; });
+    renderCheckFacet('f-mood', MOOD_OPTIONS, state.moods, 'mood', function (r) { return r.mood; });
+    renderRatingFacet();
+    renderCuisineFacet();
+  }
+
+  function activeFilterCount() {
+    return Object.keys(state.boroughs).filter(function (k) { return state.boroughs[k]; }).length +
+      Object.keys(state.costs).filter(function (k) { return state.costs[k]; }).length +
+      Object.keys(state.moods).filter(function (k) { return state.moods[k]; }).length +
+      Object.keys(state.cuisines).filter(function (k) { return state.cuisines[k]; }).length +
+      (state.minRating > 0 ? 1 : 0);
+  }
+
+  function updateMarkers() {
+    var pool = filteredPool();
+    var byHood = {};
+    pool.forEach(function (r) {
+      var key = r.borough + '|' + r.hood;
+      if (!byHood[key]) byHood[key] = [];
+      byHood[key].push(r);
+    });
+
+    Object.keys(markerByKey).forEach(function (key) {
+      var spots = byHood[key] || [];
+      var rated = spots.filter(function (s) { return s.rated; });
+      var topRating = rated.length ? Math.max.apply(null, rated.map(function (s) { return s.stars; })) : null;
+      var m = markerByKey[key];
+      m.setRadius(radiusFor(spots.length));
+      m.setStyle({ color: colorFor(topRating), fillColor: colorFor(topRating), fillOpacity: spots.length ? 0.55 : 0.15 });
+      m._filteredSpots = spots;
+      m._topRating = topRating;
+      var parts = key.split('|');
+      m.setTooltipContent(parts[1] + ', ' + parts[0] + ' &middot; ' + spots.length + (spots.length === 1 ? ' spot' : ' spots') + ' matching');
+    });
+
+    if (selectedHoodKey) showHoodByKey(selectedHoodKey);
+  }
+
+  function onFiltersChanged() {
+    renderAllFacets();
+    updateMarkers();
+    document.getElementById('active-count').textContent = activeFilterCount()
+      ? activeFilterCount() + ' filter' + (activeFilterCount() === 1 ? '' : 's') + ' active'
+      : 'No filters active';
+  }
+
+  function showHoodByKey(key) {
+    selectedHoodKey = key;
+    var m = markerByKey[key];
+    var parts = key.split('|');
+    var borough = parts[0], hood = parts[1];
+    var spots = (m && m._filteredSpots || []).slice().sort(function (a, b) {
       var as = a.stars === null ? -1 : a.stars, bs = b.stars === null ? -1 : b.stars;
       if (bs !== as) return bs - as;
       return b.recScore - a.recScore;
     });
-    var top = spots.slice(0, 8);
-    var html = '<div class="eyebrow">' + escapeHtml(n.borough) + '</div>' +
-      '<h2 style="margin-bottom:4px;">' + escapeHtml(n.hood) + '</h2>' +
-      '<p class="muted" style="margin-bottom:16px;">' + n.count + ' spots tracked here' +
-      (n.topRating !== null ? ' &middot; top rated ' + n.topRating + '★' : '') + '</p>';
-    html += top.map(function (s) { return spotCardHtml(s, { hideLocation: true }); }).join('<div style="height:10px"></div>');
-    if (spots.length > top.length) {
-      html += '<p class="faint" style="margin-top:12px;">+ ' + (spots.length - top.length) + ' more in ' + escapeHtml(n.hood) + '. See the <a href="guides.html">full guide</a>.</p>';
+    var top = spots.slice(0, 10);
+    var totalInHood = RESTAURANTS.filter(function (r) { return r.borough === borough && r.hood === hood; }).length;
+
+    var html = '<div class="eyebrow">' + escapeHtml(borough) + '</div>' +
+      '<h2 style="margin-bottom:4px;">' + escapeHtml(hood) + '</h2>' +
+      '<p class="muted" style="margin-bottom:16px;">' + spots.length + ' of ' + totalInHood + ' spots match your filters' +
+      (m && m._topRating !== null && m._topRating !== undefined ? ' &middot; top match ' + m._topRating + '★' : '') + '</p>';
+
+    if (!spots.length) {
+      html += '<p class="muted">Nothing here matches your current filters. Try loosening one.</p>';
+    } else {
+      html += top.map(function (s) { return spotCardHtml(s, { hideLocation: true }); }).join('<div style="height:10px"></div>');
+      if (spots.length > top.length) {
+        html += '<p class="faint" style="margin-top:12px;">+ ' + (spots.length - top.length) + ' more matching in ' + escapeHtml(hood) + '.</p>';
+      }
     }
-    document.getElementById('map-side').innerHTML = html;
+    document.getElementById('map-detail').innerHTML = html;
   }
+
+  document.getElementById('clear-filters').addEventListener('click', function () {
+    state.boroughs = {}; state.costs = {}; state.moods = {}; state.cuisines = {};
+    state.minRating = 0; state.cuisineSearch = '';
+    document.getElementById('f-cuisine-search').value = '';
+    onFiltersChanged();
+  });
+
+  document.getElementById('f-hide-closed').addEventListener('change', function (e) {
+    state.hideClosed = e.target.checked;
+    onFiltersChanged();
+  });
+
+  document.getElementById('f-cuisine-search').addEventListener('input', function (e) {
+    state.cuisineSearch = e.target.value;
+    renderCuisineFacet();
+  });
+
+  document.getElementById('mobile-filter-toggle').addEventListener('click', function () {
+    document.getElementById('map-filters').classList.toggle('open');
+  });
 
   document.addEventListener('data:ready', function () {
     NEIGHBORHOODS.forEach(function (n) {
       if (n.lat === null) return;
+      var key = n.borough + '|' + n.hood;
       var m = L.circleMarker([n.lat, n.lng], {
         radius: radiusFor(n.count),
         color: colorFor(n.topRating),
@@ -156,29 +433,12 @@
         fillColor: colorFor(n.topRating),
         fillOpacity: 0.55
       }).addTo(map);
-      m.borough = n.borough;
-      m.on('click', function () { showHood(n); });
       m.bindTooltip(n.hood + ', ' + n.borough + ' &middot; ' + n.count + ' spots', { direction: 'top' });
-      markers.push(m);
+      m.on('click', function () { showHoodByKey(key); });
+      markerByKey[key] = m;
     });
 
-    var boroughs = ['All'].concat(META.boroughs);
-    var filterBar = document.getElementById('borough-filters');
-    boroughs.forEach(function (b, i) {
-      var btn = document.createElement('button');
-      btn.textContent = b;
-      if (i === 0) btn.classList.add('active');
-      btn.addEventListener('click', function () {
-        filterBar.querySelectorAll('button').forEach(function (x) { x.classList.remove('active'); });
-        btn.classList.add('active');
-        markers.forEach(function (m) {
-          var show = b === 'All' || m.borough === b;
-          var el = m.getElement();
-          if (el) el.style.display = show ? '' : 'none';
-        });
-      });
-      filterBar.appendChild(btn);
-    });
+    onFiltersChanged();
   });
 </script>
 </body>
