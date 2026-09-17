@@ -22,11 +22,7 @@
   #edit-search { width: 100%; margin-bottom: 8px; }
   .edit-filter-row { display: flex; gap: 8px; margin-bottom: 8px; }
   .edit-filter-row select { flex: 1; min-width: 0; font-size: 0.85rem; padding: 7px 10px; }
-  .edit-filter-check {
-    display: flex; align-items: center; gap: 6px; font-size: 0.85rem;
-    color: var(--ink-soft); margin-bottom: 10px; cursor: pointer;
-  }
-  .edit-filter-check input { width: auto; }
+  .edit-filter-row .btn { flex: 0 0 auto; padding: 7px 14px; font-size: 0.85rem; }
   #edit-count { font-size: 0.78rem; color: var(--ink-faint); margin-bottom: 6px; }
   .edit-row {
     display: flex; justify-content: space-between; align-items: center; gap: 8px;
@@ -128,16 +124,35 @@
           <input type="search" id="edit-search" placeholder="Search to edit…">
           <div class="edit-filter-row">
             <select id="edit-filter-borough"><option value="">All boroughs</option></select>
+            <select id="edit-filter-type"><option value="">All cuisines</option></select>
+          </div>
+          <div class="edit-filter-row">
+            <select id="edit-filter-rating">
+              <option value="">Any rating</option>
+              <option value="unrated">Not yet rated</option>
+              <option value="5">5★ only</option>
+              <option value="4">4★ and up</option>
+              <option value="3">3★ and up</option>
+              <option value="2">2★ and up</option>
+              <option value="1">1★ and up</option>
+            </select>
+            <select id="edit-filter-cost">
+              <option value="">Any budget</option>
+              <option value="1">$</option>
+              <option value="2">$$ and under</option>
+              <option value="3">$$$ and under</option>
+              <option value="4">$$$$ and under</option>
+              <option value="5">$$$$$</option>
+            </select>
+          </div>
+          <div class="edit-filter-row">
             <select id="edit-sort">
               <option value="name">Sort: name</option>
               <option value="rating">Sort: rating</option>
               <option value="hood">Sort: neighborhood</option>
             </select>
+            <button type="button" class="btn btn-outline" id="edit-clear-filters">Clear</button>
           </div>
-          <label class="edit-filter-check">
-            <input type="checkbox" id="edit-filter-unrated">
-            Not yet rated only
-          </label>
           <button class="btn btn-dark" id="new-btn" style="width:100%; margin-bottom:10px;">+ Add a new restaurant</button>
           <div id="edit-count"></div>
           <div id="edit-list"></div>
@@ -334,18 +349,37 @@
     document.getElementById('type-list').innerHTML = types.map(function (t) {
       return '<option value="' + escapeHtml(t) + '">';
     }).join('');
+
+    var typeSel = document.getElementById('edit-filter-type');
+    var currentType = typeSel.value;
+    typeSel.innerHTML = '<option value="">All cuisines</option>' + types.map(function (t) {
+      return '<option value="' + escapeHtml(t) + '">' + escapeHtml(t) + '</option>';
+    }).join('');
+    if (types.indexOf(currentType) !== -1) typeSel.value = currentType;
   }
 
   function renderList() {
     var q = document.getElementById('edit-search').value.trim().toLowerCase();
     var borough = document.getElementById('edit-filter-borough').value;
-    var unratedOnly = document.getElementById('edit-filter-unrated').checked;
+    var type = document.getElementById('edit-filter-type').value;
+    var ratingFilter = document.getElementById('edit-filter-rating').value;
+    var costFilter = document.getElementById('edit-filter-cost').value;
     var sortMode = document.getElementById('edit-sort').value;
 
     var rows = allRows.filter(function (r) {
       if (q && (r.name || '').toLowerCase().indexOf(q) === -1 && (r.hood || '').toLowerCase().indexOf(q) === -1) return false;
       if (borough && r.borough !== borough) return false;
-      if (unratedOnly && r.stars !== null) return false;
+      if (type && r.type !== type) return false;
+      if (ratingFilter === 'unrated' && r.stars !== null) return false;
+      if (ratingFilter && ratingFilter !== 'unrated') {
+        var minRating = parseInt(ratingFilter, 10);
+        if (r.stars === null || r.stars < minRating) return false;
+      }
+      if (costFilter) {
+        var maxCostLevel = parseInt(costFilter, 10);
+        var costLevel = computeCostLevel(r.cost);
+        if (!costLevel || costLevel > maxCostLevel) return false;
+      }
       return true;
     });
 
@@ -367,7 +401,7 @@
     listEl.innerHTML = rows.map(function (r) {
       return '<div class="edit-row" data-id="' + r.id + '">' +
         '<span class="er-name">' + escapeHtml(r.name) + (r.closed ? ' <span class="pill pill-bad" style="font-size:0.68rem;padding:1px 6px;">closed</span>' : '') + '</span>' +
-        '<span class="er-meta">' + escapeHtml(r.hood) + (r.stars !== null ? ' · ' + r.stars + '★' : '') + '</span>' +
+        '<span class="er-meta">' + escapeHtml(r.hood) + (r.stars !== null ? ' · ' + r.stars + '★' : '') + (r.cost ? ' · ' + escapeHtml(r.cost) : '') + '</span>' +
       '</div>';
     }).join('') || '<div style="padding:16px;" class="muted">No matches.</div>';
 
@@ -504,8 +538,18 @@
   document.getElementById('new-btn').addEventListener('click', resetForm);
   document.getElementById('edit-search').addEventListener('input', renderList);
   document.getElementById('edit-filter-borough').addEventListener('change', renderList);
+  document.getElementById('edit-filter-type').addEventListener('change', renderList);
+  document.getElementById('edit-filter-rating').addEventListener('change', renderList);
+  document.getElementById('edit-filter-cost').addEventListener('change', renderList);
   document.getElementById('edit-sort').addEventListener('change', renderList);
-  document.getElementById('edit-filter-unrated').addEventListener('change', renderList);
+  document.getElementById('edit-clear-filters').addEventListener('click', function () {
+    document.getElementById('edit-search').value = '';
+    document.getElementById('edit-filter-borough').value = '';
+    document.getElementById('edit-filter-type').value = '';
+    document.getElementById('edit-filter-rating').value = '';
+    document.getElementById('edit-filter-cost').value = '';
+    renderList();
+  });
   initStarPicker();
 
   function showEditor(session) {
