@@ -466,3 +466,31 @@ footer .wrap {
 }
 
 .legend-item:last-child { border-bottom: none; }
+
+/* Faceted checkbox filters — shared by the map and directory pages */
+.filter-section { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.filter-section:first-child { padding-top: 0; }
+.filter-section:last-of-type { border-bottom: none; }
+.filter-section h3 {
+  font-family: var(--sans); font-size: 0.78rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint);
+  margin-bottom: 10px;
+}
+.facet-list { display: flex; flex-direction: column; gap: 2px; }
+.facet-row {
+  display: flex; align-items: center; gap: 8px; cursor: pointer;
+  padding: 4px 2px; border-radius: 6px; font-size: 0.88rem;
+}
+.facet-row:hover { background: var(--neutral-soft); }
+.facet-row input { flex-shrink: 0; }
+.facet-row .facet-label { flex: 1; color: var(--ink); }
+.facet-row .facet-count { color: var(--ink-faint); font-size: 0.8rem; }
+.facet-row.facet-zero .facet-label,
+.facet-row.facet-zero .facet-count { color: var(--ink-faint); }
+.cuisine-scroll { max-height: 160px; overflow-y: auto; }
+.mobile-filter-toggle { display: none; }
+.filters-sidebar {
+  border-right: 1px solid var(--line);
+  padding: 18px 16px;
+}
+#active-count { font-size: 0.8rem; color: var(--ink-faint); margin-bottom: 4px; }

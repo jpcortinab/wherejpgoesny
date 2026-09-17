@@ -11,14 +11,34 @@
 <!-- Analytics: free at https://www.goatcounter.com — sign up, then replace WHEREJPGOESNY below with your own site code -->
 <script data-goatcounter="https://WHEREJPGOESNY.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <style>
-  .filter-bar {
-    display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
-    padding: 18px 0;
+  .dir-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--paper-raised);
   }
-  .filter-bar select, .filter-bar input[type="search"] { min-width: 140px; }
+  .dir-filters {
+    border-right: 1px solid var(--line);
+    padding: 18px 16px;
+    max-height: 82vh;
+    overflow-y: auto;
+  }
+  #f-cuisine-search { width: 100%; margin-bottom: 8px; font-size: 0.85rem; padding: 7px 10px; }
+  #clear-filters { width: 100%; margin-top: 4px; }
+  .dir-main { padding: 20px 24px; }
+  .dir-toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
   #dir-search { flex: 1; min-width: 200px; }
   #dir-count { color: var(--ink-faint); font-size: 0.88rem; margin-bottom: 14px; }
   #load-more-wrap { text-align: center; padding: 28px 0; }
+
+  @media (max-width: 1000px) {
+    .mobile-filter-toggle { display: inline-flex; margin-bottom: 12px; }
+    .dir-layout { grid-template-columns: 1fr; }
+    .dir-filters { display: none; border-right: none; border-bottom: 1px solid var(--line); max-height: none; }
+    .dir-filters.open { display: block; }
+  }
 </style>
 </head>
 <body data-page="directory">
@@ -49,37 +69,69 @@
 
 <section class="section-tight">
   <div class="wrap">
-    <div class="filter-bar">
-      <input type="search" id="dir-search" placeholder="Search by name or cuisine…">
-      <select id="dir-borough"><option value="">All boroughs</option></select>
-      <select id="dir-hood"><option value="">All neighborhoods</option></select>
-      <select id="dir-cost">
-        <option value="">Any budget</option>
-        <option value="1">$</option>
-        <option value="2">$$ and under</option>
-        <option value="3">$$$ and under</option>
-        <option value="4">$$$$ and under</option>
-        <option value="5">$$$$$</option>
-      </select>
-      <select id="dir-stars">
-        <option value="">Any rating</option>
-        <option value="5">5★ only</option>
-        <option value="4">4★ and up</option>
-        <option value="3">3★ and up</option>
-        <option value="2">2★ and up</option>
-        <option value="1">1★ and up</option>
-        <option value="unrated">Not yet rated</option>
-      </select>
-      <select id="dir-sort">
-        <option value="rating">Sort: top rated</option>
-        <option value="rec">Sort: most recommended</option>
-        <option value="name">Sort: name A–Z</option>
-        <option value="hood">Sort: neighborhood</option>
-      </select>
+    <button class="btn btn-outline mobile-filter-toggle" id="mobile-filter-toggle">Filters</button>
+    <div class="dir-layout">
+
+      <aside class="dir-filters" id="dir-filters">
+        <div id="active-count"></div>
+
+        <div class="filter-section">
+          <h3>Borough</h3>
+          <div class="facet-list" id="f-borough"></div>
+        </div>
+
+        <div class="filter-section">
+          <h3>Neighborhood</h3>
+          <select id="f-hood"><option value="">All neighborhoods</option></select>
+        </div>
+
+        <div class="filter-section">
+          <h3>Price</h3>
+          <div class="facet-list" id="f-cost"></div>
+        </div>
+
+        <div class="filter-section">
+          <h3>Rating</h3>
+          <div class="facet-list" id="f-rating"></div>
+        </div>
+
+        <div class="filter-section">
+          <h3>Vibe</h3>
+          <div class="facet-list" id="f-mood"></div>
+        </div>
+
+        <div class="filter-section">
+          <h3>Cuisine</h3>
+          <input type="search" id="f-cuisine-search" placeholder="Search cuisines…">
+          <div class="facet-list cuisine-scroll" id="f-cuisine"></div>
+        </div>
+
+        <div class="filter-section">
+          <div class="facet-row" style="padding-left:0;">
+            <input type="checkbox" id="f-hide-closed" checked>
+            <label class="facet-label" for="f-hide-closed" style="cursor:pointer;">Hide permanently closed</label>
+          </div>
+        </div>
+
+        <button class="btn btn-outline" id="clear-filters">Clear all filters</button>
+      </aside>
+
+      <div class="dir-main">
+        <div class="dir-toolbar">
+          <input type="search" id="dir-search" placeholder="Search by name…">
+          <select id="dir-sort">
+            <option value="rating">Sort: top rated</option>
+            <option value="rec">Sort: most recommended</option>
+            <option value="name">Sort: name A–Z</option>
+            <option value="hood">Sort: neighborhood</option>
+          </select>
+        </div>
+        <div id="dir-count"></div>
+        <div class="grid grid-auto" id="dir-results"></div>
+        <div id="load-more-wrap"><button class="btn btn-outline" id="load-more">Show more</button></div>
+      </div>
+
     </div>
-    <div id="dir-count"></div>
-    <div class="grid grid-auto" id="dir-results"></div>
-    <div id="load-more-wrap"><button class="btn btn-outline" id="load-more">Show more</button></div>
   </div>
 </section>
 
@@ -97,47 +149,171 @@
 <script src="js/util.js"></script>
 <script>
 document.addEventListener('data:ready', function () {
-  var boroughSel = document.getElementById('dir-borough');
-  var hoodSel = document.getElementById('dir-hood');
-  META.boroughs.forEach(function (b) {
-    boroughSel.innerHTML += '<option value="' + escapeHtml(b) + '">' + escapeHtml(b) + '</option>';
-  });
+  var RATING_OPTIONS = [
+    { value: 0, label: 'Any rating' },
+    { value: 3, label: '3★ and up' },
+    { value: 4, label: '4★ and up' },
+    { value: 5, label: '5★ only' }
+  ];
+
+  var state = {
+    boroughs: {},
+    costs: {},
+    moods: {},
+    cuisines: {},
+    minRating: 0,
+    hideClosed: true,
+    hood: '',
+    search: '',
+    cuisineSearch: ''
+  };
+
+  function anySelected(obj) { return Object.keys(obj).some(function (k) { return obj[k]; }); }
+
+  function matchesText(r, q) {
+    if (!q) return true;
+    return (r.name && r.name.toLowerCase().indexOf(q) !== -1) ||
+      (r.type && r.type.toLowerCase().indexOf(q) !== -1);
+  }
+
+  function matchesFilters(r, exclude) {
+    if (state.hideClosed && r.closed) return false;
+    if (!matchesText(r, state.search)) return false;
+    if (state.hood && r.hood !== state.hood) return false;
+    if (exclude !== 'borough' && anySelected(state.boroughs) && !state.boroughs[r.borough]) return false;
+    if (exclude !== 'cost' && anySelected(state.costs) && !state.costs[r.cost]) return false;
+    if (exclude !== 'mood' && anySelected(state.moods) && !state.moods[r.mood]) return false;
+    if (exclude !== 'cuisine' && anySelected(state.cuisines) && !state.cuisines[r.type]) return false;
+    if (exclude !== 'rating' && state.minRating > 0 && (!r.rated || r.stars < state.minRating)) return false;
+    return true;
+  }
+
+  function filteredPool() {
+    return RESTAURANTS.filter(function (r) { return matchesFilters(r, null); });
+  }
+
+  function renderCheckFacet(containerId, options, stateObj, exclude, formatCount) {
+    var el = document.getElementById(containerId);
+    var counts = {};
+    RESTAURANTS.forEach(function (r) {
+      if (!matchesFilters(r, exclude)) return;
+      var key = formatCount ? formatCount(r) : null;
+      if (key === null || key === undefined) return;
+      counts[key] = (counts[key] || 0) + 1;
+    });
+    el.innerHTML = options.map(function (opt) {
+      var n = counts[opt] || 0;
+      var checked = !!stateObj[opt];
+      var id = containerId + '-' + opt.replace(/[^a-z0-9]/gi, '');
+      return '<label class="facet-row' + (n === 0 && !checked ? ' facet-zero' : '') + '" for="' + id + '">' +
+        '<input type="checkbox" id="' + id + '" data-value="' + escapeHtml(opt) + '"' + (checked ? ' checked' : '') + '>' +
+        '<span class="facet-label">' + escapeHtml(opt) + '</span>' +
+        '<span class="facet-count">' + n + '</span>' +
+      '</label>';
+    }).join('');
+    el.querySelectorAll('input[type="checkbox"]').forEach(function (input) {
+      input.addEventListener('change', function () {
+        stateObj[input.dataset.value] = input.checked;
+        onFiltersChanged();
+      });
+    });
+  }
+
+  function renderCuisineFacet() {
+    var q = state.cuisineSearch.trim().toLowerCase();
+    var counts = {};
+    RESTAURANTS.forEach(function (r) {
+      if (!r.type) return;
+      if (!matchesFilters(r, 'cuisine')) return;
+      counts[r.type] = (counts[r.type] || 0) + 1;
+    });
+    var types = Object.keys(counts).filter(function (t) {
+      return !q || t.toLowerCase().indexOf(q) !== -1 || state.cuisines[t];
+    }).sort(function (a, b) {
+      if (!!state.cuisines[b] !== !!state.cuisines[a]) return state.cuisines[b] ? 1 : -1;
+      return counts[b] - counts[a];
+    }).slice(0, 40);
+
+    var el = document.getElementById('f-cuisine');
+    el.innerHTML = types.map(function (t) {
+      var checked = !!state.cuisines[t];
+      var id = 'f-cuisine-' + t.replace(/[^a-z0-9]/gi, '');
+      return '<label class="facet-row" for="' + id + '">' +
+        '<input type="checkbox" id="' + id + '" data-value="' + escapeHtml(t) + '"' + (checked ? ' checked' : '') + '>' +
+        '<span class="facet-label">' + escapeHtml(t) + '</span>' +
+        '<span class="facet-count">' + counts[t] + '</span>' +
+      '</label>';
+    }).join('') || '<p class="faint" style="font-size:0.85rem;">No cuisines match "' + escapeHtml(q) + '".</p>';
+    el.querySelectorAll('input[type="checkbox"]').forEach(function (input) {
+      input.addEventListener('change', function () {
+        state.cuisines[input.dataset.value] = input.checked;
+        onFiltersChanged();
+      });
+    });
+  }
+
+  function renderRatingFacet() {
+    var el = document.getElementById('f-rating');
+    el.innerHTML = RATING_OPTIONS.map(function (opt) {
+      var n = RESTAURANTS.filter(function (r) {
+        if (!matchesFilters(r, 'rating')) return false;
+        return opt.value === 0 || (r.rated && r.stars >= opt.value);
+      }).length;
+      var id = 'f-rating-' + opt.value;
+      var checked = state.minRating === opt.value;
+      return '<label class="facet-row' + (n === 0 && !checked ? ' facet-zero' : '') + '" for="' + id + '">' +
+        '<input type="radio" name="f-rating-radio" id="' + id + '" value="' + opt.value + '"' + (checked ? ' checked' : '') + '>' +
+        '<span class="facet-label">' + opt.label + '</span>' +
+        '<span class="facet-count">' + n + '</span>' +
+      '</label>';
+    }).join('');
+    el.querySelectorAll('input[type="radio"]').forEach(function (input) {
+      input.addEventListener('change', function () {
+        state.minRating = parseInt(input.value, 10);
+        onFiltersChanged();
+      });
+    });
+  }
 
   function refreshHoodOptions() {
-    var b = boroughSel.value;
-    var hoods = NEIGHBORHOODS.filter(function (n) { return !b || n.borough === b; })
+    var hoodSel = document.getElementById('f-hood');
+    var checkedBoroughs = Object.keys(state.boroughs).filter(function (k) { return state.boroughs[k]; });
+    var hoods = NEIGHBORHOODS.filter(function (n) { return !checkedBoroughs.length || checkedBoroughs.indexOf(n.borough) !== -1; })
       .map(function (n) { return n.hood; }).sort();
     var current = hoodSel.value;
     hoodSel.innerHTML = '<option value="">All neighborhoods</option>' +
       hoods.map(function (h) { return '<option value="' + escapeHtml(h) + '">' + escapeHtml(h) + '</option>'; }).join('');
-    if (hoods.indexOf(current) !== -1) hoodSel.value = current;
+    if (hoods.indexOf(current) !== -1) {
+      hoodSel.value = current;
+    } else {
+      state.hood = '';
+    }
   }
-  refreshHoodOptions();
+
+  function renderAllFacets() {
+    renderCheckFacet('f-borough', META.boroughs, state.boroughs, 'borough', function (r) { return r.borough; });
+    refreshHoodOptions();
+    renderCheckFacet('f-cost', BUDGET_OPTIONS, state.costs, 'cost', function (r) { return r.cost; });
+    renderCheckFacet('f-mood', MOOD_OPTIONS, state.moods, 'mood', function (r) { return r.mood; });
+    renderRatingFacet();
+    renderCuisineFacet();
+  }
+
+  function activeFilterCount() {
+    return Object.keys(state.boroughs).filter(function (k) { return state.boroughs[k]; }).length +
+      Object.keys(state.costs).filter(function (k) { return state.costs[k]; }).length +
+      Object.keys(state.moods).filter(function (k) { return state.moods[k]; }).length +
+      Object.keys(state.cuisines).filter(function (k) { return state.cuisines[k]; }).length +
+      (state.minRating > 0 ? 1 : 0) +
+      (state.hood ? 1 : 0);
+  }
 
   var PAGE_SIZE = 24;
   var shown = PAGE_SIZE;
 
-  function currentResults() {
-    var q = document.getElementById('dir-search').value.trim().toLowerCase();
-    var borough = boroughSel.value;
-    var hood = hoodSel.value;
-    var maxCost = document.getElementById('dir-cost').value ? parseInt(document.getElementById('dir-cost').value, 10) : null;
-    var starsFilter = document.getElementById('dir-stars').value;
+  function sortedResults() {
+    var list = filteredPool();
     var sortMode = document.getElementById('dir-sort').value;
-
-    var list = RESTAURANTS.filter(function (r) {
-      if (q && !((r.name && r.name.toLowerCase().indexOf(q) !== -1) || (r.type && r.type.toLowerCase().indexOf(q) !== -1))) return false;
-      if (borough && r.borough !== borough) return false;
-      if (hood && r.hood !== hood) return false;
-      if (maxCost && (!r.costLevel || r.costLevel > maxCost)) return false;
-      if (starsFilter === 'unrated' && r.rated) return false;
-      if (starsFilter && starsFilter !== 'unrated') {
-        var min = parseInt(starsFilter, 10);
-        if (!r.rated || r.stars < min) return false;
-      }
-      return true;
-    });
-
     list.sort(function (a, b) {
       if (sortMode === 'name') return a.name.localeCompare(b.name);
       if (sortMode === 'hood') return a.hood.localeCompare(b.hood) || a.name.localeCompare(b.name);
@@ -149,23 +325,65 @@ document.addEventListener('data:ready', function () {
     return list;
   }
 
-  function render() {
-    var list = currentResults();
+  function renderResults() {
+    var list = sortedResults();
     document.getElementById('dir-count').textContent = list.length + ' spot' + (list.length === 1 ? '' : 's');
     var slice = list.slice(0, shown);
     document.getElementById('dir-results').innerHTML = slice.map(function (r) { return spotCardHtml(r); }).join('');
     document.getElementById('load-more-wrap').style.display = list.length > shown ? '' : 'none';
   }
 
-  document.getElementById('dir-search').addEventListener('input', function () { shown = PAGE_SIZE; render(); });
-  ['dir-cost', 'dir-stars', 'dir-sort'].forEach(function (id) {
-    document.getElementById(id).addEventListener('change', function () { shown = PAGE_SIZE; render(); });
-  });
-  boroughSel.addEventListener('change', function () { refreshHoodOptions(); shown = PAGE_SIZE; render(); });
-  hoodSel.addEventListener('change', function () { shown = PAGE_SIZE; render(); });
-  document.getElementById('load-more').addEventListener('click', function () { shown += PAGE_SIZE; render(); });
+  function onFiltersChanged() {
+    renderAllFacets();
+    document.getElementById('active-count').textContent = activeFilterCount()
+      ? activeFilterCount() + ' filter' + (activeFilterCount() === 1 ? '' : 's') + ' active'
+      : 'No filters active';
+    shown = PAGE_SIZE;
+    renderResults();
+  }
 
-  render();
+  document.getElementById('clear-filters').addEventListener('click', function () {
+    state.boroughs = {}; state.costs = {}; state.moods = {}; state.cuisines = {};
+    state.minRating = 0; state.hood = ''; state.cuisineSearch = '';
+    document.getElementById('f-cuisine-search').value = '';
+    onFiltersChanged();
+  });
+
+  document.getElementById('f-hide-closed').addEventListener('change', function (e) {
+    state.hideClosed = e.target.checked;
+    onFiltersChanged();
+  });
+
+  document.getElementById('f-hood').addEventListener('change', function (e) {
+    state.hood = e.target.value;
+    onFiltersChanged();
+  });
+
+  document.getElementById('f-cuisine-search').addEventListener('input', function (e) {
+    state.cuisineSearch = e.target.value;
+    renderCuisineFacet();
+  });
+
+  document.getElementById('dir-search').addEventListener('input', function (e) {
+    state.search = e.target.value.trim().toLowerCase();
+    onFiltersChanged();
+  });
+
+  document.getElementById('dir-sort').addEventListener('change', function () {
+    shown = PAGE_SIZE;
+    renderResults();
+  });
+
+  document.getElementById('load-more').addEventListener('click', function () {
+    shown += PAGE_SIZE;
+    renderResults();
+  });
+
+  document.getElementById('mobile-filter-toggle').addEventListener('click', function () {
+    document.getElementById('dir-filters').classList.toggle('open');
+  });
+
+  onFiltersChanged();
 });
 </script>
 </body>
