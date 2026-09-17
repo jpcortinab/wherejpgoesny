@@ -319,20 +319,26 @@
   }
 
   function populateStaticOptions() {
+    // Clears each select before repopulating — this function can safely be
+    // called more than once (defensive: it's only meant to run once per
+    // sign-in, but re-running it should never duplicate options).
     var boroughs = ['Manhattan', 'Brooklyn', 'Queens', 'Bronx', 'Staten Island'];
     var boroughSel = document.getElementById('f-borough');
+    boroughSel.innerHTML = '';
     boroughs.forEach(function (b) {
       var o = document.createElement('option');
       o.value = b; o.textContent = b;
       boroughSel.appendChild(o);
     });
     var filterBoroughSel = document.getElementById('edit-filter-borough');
+    filterBoroughSel.innerHTML = '<option value="">All boroughs</option>';
     boroughs.forEach(function (b) {
       var o = document.createElement('option');
       o.value = b; o.textContent = b;
       filterBoroughSel.appendChild(o);
     });
     var moodSel = document.getElementById('f-mood');
+    moodSel.innerHTML = '<option value="">—</option>';
     MOOD_OPTIONS.forEach(function (m) {
       var o = document.createElement('option');
       o.value = m; o.textContent = m;
@@ -552,15 +558,25 @@
   });
   initStarPicker();
 
+  var editorReady = false;
+
   function showEditor(session) {
     document.getElementById('login-view').classList.add('hidden');
     document.getElementById('editor-view').classList.remove('hidden');
     document.getElementById('who-line').textContent = 'Signed in as ' + session.user.email;
+    // Supabase fires onAuthStateChange again whenever it silently refreshes
+    // the session (e.g. switching back to this tab) — without this guard,
+    // every one of those events would re-run the "just signed in" setup
+    // below, wiping out whatever was being edited and duplicating the
+    // borough/mood dropdown options.
+    if (editorReady) return;
+    editorReady = true;
     populateStaticOptions();
     refreshRows().then(resetForm);
   }
 
   function showLogin() {
+    editorReady = false;
     document.getElementById('login-view').classList.remove('hidden');
     document.getElementById('editor-view').classList.add('hidden');
   }
