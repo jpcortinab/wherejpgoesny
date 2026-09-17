@@ -1802,10 +1802,10 @@
  {
   "id": 76,
   "borough": "Manhattan",
-  "hood": "Upper East Side",
+  "hood": "Midtown West",
   "name": "Milos",
   "type": "Mediterranean",
-  "description": "Estiatorio Milos, an upscale Greek seafood restaurant known for whole fish priced by the pound and a bright, marble-heavy dining room \u2014 its NYC locations are in Midtown and Hudson Yards, not the Upper East Side.",
+  "description": "Estiatorio Milos, an upscale Greek seafood restaurant near Sixth Avenue in Midtown, known for whole fish priced by the pound, a raw bar, and a bright, marble-heavy dining room; there's also a newer outpost at Hudson Yards.",
   "descriptionSource": "researched",
   "stars": 3,
   "rated": true,
@@ -1819,8 +1819,8 @@
   "rez": "YES",
   "misc": null,
   "topPick": true,
-  "lat": 40.7736,
-  "lng": -73.9566,
+  "lat": 40.76,
+  "lng": -73.988,
   "closed": false
  },
  {

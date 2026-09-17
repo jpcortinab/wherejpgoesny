@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """
-Pushes the finished description/description_source fields to the LIVE
-Supabase 'restaurants' table — every restaurant now has a real, researched
-description, so this syncs all 505 rows to match.
+Pushes the finished description/description_source/hood fields to the LIVE
+Supabase 'restaurants' table. A previous run of this script missed 13 rows
+(a mid-run failure), so their live descriptions were still the generic
+placeholder — this re-run fixes those, picks up a handful of small wording
+touch-ups, and corrects Milos's neighborhood (it was tagged Upper East Side;
+its actual locations are Midtown and Hudson Yards).
 
 Run this yourself, locally — it needs your project's service_role key
 (Settings -> API), which is a real secret. Set it as an env var in your own
@@ -37,6 +40,7 @@ for i, r in enumerate(restaurants, 1):
     url = f"{SUPABASE_URL.rstrip('/')}/rest/v1/restaurants?id=eq.{r['id']}"
     body = json.dumps({
         "description": r["description"], "description_source": r["descriptionSource"],
+        "hood": r["hood"],
     }).encode("utf-8")
     req = urllib.request.Request(url, data=body, method="PATCH", headers={
         "apikey": SERVICE_KEY,
