@@ -38,6 +38,22 @@
   .field textarea { min-height: 60px; resize: vertical; }
   .field-check { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
   .field-check input { width: auto; }
+
+  .star-picker { display: flex; gap: 2px; }
+  .star-btn {
+    background: none; border: none; cursor: pointer; padding: 0 1px;
+    font-size: 1.7rem; line-height: 1; color: var(--line-strong);
+    transition: color 0.1s ease, transform 0.1s ease;
+  }
+  .star-btn:hover { transform: scale(1.12); }
+  .star-btn.filled { color: var(--gold); }
+  .star-picker-meta { display: flex; align-items: center; gap: 10px; margin-top: 4px; flex-wrap: wrap; }
+  .star-picker-meta .muted { font-size: 0.82rem; }
+  .star-link-btn {
+    background: none; border: none; cursor: pointer; padding: 0;
+    font-size: 0.78rem; color: var(--accent); text-decoration: underline;
+    text-underline-offset: 2px; font-family: inherit;
+  }
   #save-feedback { font-size: 0.88rem; font-weight: 600; min-height: 1.2em; margin-top: 8px; }
   #save-feedback.ok { color: var(--good); }
   #save-feedback.err { color: var(--bad); }
@@ -134,15 +150,19 @@
             <div class="field-row">
               <div class="field">
                 <label>Stars</label>
-                <select id="f-stars">
-                  <option value="">Not yet rated</option>
-                  <option value="0">0 — Poor</option>
-                  <option value="1">1 — Fair</option>
-                  <option value="2">2 — Good</option>
-                  <option value="3">3 — Very good</option>
-                  <option value="4">4 — Excellent</option>
-                  <option value="5">5 — Extraordinary</option>
-                </select>
+                <div class="star-picker" id="star-picker">
+                  <button type="button" class="star-btn" data-star="1">★</button>
+                  <button type="button" class="star-btn" data-star="2">★</button>
+                  <button type="button" class="star-btn" data-star="3">★</button>
+                  <button type="button" class="star-btn" data-star="4">★</button>
+                  <button type="button" class="star-btn" data-star="5">★</button>
+                </div>
+                <div class="star-picker-meta">
+                  <span class="muted" id="star-picker-label">Not yet rated</span>
+                  <button type="button" class="star-link-btn" id="star-zero-btn">Mark 0★ (visited, poor)</button>
+                  <button type="button" class="star-link-btn" id="star-clear-btn">Not yet rated</button>
+                </div>
+                <input type="hidden" id="f-stars">
               </div>
               <div class="field">
                 <label>Cost</label>
@@ -238,6 +258,30 @@
   function fieldVal(id) { return document.getElementById(id).value; }
   function setFieldVal(id, v) { document.getElementById(id).value = v === null || v === undefined ? '' : v; }
 
+  function renderStarPicker(value) {
+    // value: null (not yet rated) or 0-5
+    document.querySelectorAll('.star-btn').forEach(function (btn) {
+      var n = parseInt(btn.dataset.star, 10);
+      btn.classList.toggle('filled', value !== null && n <= value);
+    });
+    document.getElementById('star-picker-label').textContent =
+      value === null ? 'Not yet rated' : (value === 0 ? '0 — Poor' : value + (value === 1 ? ' star' : ' stars'));
+    document.getElementById('f-stars').value = value === null ? '' : value;
+  }
+
+  function initStarPicker() {
+    document.querySelectorAll('.star-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var n = parseInt(btn.dataset.star, 10);
+        var current = fieldVal('f-stars');
+        var currentNum = current === '' ? null : parseInt(current, 10);
+        renderStarPicker(currentNum === n ? null : n);
+      });
+    });
+    document.getElementById('star-zero-btn').addEventListener('click', function () { renderStarPicker(0); });
+    document.getElementById('star-clear-btn').addEventListener('click', function () { renderStarPicker(null); });
+  }
+
   function populateStaticOptions() {
     var boroughSel = document.getElementById('f-borough');
     ['Manhattan', 'Brooklyn', 'Queens', 'Bronx', 'Staten Island'].forEach(function (b) {
@@ -293,7 +337,7 @@
     setFieldVal('f-hood', r.hood);
     setFieldVal('f-name', r.name);
     setFieldVal('f-type', r.type);
-    setFieldVal('f-stars', r.stars === null ? '' : r.stars);
+    renderStarPicker(r.stars === undefined ? null : r.stars);
     setFieldVal('f-cost', r.cost);
     setFieldVal('f-mood', r.mood);
     setFieldVal('f-rec', r.rec);
@@ -313,6 +357,7 @@
     document.querySelectorAll('.edit-row').forEach(function (el) { el.classList.remove('active'); });
     document.getElementById('form-heading').textContent = 'New restaurant';
     document.getElementById('edit-form').reset();
+    renderStarPicker(null);
     document.getElementById('delete-btn').classList.add('hidden');
     clearFeedback();
   }
@@ -408,6 +453,7 @@
 
   document.getElementById('new-btn').addEventListener('click', resetForm);
   document.getElementById('edit-search').addEventListener('input', function (e) { renderList(e.target.value); });
+  initStarPicker();
 
   function showEditor(session) {
     document.getElementById('login-view').classList.add('hidden');
