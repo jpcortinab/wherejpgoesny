@@ -185,13 +185,68 @@
 <script src="js/supabase-client.js"></script>
 <script src="js/data-live.js"></script>
 <script src="js/util.js"></script>
+<script src="js/nyc-boroughs.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
-  var map = L.map('map', { scrollWheelZoom: false }).setView([40.735, -73.95], 11);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors',
-    maxZoom: 18
+  // Padded bounding box around the five boroughs — keeps people from panning
+  // off into a sea of white nothingness.
+  var NYC_BOUNDS = [[40.46, -74.30], [40.95, -73.65]];
+
+  var map = L.map('map', {
+    scrollWheelZoom: false,
+    maxBounds: NYC_BOUNDS,
+    maxBoundsViscosity: 0.8,
+    minZoom: 10
+  }).setView([40.72, -73.97], 11);
+
+  function esriTileUrl(dark) {
+    return 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_' +
+      (dark ? 'Dark_Gray_Base' : 'Light_Gray_Base') + '/MapServer/tile/{z}/{y}/{x}';
+  }
+  var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var tileLayer = L.tileLayer(esriTileUrl(isDark), {
+    attribution: 'Esri, HERE, Garmin, &copy; OpenStreetMap contributors, and the GIS User Community',
+    maxZoom: 16
   }).addTo(map);
+
+  // Mask everything outside the five boroughs: one polygon whose outer ring
+  // covers the whole visible world, with each borough shape cut out of it as
+  // a hole (Leaflet/SVG's default even-odd fill rule punches holes wherever
+  // ring winding alternates), leaving only the boroughs showing real tiles.
+  function buildBoroughMask() {
+    var world = [[-85, -180], [85, -180], [85, 180], [-85, 180]];
+    var holes = [];
+    NYC_BOROUGHS_GEOJSON.features.forEach(function (f) {
+      var geom = f.geometry;
+      var polys = geom.type === 'MultiPolygon' ? geom.coordinates : [geom.coordinates];
+      polys.forEach(function (poly) {
+        holes.push(poly[0].map(function (c) { return [c[1], c[0]]; }));
+      });
+    });
+    var maskColor = getComputedStyle(document.documentElement).getPropertyValue('--paper-raised').trim() || '#ffffff';
+    return L.polygon([world].concat(holes), {
+      stroke: false,
+      fillColor: maskColor,
+      fillOpacity: 1,
+      interactive: false
+    }).addTo(map);
+  }
+  var boroughMask = buildBoroughMask();
+
+  // Outline the boroughs themselves, subtly, so the cut edge reads as
+  // intentional rather than like the map is broken.
+  var lineColor = getComputedStyle(document.documentElement).getPropertyValue('--line-strong').trim() || '#d8cbb0';
+  L.geoJSON(NYC_BOROUGHS_GEOJSON, {
+    style: { color: lineColor, weight: 1, fillOpacity: 0, interactive: false }
+  }).addTo(map);
+
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+      tileLayer.setUrl(esriTileUrl(e.matches));
+      var newMaskColor = getComputedStyle(document.documentElement).getPropertyValue('--paper-raised').trim();
+      if (newMaskColor) boroughMask.setStyle({ fillColor: newMaskColor });
+    });
+  }
 
   function colorFor(topRating) {
     if (topRating === null || topRating === undefined) return '#d8cbb0';
