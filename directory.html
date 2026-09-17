@@ -120,11 +120,12 @@
         <div class="dir-toolbar">
           <input type="search" id="dir-search" placeholder="Search by name…">
           <select id="dir-sort">
-            <option value="rating">Sort: top rated</option>
-            <option value="rec">Sort: most recommended</option>
-            <option value="name">Sort: name A–Z</option>
+            <option value="rating">Sort: rating</option>
+            <option value="rec">Sort: recommended</option>
+            <option value="name">Sort: name</option>
             <option value="hood">Sort: neighborhood</option>
           </select>
+          <button type="button" class="btn btn-outline" id="dir-sort-dir"></button>
         </div>
         <div id="dir-count"></div>
         <div class="grid grid-auto" id="dir-results"></div>
@@ -311,16 +312,37 @@ document.addEventListener('data:ready', function () {
   var PAGE_SIZE = 24;
   var shown = PAGE_SIZE;
 
+  var sortDir = 1; // 1 = the default order for the current sort mode, -1 = reversed
+
+  var SORT_DIR_LABELS = {
+    rating: ['High → low', 'Low → high'],
+    rec: ['Most → least', 'Least → most'],
+    name: ['A → Z', 'Z → A'],
+    hood: ['A → Z', 'Z → A']
+  };
+
+  function updateSortDirButton() {
+    var mode = document.getElementById('dir-sort').value;
+    var labels = SORT_DIR_LABELS[mode] || ['↓', '↑'];
+    document.getElementById('dir-sort-dir').textContent = sortDir === 1 ? labels[0] : labels[1];
+  }
+
   function sortedResults() {
     var list = filteredPool();
     var sortMode = document.getElementById('dir-sort').value;
     list.sort(function (a, b) {
-      if (sortMode === 'name') return a.name.localeCompare(b.name);
-      if (sortMode === 'hood') return a.hood.localeCompare(b.hood) || a.name.localeCompare(b.name);
-      if (sortMode === 'rec') return b.recScore - a.recScore;
-      var as = a.stars === null ? -1 : a.stars, bs = b.stars === null ? -1 : b.stars;
-      if (bs !== as) return bs - as;
-      return b.recScore - a.recScore;
+      var cmp;
+      if (sortMode === 'name') {
+        cmp = a.name.localeCompare(b.name);
+      } else if (sortMode === 'hood') {
+        cmp = a.hood.localeCompare(b.hood) || a.name.localeCompare(b.name);
+      } else if (sortMode === 'rec') {
+        cmp = b.recScore - a.recScore;
+      } else {
+        var as = a.stars === null ? -1 : a.stars, bs = b.stars === null ? -1 : b.stars;
+        cmp = bs !== as ? bs - as : b.recScore - a.recScore;
+      }
+      return cmp * sortDir;
     });
     return list;
   }
@@ -370,6 +392,15 @@ document.addEventListener('data:ready', function () {
   });
 
   document.getElementById('dir-sort').addEventListener('change', function () {
+    sortDir = 1;
+    updateSortDirButton();
+    shown = PAGE_SIZE;
+    renderResults();
+  });
+
+  document.getElementById('dir-sort-dir').addEventListener('click', function () {
+    sortDir *= -1;
+    updateSortDirButton();
     shown = PAGE_SIZE;
     renderResults();
   });
@@ -383,6 +414,7 @@ document.addEventListener('data:ready', function () {
     document.getElementById('dir-filters').classList.toggle('open');
   });
 
+  updateSortDirButton();
   onFiltersChanged();
 });
 </script>
