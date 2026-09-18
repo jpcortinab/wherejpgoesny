@@ -66,7 +66,7 @@
 
       <div class="quiz-step">
         <h3><span class="step-num">1</span>Where in the city?</h3>
-        <p class="muted" style="margin-bottom:12px;">Pick as many as you like. Leave blank for anywhere. Pick Manhattan or Brooklyn and I'll ask which part.</p>
+        <p class="muted" style="margin-bottom:12px;">Pick as many as you like. Leave blank for anywhere. Pick Manhattan or Brooklyn and I'll let you narrow to a specific neighborhood.</p>
         <div class="choice-grid" id="q-borough"></div>
         <div id="area-filters"></div>
       </div>
@@ -124,60 +124,38 @@ document.addEventListener('data:ready', function () {
     }).join('');
   }
 
-  var GENERAL_AREAS = {
-    'Manhattan': {
-      'Uptown': ['Upper East Side', 'Upper West Side', 'Harlem'],
-      'Midtown': ['Midtown West', 'Midtown East', 'Murray Hill', 'Hudson Yards', 'Rockefeller Center', 'Chelsea', 'Flatiron'],
-      'Downtown': ['West Village', 'Greenwich Village', 'East Village', 'Soho', 'Nolita', 'Tribeca', 'Noho', 'Chinatown', 'Lower East Side', 'FiDi', 'Hudson Square']
-    },
-    'Brooklyn': {
-      'North Brooklyn': ['Williamsburg', 'Greenpoint', 'Bushwick'],
-      'Downtown Brooklyn': ['Brooklyn Heights', 'DUMBO', 'Downtown Brooklyn', 'Fort Greene', 'Carroll Gardens', 'Red Hook'],
-      'Central Brooklyn': ['Bedford-Stuyvesant'],
-      'South Brooklyn': ['Sunset Park', 'Bensonhurst', 'Sheepshead Bay', 'Gravesend', 'New Lots']
-    }
-  };
+  var HOOD_PICKER_BOROUGHS = ['Manhattan', 'Brooklyn'];
 
-  var MANHATTAN_HOODS = Array.from(new Set(
-    RESTAURANTS.filter(function (r) { return r.borough === 'Manhattan'; }).map(function (r) { return r.hood; })
-  )).sort();
+  function hoodsFor(borough) {
+    return Array.from(new Set(
+      RESTAURANTS.filter(function (r) { return r.borough === borough; }).map(function (r) { return r.hood; })
+    )).sort();
+  }
 
-  function renderAreaFilters() {
+  function renderHoodFilters() {
     var checkedBoroughs = getChecked('borough');
     var preserved = {};
-    Object.keys(GENERAL_AREAS).forEach(function (b) { preserved[b] = getChecked('area-' + b); });
-    var preservedHood = getChecked('hood-Manhattan');
+    HOOD_PICKER_BOROUGHS.forEach(function (b) { preserved[b] = getChecked('hood-' + b); });
 
     var html = '';
-    Object.keys(GENERAL_AREAS).forEach(function (b) {
+    HOOD_PICKER_BOROUGHS.forEach(function (b) {
       if (checkedBoroughs.indexOf(b) === -1) return;
       html += '<div class="area-group">' +
-        '<div class="area-label">Which part of ' + b + '?</div>' +
-        '<div class="choice-grid" id="q-area-' + b + '"></div>' +
+        '<div class="area-label">Specific neighborhood in ' + b + '?</div>' +
+        '<div class="choice-grid" id="q-hood-' + b + '"></div>' +
       '</div>';
-      if (b === 'Manhattan') {
-        html += '<div class="area-group">' +
-          '<div class="area-label">Or a specific neighborhood in Manhattan?</div>' +
-          '<div class="choice-grid" id="q-hood-Manhattan"></div>' +
-        '</div>';
-      }
     });
     document.getElementById('area-filters').innerHTML = html;
 
-    Object.keys(GENERAL_AREAS).forEach(function (b) {
+    HOOD_PICKER_BOROUGHS.forEach(function (b) {
       if (checkedBoroughs.indexOf(b) === -1) return;
-      buildChoiceGrid('q-area-' + b, Object.keys(GENERAL_AREAS[b]), 'area-' + b, true);
-      preserved[b].forEach(function (v) { setChecked('area-' + b, v); });
+      buildChoiceGrid('q-hood-' + b, hoodsFor(b), 'hood-' + b, true);
+      preserved[b].forEach(function (v) { setChecked('hood-' + b, v); });
     });
-
-    if (checkedBoroughs.indexOf('Manhattan') !== -1) {
-      buildChoiceGrid('q-hood-Manhattan', MANHATTAN_HOODS, 'hood-Manhattan', true);
-      preservedHood.forEach(function (v) { setChecked('hood-Manhattan', v); });
-    }
   }
 
   buildChoiceGrid('q-borough', META.boroughs, 'borough', true);
-  document.getElementById('q-borough').addEventListener('change', renderAreaFilters);
+  document.getElementById('q-borough').addEventListener('change', renderHoodFilters);
 
   var budgetOptions = ['$', '$$', '$$$', '$$$$', '$$$$$'];
   buildChoiceGrid('q-budget', budgetOptions, 'budget', false);
@@ -193,11 +171,11 @@ document.addEventListener('data:ready', function () {
     return Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(function (i) { return i.value; });
   }
 
-  function activeAreaSelections() {
+  function activeHoodSelections() {
     var sel = {};
-    Object.keys(GENERAL_AREAS).forEach(function (b) {
-      var areas = getChecked('area-' + b);
-      if (areas.length) sel[b] = areas;
+    HOOD_PICKER_BOROUGHS.forEach(function (b) {
+      var hoods = getChecked('hood-' + b);
+      if (hoods.length) sel[b] = hoods;
     });
     return sel;
   }
@@ -208,8 +186,7 @@ document.addEventListener('data:ready', function () {
     var moods = getChecked('mood');
     var cuisineRaw = document.getElementById('cuisine-input').value.trim();
     var cuisines = cuisineRaw ? cuisineRaw.split(',').map(function (c) { return c.trim().toLowerCase(); }).filter(Boolean) : [];
-    var areaSel = activeAreaSelections();
-    var hoodSel = getChecked('hood-Manhattan');
+    var hoodSel = activeHoodSelections();
 
     // Budget and vibe are hard constraints — they never get relaxed, even if
     // that means fewer than 5 results. A slightly different neighborhood or
@@ -220,20 +197,14 @@ document.addEventListener('data:ready', function () {
     var useCost = maxCostLevel > 0;
     var useMood = moods.length > 0;
 
-    var useBoroughs = relaxLevel < 4 && boroughs.length > 0;
-    var useArea = relaxLevel < 3 && Object.keys(areaSel).length > 0;
-    var useHood = relaxLevel < 2 && hoodSel.length > 0;
+    var useBoroughs = relaxLevel < 3 && boroughs.length > 0;
+    var useHood = relaxLevel < 2 && Object.keys(hoodSel).length > 0;
     var useCuisine = relaxLevel < 1 && cuisines.length > 0;
 
     var pool = RESTAURANTS.filter(function (r) {
       if (!r.rated || r.recScore < 0 || r.closed) return false;
       if (useBoroughs && boroughs.indexOf(r.borough) === -1) return false;
-      if (useHood && r.borough === 'Manhattan' && hoodSel.indexOf(r.hood) === -1) return false;
-      if (useArea && areaSel[r.borough]) {
-        var map = GENERAL_AREAS[r.borough];
-        var inArea = areaSel[r.borough].some(function (a) { return (map[a] || []).indexOf(r.hood) !== -1; });
-        if (!inArea) return false;
-      }
+      if (useHood && hoodSel[r.borough] && hoodSel[r.borough].indexOf(r.hood) === -1) return false;
       if (useCost && (!r.costLevel || r.costLevel > maxCostLevel)) return false;
       if (useMood && (!r.mood || !moods.some(function (m) { return moodPocket(m) === moodPocket(r.mood); }))) return false;
       if (useCuisine && !cuisines.some(function (c) { return r.type && r.type.toLowerCase().indexOf(c) !== -1; })) return false;
@@ -245,7 +216,7 @@ document.addEventListener('data:ready', function () {
       return scoreB - scoreA;
     });
 
-    return { pool: pool, relaxLevel: relaxLevel, useCuisine: useCuisine, useMood: useMood, useCost: useCost, useHood: useHood, useArea: useArea, useBoroughs: useBoroughs };
+    return { pool: pool, relaxLevel: relaxLevel, useCuisine: useCuisine, useMood: useMood, useCost: useCost, useHood: useHood, useBoroughs: useBoroughs };
   }
 
   function whyLine(r, ctx) {
@@ -262,14 +233,13 @@ document.addEventListener('data:ready', function () {
     var relax = 0;
     var result = runQuiz(relax);
     var notes = [];
-    while (result.pool.length < 5 && relax < 4) {
+    while (result.pool.length < 5 && relax < 3) {
       relax++;
       var before = result;
       result = runQuiz(relax);
       if (relax === 1 && before.useCuisine) notes.push('widened past your cuisine pick');
       if (relax === 2 && before.useHood) notes.push('widened past your specific neighborhood pick');
-      if (relax === 3 && before.useArea) notes.push('widened past your area pick');
-      if (relax === 4 && before.useBoroughs) notes.push('widened past your neighborhood pick');
+      if (relax === 3 && before.useBoroughs) notes.push('widened past your neighborhood pick');
     }
 
     var top = result.pool.slice(0, 5);
@@ -308,12 +278,10 @@ document.addEventListener('data:ready', function () {
     var params = new URLSearchParams();
     var boroughs = getChecked('borough');
     if (boroughs.length) params.set('b', boroughs.join(','));
-    var am = getChecked('area-Manhattan');
-    if (am.length) params.set('am', am.join(','));
-    var ab = getChecked('area-Brooklyn');
-    if (ab.length) params.set('ab', ab.join(','));
     var hm = getChecked('hood-Manhattan');
     if (hm.length) params.set('hm', hm.join(','));
+    var hb = getChecked('hood-Brooklyn');
+    if (hb.length) params.set('hb', hb.join(','));
     var budget = (document.querySelector('input[name="budget"]:checked') || {}).value;
     if (budget) params.set('c', budget);
     var moods = getChecked('mood');
@@ -338,13 +306,11 @@ document.addEventListener('data:ready', function () {
   function applyStateFromParams(params) {
     var b = params.get('b');
     if (b) b.split(',').forEach(function (v) { setChecked('borough', v); });
-    renderAreaFilters();
-    var am = params.get('am');
-    if (am) am.split(',').forEach(function (v) { setChecked('area-Manhattan', v); });
-    var ab = params.get('ab');
-    if (ab) ab.split(',').forEach(function (v) { setChecked('area-Brooklyn', v); });
+    renderHoodFilters();
     var hm = params.get('hm');
     if (hm) hm.split(',').forEach(function (v) { setChecked('hood-Manhattan', v); });
+    var hb = params.get('hb');
+    if (hb) hb.split(',').forEach(function (v) { setChecked('hood-Brooklyn', v); });
     var c = params.get('c');
     if (c) setChecked('budget', c);
     var m = params.get('m');
