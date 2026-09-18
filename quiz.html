@@ -211,11 +211,18 @@ document.addEventListener('data:ready', function () {
     var areaSel = activeAreaSelections();
     var hoodSel = getChecked('hood-Manhattan');
 
-    var useBoroughs = relaxLevel < 6 && boroughs.length > 0;
-    var useArea = relaxLevel < 5 && Object.keys(areaSel).length > 0;
-    var useHood = relaxLevel < 4 && hoodSel.length > 0;
-    var useCost = relaxLevel < 3 && maxCostLevel > 0;
-    var useMood = relaxLevel < 2 && moods.length > 0;
+    // Budget and vibe are hard constraints — they never get relaxed, even if
+    // that means fewer than 5 results. A slightly different neighborhood or
+    // cuisine is still a useful suggestion; the wrong price tier or the
+    // wrong occasion (e.g. fine dining when you asked for casual) isn't —
+    // it's better to honestly show fewer matches than to quietly substitute
+    // something that doesn't fit what was actually asked for.
+    var useCost = maxCostLevel > 0;
+    var useMood = moods.length > 0;
+
+    var useBoroughs = relaxLevel < 4 && boroughs.length > 0;
+    var useArea = relaxLevel < 3 && Object.keys(areaSel).length > 0;
+    var useHood = relaxLevel < 2 && hoodSel.length > 0;
     var useCuisine = relaxLevel < 1 && cuisines.length > 0;
 
     var pool = RESTAURANTS.filter(function (r) {
@@ -255,22 +262,24 @@ document.addEventListener('data:ready', function () {
     var relax = 0;
     var result = runQuiz(relax);
     var notes = [];
-    while (result.pool.length < 5 && relax < 6) {
+    while (result.pool.length < 5 && relax < 4) {
       relax++;
       var before = result;
       result = runQuiz(relax);
       if (relax === 1 && before.useCuisine) notes.push('widened past your cuisine pick');
-      if (relax === 2 && before.useMood) notes.push('widened past your vibe pick');
-      if (relax === 3 && before.useCost) notes.push('widened past your budget');
-      if (relax === 4 && before.useHood) notes.push('widened past your specific neighborhood pick');
-      if (relax === 5 && before.useArea) notes.push('widened past your area pick');
-      if (relax === 6 && before.useBoroughs) notes.push('widened past your neighborhood pick');
+      if (relax === 2 && before.useHood) notes.push('widened past your specific neighborhood pick');
+      if (relax === 3 && before.useArea) notes.push('widened past your area pick');
+      if (relax === 4 && before.useBoroughs) notes.push('widened past your neighborhood pick');
     }
 
     var top = result.pool.slice(0, 5);
-    var html = '<h2 style="margin-top:8px;">Your five</h2>';
+    var headline = top.length === 0 ? 'No matches' : (top.length < 5 ? 'Your ' + top.length : 'Your five');
+    var html = '<h2 style="margin-top:8px;">' + headline + '</h2>';
     if (notes.length) {
-      html += '<p class="faint">Not many exact matches, so I ' + notes.join(', then ') + ' to still get you five.</p>';
+      html += '<p class="faint">Not many exact matches, so I ' + notes.join(', then ') + '.</p>';
+    }
+    if (top.length < 5 && (result.useCost || result.useMood)) {
+      html += '<p class="faint">Budget and vibe are kept exact, so that' + (top.length ? "'s everything that fits right now." : ' — try a different budget or vibe.') + '</p>';
     }
     if (!top.length) {
       html += '<p class="muted">Nothing matched — try loosening a filter.</p>';
