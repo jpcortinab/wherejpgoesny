@@ -235,7 +235,7 @@ document.addEventListener('data:ready', function () {
         if (!inArea) return false;
       }
       if (useCost && (!r.costLevel || r.costLevel > maxCostLevel)) return false;
-      if (useMood && (!r.mood || moods.indexOf(r.mood) === -1)) return false;
+      if (useMood && (!r.mood || !moods.some(function (m) { return moodPocket(m) === moodPocket(r.mood); }))) return false;
       if (useCuisine && !cuisines.some(function (c) { return r.type && r.type.toLowerCase().indexOf(c) !== -1; })) return false;
       return true;
     });

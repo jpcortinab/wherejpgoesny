@@ -57,6 +57,24 @@ const MOOD_OPTIONS = [
   "Casual", "Elevated Casual", "Nice", "Formal", "Fine Dining", "Street / Quick", "Bar & Drinks"
 ];
 
+// Moods that are close enough in practice to count as a match for each
+// other (used by the quiz, where vibe is a hard constraint but shouldn't
+// be pickier than a person actually is — "Casual" and "Street / Quick"
+// are the same kind of night out, as are "Elevated Casual" through
+// "Fine Dining"). Moods not listed here only match themselves.
+const MOOD_POCKETS = {
+  "Casual": "casual",
+  "Street / Quick": "casual",
+  "Elevated Casual": "upscale",
+  "Nice": "upscale",
+  "Formal": "upscale",
+  "Fine Dining": "upscale"
+};
+
+function moodPocket(mood) {
+  return MOOD_POCKETS[mood] || mood;
+}
+
 const BUDGET_OPTIONS = ["$", "$$", "$$$", "$$$$", "$$$$$"];
 
 function coordsFor(borough, hood) {
