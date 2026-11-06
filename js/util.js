@@ -27,7 +27,10 @@ function recPillHtml(spot) {
   if (spot.recScore >= 2) cls = 'pill-good';
   else if (spot.recScore >= 0.5) cls = 'pill-gold';
   else if (spot.recScore < 0) cls = 'pill-bad';
-  return '<span class="pill ' + cls + '">' + escapeHtml(spot.rec) + '</span>';
+  // Labeled as a personal call on purpose — it's separate from the stars. A
+  // 5★ place can still get a "meh" here (e.g. a perennial best-restaurant
+  // winner or a $400 prix fixe isn't something I'd actually "recommend").
+  return '<span class="pill ' + cls + '" title="My personal recommendation — would I actually tell a friend to go? Separate from the star rating.">My rec: ' + escapeHtml(spot.rec) + '</span>';
 }
 
 function moodPillHtml(spot) {
