@@ -467,6 +467,25 @@ footer .wrap {
 
 .legend-item:last-child { border-bottom: none; }
 
+/* "How to read My rec" callout — shown at the top of pages that list restaurants */
+.rec-note {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin: 16px 0 0;
+  max-width: 760px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.rec-note b { color: var(--ink); }
+.rec-note-example {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin-top: 8px; font-size: 0.82rem;
+}
+
 /* Faceted checkbox filters — shared by the map and directory pages */
 .filter-section { padding: 14px 0; border-bottom: 1px solid var(--line); }
 .filter-section:first-child { padding-top: 0; }

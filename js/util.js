@@ -33,6 +33,28 @@ function recPillHtml(spot) {
   return '<span class="pill ' + cls + '" title="My personal recommendation — would I actually tell a friend to go? Separate from the star rating.">My rec: ' + escapeHtml(spot.rec) + '</span>';
 }
 
+// The one place the "what does My rec mean" explanation lives. Shown at the
+// top of every page that lists restaurant cards (see data-rec-note placeholders
+// and the quiz results), so edit the wording here and it updates everywhere.
+function recNoteHtml() {
+  return (
+    '<div class="rec-note">' +
+      '<div><b>How to read &ldquo;My rec&rdquo;:</b> the stars are how good a place is. ' +
+      '<b>My rec</b> is whether I&rsquo;d personally tell a friend to go &mdash; so a 5&#9733; spot can still get a &ldquo;meh&rdquo; from me. ' +
+      'I won&rsquo;t &ldquo;recommend&rdquo; a restaurant that&rsquo;s been voted best in the city year after year, or a $400 prix fixe &mdash; that would be a little absurd.</div>' +
+      '<div class="rec-note-example">' + starsHtml(5) +
+        '<span class="pill pill-gold">My rec: MEH</span>' +
+        '<span>= extraordinary, just not something I&rsquo;d send you to.</span></div>' +
+    '</div>'
+  );
+}
+
+function setupRecNotes() {
+  document.querySelectorAll('[data-rec-note]').forEach(function (el) {
+    el.innerHTML = recNoteHtml();
+  });
+}
+
 function moodPillHtml(spot) {
   if (!spot.mood) return '';
   return '<span class="pill pill-neutral">' + escapeHtml(spot.mood) + '</span>';
@@ -136,3 +158,5 @@ document.addEventListener('data:ready', setupLastUpdated);
 document.addEventListener('DOMContentLoaded', setupNav);
 
 document.addEventListener('DOMContentLoaded', setupSpotToggles);
+
+document.addEventListener('DOMContentLoaded', setupRecNotes);

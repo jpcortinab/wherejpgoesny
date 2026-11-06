@@ -17,6 +17,7 @@
   .quiz-step .step-num { color: var(--accent); font-family: var(--serif); font-weight: 700; margin-right: 6px; }
   #cuisine-input { width: 100%; max-width: 420px; }
   #results { margin-top: 12px; }
+  #results .rec-note { margin-bottom: 14px; }
   .result-badge {
     display: inline-flex; align-items: center; justify-content: center;
     width: 26px; height: 26px; border-radius: 50%;
@@ -254,6 +255,7 @@ document.addEventListener('data:ready', function () {
     if (!top.length) {
       html += '<p class="muted">Nothing matched — try loosening a filter.</p>';
     } else {
+      html += recNoteHtml();
       html += '<div class="share-row">' +
         '<button class="btn btn-outline" id="share-btn" type="button">🔗 Copy link to these five</button>' +
         '<span id="share-feedback"></span>' +
