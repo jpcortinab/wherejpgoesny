@@ -1,4 +1,4 @@
-# NYC Art Index — cross-device sync
+# Art Agenda — cross-device sync
 
 The website works without cloud sync: visits and monthly watchlists stay on this browser. **Sync / share** also offers a transfer link that imports a one-time snapshot on another device.
 
