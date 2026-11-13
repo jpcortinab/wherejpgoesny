@@ -187,6 +187,24 @@ dialog::backdrop{background:#1c332ab8;backdrop-filter:blur(3px)}
 @media(max-width:780px){.shell{padding:0 19px}.topbar{min-height:68px;gap:14px}.hero{padding:33px 0 34px;display:block}.hero-numbers{margin-top:25px;gap:30px}.hero-numbers strong{font-size:34px}.month-cluster .month-label{display:none}.month-strip .shell{padding-top:12px;padding-bottom:12px}.watch-layout{display:flex;flex-direction:column}.map-pane{order:-1;position:relative;top:auto;width:100%}.list-pane{width:100%}.map-container{height:370px;min-height:370px}.directory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.view-header{align-items:start}.view-header h2{font-size:30px}}
 @media(max-width:555px){.shell{padding:0 14px}.topbar{flex-wrap:wrap;justify-content:center;padding:14px 0 12px}.identity{font-size:10px}.topnav{width:100%;justify-content:stretch}.navlink{flex:1;padding:10px 9px;font-size:11px}.hero{padding-top:27px}.hero-numbers{gap:23px}.hero-numbers strong{font-size:31px}.hero-numbers small{font-size:9px}h1{font-size:49px}.month-strip .shell{gap:11px}.month-cluster{width:100%;justify-content:center}.month-actions{width:100%;justify-content:center}.view-header{display:block}.small-actions{margin-top:12px}.search-row{display:block}.searchbox{margin-bottom:8px}.filterselect{max-width:none;width:100%}.directory-grid{grid-template-columns:1fr}.catalog-tools{display:grid;grid-template-columns:1fr 1fr}.catalog-tools .searchbox{grid-column:1/-1;min-width:0;max-width:none;margin:0}.catalog-tools .filterselect{min-width:0;max-width:none;width:100%}#catalogCount{grid-column:1/-1;margin:0}.discover-info{display:block}.discover-info button{margin-top:11px}.map-container{height:315px;min-height:315px}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.pagefooter{display:block}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+/* Compact itinerary cards and cloud-sharing controls */
+[hidden]{display:none!important}
+.plan-strip{background:#f1f4ed;border:1px solid #dce6d8;border-radius:13px;padding:14px 15px;margin:-1px 0 20px}
+.plan-heading{display:flex;gap:15px;justify-content:space-between;align-items:center;margin-bottom:11px}
+.plan-heading strong{font-size:10px;color:#55705e;letter-spacing:.11em;text-transform:uppercase}
+.plan-heading button{border:0;background:transparent;color:#3e7453;font-size:11px;font-weight:750;cursor:pointer}
+.plan-days{display:flex;gap:9px;overflow-x:auto;padding:1px 1px 4px;scroll-snap-type:x proximity}
+.plan-day{display:flex;flex-direction:column;align-items:flex-start;flex:0 0 auto;min-width:145px;max-width:230px;gap:4px;border:1px solid #dae5d9;background:white;border-radius:10px;padding:10px 12px;text-align:left;scroll-snap-align:start}
+.plan-day strong{font-size:13px;color:#2b4e3b}.plan-day span{font-size:10px;color:#6d7c70}.plan-day.active{border-color:#477a59;background:#e0f0e1;box-shadow:inset 0 0 0 1px #477a59}
+.cloud-status{color:#587364;font-size:12px;line-height:1.65;margin:0 0 16px}
+.cloud-sections{padding:20px 24px;display:grid;gap:16px;max-height:70vh;overflow:auto}
+.cloud-section{border:1px solid #e2eade;border-radius:11px;padding:15px;background:#fbfcfa}
+.cloud-section h3{font:normal 21px/1.2 var(--serif);margin:0 0 7px}
+.cloud-section p{font-size:11px;line-height:1.65;color:#6c7d6f;margin:0 0 12px}
+.cloud-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.cloud-row input{padding:10px 11px;font-size:12px;border:1px solid #dce5d9;border-radius:8px;min-width:190px;flex:1}
+.cloud-section small{color:#879388;font-size:10px;line-height:1.5}
+@media(max-width:555px){.plan-day{min-width:130px}.cloud-sections{padding:14px}.cloud-row input{width:100%}.month-actions #cloudBtn{order:-1}}
 </style>
 </head>
 <body>
@@ -224,6 +242,7 @@ dialog::backdrop{background:#1c332ab8;backdrop-filter:blur(3px)}
       <div class="month-actions">
         <button type="button" class="ghost" id="newShow">+ Add exhibition</button>
         <button type="button" class="ghost" id="importBtn">↑ Import JSON</button>
+        <button type="button" class="ghost" id="cloudBtn">⇄ Sync / share</button>
         <button type="button" class="solid" id="backupBtn">↓ Save backup</button>
         <input id="importFile" type="file" accept="application/json,.json" hidden>
       </div>
@@ -242,6 +261,10 @@ dialog::backdrop{background:#1c332ab8;backdrop-filter:blur(3px)}
           <button type="button" class="soft" id="exploreFromWatch">+ Explore exhibitions</button>
         </div>
       </div>
+      <section class="plan-strip" id="planStrip" aria-label="Upcoming planned visits" hidden>
+        <div class="plan-heading"><strong>Your planned visits</strong><button type="button" id="clearPlan" hidden>Show all exhibitions ×</button></div>
+        <div id="planDays" class="plan-days"></div>
+      </section>
       <div class="watch-layout">
         <div class="list-pane">
           <div class="search-row">
@@ -287,7 +310,7 @@ dialog::backdrop{background:#1c332ab8;backdrop-filter:blur(3px)}
       <div id="directoryCards" class="directory-grid" aria-live="polite"></div>
     </section>
     <footer class="pagefooter">
-      <div>Curated exhibition dates and links checked November 13, 2026. Confirm opening hours and reservations before going.<br>Watchlists and custom exhibitions save <strong>in this browser</strong>, not to an online account. Export JSON to keep a backup or move devices.</div>
+      <div>Curated exhibition dates and links checked November 13, 2026. Confirm opening hours and reservations before going.<br>Watchlists save <strong>in this browser</strong> until cloud sync is connected. Use Sync / share for a transfer link, or export JSON for a backup.</div>
       <div>NYC / ART INDEX &nbsp; · &nbsp; Made to keep exploring.</div>
     </footer>
   </main>
@@ -314,10 +337,23 @@ dialog::backdrop{background:#1c332ab8;backdrop-filter:blur(3px)}
       <div class="form-foot"><label class="checkadd"><input type="checkbox" id="formAdd" checked> Add to <span id="formMonth">November 2026</span> watchlist</label><div style="display:flex;gap:8px"><button type="button" class="ghost" id="cancelDialog">Cancel</button><button type="submit" class="solid" id="saveShow">Save exhibition</button></div></div>
     </form>
   </dialog>
+  <dialog id="cloudDialog" aria-labelledby="cloudDialogTitle">
+    <div class="dialog-head"><div><h2 id="cloudDialogTitle">Sync & share</h2><p>Keep your art list on another device.</p></div><button class="xbtn" type="button" id="closeCloud" aria-label="Close dialog">×</button></div>
+    <div class="cloud-sections">
+      <p id="cloudStatus" class="cloud-status" role="status" aria-live="polite"></p>
+      <div class="cloud-section"><h3>Move to another device</h3><p>Copy a private transfer link and open it on your phone or computer. This copies a snapshot of the current list; it does not automatically update afterward.</p><button type="button" class="solid" id="copyTransfer">Copy transfer link ↗</button><div><small>Anyone with this link can view the saved list. Keep it private.</small></div></div>
+      <div class="cloud-section" id="cloudSetup"><h3>Automatic cloud sync</h3><p>Not configured yet. Your watchlist is safe in this browser. A private Supabase account is needed to enable secure cross-device syncing.</p><a class="textlink" href="./SYNC_SETUP.md" target="_blank" rel="noopener noreferrer">Setup instructions ↗</a></div>
+      <div class="cloud-section"><h3>Cloud account</h3>
+        <form id="cloudLoginForm" class="cloud-row" hidden><input id="cloudEmail" type="email" required placeholder="Email address" aria-label="Email for cloud sync"><button type="submit" class="solid">Email sign-in link</button></form>
+        <div id="cloudSignedIn" hidden><p id="cloudAccount"></p><div class="cloud-row"><button type="button" class="soft" id="cloudDownload">Restore from cloud</button><button type="button" class="ghost" id="cloudUpload">Use this device's list</button><button type="button" class="ghost" id="cloudSignOut">Sign out</button></div></div>
+      </div>
+    </div>
+  </dialog>
+  <script src="./cloud-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>'use strict';
-// Exhibition directory refreshes from exhibitions.json on the hosted site.
-// Watchlists and visited status are stored locally in this browser; no cloud account is required.
+// This entire app runs in a single HTML file. No cloud account or backend is used.
 const SEED_CATALOG = [{"id":"sothebys-nov-2026","title":"The New York Sales — Modern Art Previews","artist":"Sotheby’s","venue":"Sotheby’s New York (Breuer Building)","area":"Upper East Side","address":"945 Madison Avenue, New York, NY 10021","start":"2026-11-07","close":"2026-11-18","url":"https://www.sothebys.com/en/series/the-new-york-sales","note":"Modern auction previews run through Nov 18. Planned for Tuesday, Nov 17, during lunch; reserve a free entry time. The Now & Contemporary previews finish Nov 15.","kind":"Auction preview","reservation":true,"planned":"Tue, Nov 17 · lunch break","points":[[40.77341,-73.96384]],"curated":true},{"id":"christies","title":"20th Century Evening Sale","artist":"Christie’s","venue":"Christie’s New York","area":"Midtown","address":"20 Rockefeller Plaza, New York, NY 10020","close":"2026-11-17","url":"https://www.christies.com/en/auction/20th-century-evening-sale-24266-nyr/overview","note":"20th Century Evening Sale preview; planned Monday, Nov 16, during lunch. The live sale is Nov 17 at 6:30 PM.","planned":"Mon, Nov 16 · lunch break","points":[[40.75877,-73.97871]],"kind":"Auction preview","start":null,"curated":true},{"id":"lichtenstein","title":"Like New","artist":"Roy Lichtenstein","venue":"Whitney Museum of American Art","area":"Meatpacking","address":"99 Gansevoort Street, New York, NY 10014","close":"2027-05-10","url":"https://whitney.org/exhibitions/lichtenstein/","note":"A career-spanning look at the artist’s innovations in Pop and image culture.","points":[[40.73958,-74.00886]],"kind":"Museum","start":"2026-10-11","curated":true},{"id":"brancusi","title":"The Artist and His Studio","artist":"Constantin Brancusi","venue":"The Museum of Modern Art","area":"Midtown","address":"11 West 53rd Street, New York, NY 10019","close":"2027-02-27","url":"https://www.moma.org/calendar/exhibitions/5910","note":"Sculptures, photographs, tools, and archival objects evoking his Paris studio.","points":[[40.7615,-73.97767]],"kind":"Museum","start":"2026-10-25","curated":true},{"id":"nara","title":"Yoshitomo Nara","artist":"Yoshitomo Nara","venue":"David Zwirner · 19th & 20th Street","area":"Chelsea","address":"533 W 19th St & 537 W 20th St, New York, NY 10011","close":"2026-12-12","url":"https://www.davidzwirner.com/exhibitions/2026/yoshitomo-nara","note":"New paintings, drawings, sculpture and earlier works. Two separate Chelsea spaces.","points":[[40.74436,-74.00715],[40.74523,-74.00708]],"kind":"Gallery","start":"2026-11-05","curated":true,"planned":"Sat, Nov 21 · Chelsea gallery day"},{"id":"chow","title":"Friends and Legends: The Collection of Michael Chow","artist":"Michael Chow","venue":"Gagosian · 980 Madison at 76th","area":"Upper East Side","address":"974 Madison Avenue, New York, NY 10075","close":"2026-12-22","url":"https://gagosian.com/exhibitions/2026/friends-and-legends-the-collection-of-michael-chow-new-york/","note":"Basquiat, Hockney, Haring and Warhol portraits from Michael Chow’s collection. Special Sunday opening Nov 15, 1–5 PM; easy to pair with Sotheby’s.","points":[[40.77323,-73.9642]],"kind":"Gallery","start":"2026-11-14","curated":true,"planned":"Sun, Nov 15 · 1–5 PM"},{"id":"bacon","title":"Bacon / de Kooning","artist":"Bacon / de Kooning","venue":"Lévy Gorvy Dayan","area":"Upper East Side","address":"19 East 64th Street, New York, NY 10065","close":"2026-12-19","url":"https://www.levygorvydayan.com/exhibitions/bacon-de-kooning","note":"A rare dialogue between Francis Bacon and Willem de Kooning. Closed Sunday; visit Tuesday–Saturday, 10 AM–6 PM.","points":[[40.76643,-73.97044]],"kind":"Gallery","start":"2026-11-04","curated":true},{"id":"krasner","title":"Krasner and Pollock: Past Continuous","artist":"Krasner / Pollock","venue":"The Metropolitan Museum of Art","area":"Upper East Side","address":"1000 Fifth Avenue, New York, NY 10028","close":"2027-01-31","url":"https://www.metmuseum.org/exhibitions/krasner-and-pollock-past-continuous","note":"Already visited. The first major New York show of their work together in over two decades.","points":[[40.77945,-73.96324]],"kind":"Museum","visited":true,"start":null,"curated":true},{"id":"marden","title":"I Am Plane Image","artist":"Brice Marden","venue":"Gagosian · West 21st Street","area":"Chelsea","address":"522 West 21st Street, New York, NY 10011","close":"2026-12-12","url":"https://gagosian.com/exhibitions/2026/brice-marden-i-am-plane-image/","note":"Major survey spanning six decades of Marden’s painting.","points":[[40.74621,-74.00672]],"kind":"Gallery","start":"2026-09-15","curated":true,"planned":"Sat, Nov 21 · Chelsea gallery day"},{"id":"rothko","title":"The Surrealist Years","artist":"Rothko / Gottlieb","venue":"125 Newbury · Pace","area":"Tribeca","address":"395 Broadway, New York, NY 10013","close":"2027-01-09","url":"https://125newbury.com/exhibitions/rothko-gottlieb","note":"Paintings and works on paper from 1941–1951, before their mature abstract languages.","points":[[40.71938,-74.00312]],"kind":"Gallery","start":"2026-11-13","curated":true},{"id":"turrell","title":"Something Old, Something New, Something Borrowed, Something Blue","artist":"James Turrell","venue":"Almine Rech","area":"Tribeca","address":"361 Broadway, New York, NY 10013","close":"2027-01-30","url":"https://www.alminerech.com/exhibitions/12743-james-turrell","note":"Light-based works. Free but reservation required; slots were fully booked when checked Nov 13.","points":[[40.71825,-74.00374]],"kind":"Gallery","reservation":true,"start":"2026-11-12","curated":true},{"id":"johns","title":"Recent Drawings","artist":"Jasper Johns","venue":"Matthew Marks Gallery","area":"Chelsea","address":"526 West 22nd Street, New York, NY 10011","close":"2027-01-23","url":"https://matthewmarks.com/exhibitions/jasper-johns-recent-drawings-11-2026","note":"Twelve recent drawings that revisit motifs from across Johns’s career.","points":[[40.74709,-74.00652]],"kind":"Gallery","start":"2026-11-05","curated":true,"planned":"Sat, Nov 21 · Chelsea gallery day"},{"id":"baselitz","title":"Meine Schule","artist":"Georg Baselitz","venue":"Gagosian · West 24th Street","area":"Chelsea","address":"555 West 24th Street, New York, NY 10011","close":"2027-01-23","url":"https://gagosian.com/exhibitions/2026/georg-baselitz-meine-schule/","note":"Late paintings and sculptures, including some references to de Kooning.","points":[[40.74936,-74.00618]],"kind":"Gallery","start":"2026-11-12","curated":true,"planned":"Sat, Nov 21 · Chelsea gallery day"},{"id":"curtiss","title":"UNREAL","artist":"Julie Curtiss","venue":"Gagosian · West 24th Street","area":"Chelsea","address":"541 West 24th Street, New York, NY 10011","close":"2026-12-19","url":"https://gagosian.com/exhibitions/2026/julie-curtiss-unreal/","note":"Stylized paintings reflecting the strangeness of contemporary New York.","points":[[40.74917,-74.00573]],"kind":"Gallery","start":"2026-11-10","curated":true,"planned":"Sat, Nov 21 · Chelsea gallery day"},{"id":"guston","title":"In the Studio","artist":"Philip Guston","venue":"The Museum of Modern Art","area":"Midtown","address":"11 West 53rd Street, New York, NY 10019","start":"2026-11-21","close":"2027-02-07","url":"https://www.moma.org/calendar/exhibitions/5962","note":"Paintings from the studio, with everyday objects and unsettling figures.","points":[[40.7615,-73.97767]],"kind":"Museum","curated":true},{"id":"huyghe","title":"UUmwelt","artist":"Pierre Huyghe","venue":"The Museum of Modern Art","area":"Midtown","address":"11 West 53rd Street, New York, NY 10019","start":null,"close":"2026-11-29","url":"https://www.moma.org/calendar/exhibitions/5912","note":"An AI-inflected installation in MoMA’s sculpture garden. Closes Nov 29.","points":[[40.7615,-73.97767]],"kind":"Museum","curated":true},{"id":"surrealist-book","title":"Tomorrow Lives in Mirrors","artist":"The Surrealist Book","venue":"The Museum of Modern Art","area":"Midtown","address":"11 West 53rd Street, New York, NY 10019","start":"2026-10-04","close":"2027-01-23","url":"https://www.moma.org/calendar/exhibitions/5918","note":"Surrealist publications, artist books and experiments on paper.","points":[[40.7615,-73.97767]],"kind":"Museum","curated":true},{"id":"african-architecture","title":"Modernism in Western Africa","artist":"Architects of Liberation","venue":"The Museum of Modern Art","area":"Midtown","address":"11 West 53rd Street, New York, NY 10019","start":"2026-07-05","close":"2027-01-02","url":"https://www.moma.org/calendar/exhibitions/5906","note":"Architecture and national identity in post-independence West Africa.","points":[[40.7615,-73.97767]],"kind":"Museum","curated":true},{"id":"minnie-evans","title":"The Lost World","artist":"Minnie Evans","venue":"Whitney Museum of American Art","area":"Meatpacking","address":"99 Gansevoort Street, New York, NY 10014","start":"2026-08-22","close":"2027-01-10","url":"https://whitney.org/exhibitions/the-lost-world","note":"Visionary, intricately patterned paintings and drawings.","points":[[40.73958,-74.00886]],"kind":"Museum","curated":true},{"id":"coumba","title":"Stars and Stripes","artist":"Coumba Samba","venue":"Whitney Museum of American Art","area":"Meatpacking","address":"99 Gansevoort Street, New York, NY 10014","start":"2026-09-19","close":"2027-01-18","url":"https://whitney.org/exhibitions","note":"New work at the Whitney; see the museum site for gallery details.","points":[[40.73958,-74.00886]],"kind":"Museum","curated":true},{"id":"na-mira","title":"NO SMOKING","artist":"Na Mira","venue":"The Museum of Modern Art","area":"Midtown","address":"11 West 53rd Street, New York, NY 10019","start":"2026-11-14","close":"2027-02-15","url":"https://www.moma.org/calendar/exhibitions","note":"A new MoMA exhibition opening November 14.","points":[[40.7615,-73.97767]],"kind":"Museum","curated":true},{"id":"carrington-vicuna","artist":"Leonora Carrington & Cecilia Vicuña","title":"Leonora Carrington & Cecilia Vicuña","venue":"Lehmann Maupin · West 24th Street","area":"Chelsea","address":"501 West 24th Street, New York, NY 10011","start":"2026-11-19","close":"2026-12-19","url":"https://www.lehmannmaupin.com/exhibitions/cecilia-vicuna-leonora-carrington","note":"Historical works by Carrington paired with new work by Vicuña, exploring myth and transformation. Opens Nov 19; close to other West 24th Street galleries.","kind":"Gallery","planned":"Sat, Nov 21 · Chelsea gallery day","points":[[40.74885,-74.00464]],"curated":true},{"id":"wiley-what-the-light-becomes","artist":"Kehinde Wiley","title":"What the Light Becomes","venue":"Sean Kelly · Tenth Avenue","area":"Hudson Yards","address":"475 Tenth Avenue, New York, NY 10018","start":"2026-11-06","close":"2026-12-23","url":"https://www.skny.com/exhibitions/kehinde-wiley3","note":"Portraits of contemporary New Yorkers. Sean Kelly is near West 36th Street — about a 15–20 minute walk north of the Chelsea galleries. Open Saturday.","kind":"Gallery","points":[[40.75584,-73.99784]],"curated":true},{"id":"johnson-birthday-boys","artist":"Rashid Johnson","title":"Birthday Boys","venue":"Hauser & Wirth · Wooster Street","area":"SoHo","address":"134 Wooster Street, New York, NY 10012","start":"2026-11-03","close":"2027-01-16","url":"https://www.hauserwirth.com/gsw/hauser-wirth-exhibitions/rashid-johnson-birthday-boys/","note":"New mosaics, suspended sculptures and film exploring father-son relationships. Separate SoHo outing; no ticket needed.","kind":"Gallery","points":[[40.7256,-73.99854]],"curated":true}];
 const STORAGE_KEY = 'jp-nyc-art-tracker-v2';
 const LEGACY_VISITS_KEY = 'jp-nyc-art-nov-2026-visited-v1';
@@ -406,10 +442,10 @@ if(db.schemaVersion<4){
 }
 let month=localStorageGetMonth() || currentMonth();
 let page='watchlist';
-const filters={watchStatus:'all',watchTerm:'',watchArea:'all',catalogDates:'month',catalogStatus:'all',catalogTerm:'',catalogArea:'all'};
+const filters={watchStatus:'all',watchTerm:'',watchArea:'all',planDate:null,catalogDates:'month',catalogStatus:'all',catalogTerm:'',catalogArea:'all'};
 let map=null,markers=[],leafletLayer=null,offlineMode=false,focusedId=null,geoCoordinates=null,toastTimeout=null;
 function localStorageGetMonth(){try {const m=localStorage.getItem('jp-nyc-art-month');return /^\d{4}-\d{2}$/.test(m||'')?m:null;}catch(e){return null;}}
-function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(db));localStorage.setItem('jp-nyc-art-month',month);localAvailable=true;}catch(e){localAvailable=false;}}
+function persist(notify=true){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(db));localStorage.setItem('jp-nyc-art-month',month);localAvailable=true;}catch(e){localAvailable=false;} if(notify)document.dispatchEvent(new Event('jp-art-changed'));}
 function allShows(){
   const seeded=BASE.map(s=>normalizeRecord(db.overrides[s.id]||s));
   const seen=new Set(seeded.map(s=>s.id));
@@ -422,11 +458,33 @@ function watchIDs(){return db.watchByMonth[month]||[];}
 function inWatchlist(id){return watchIDs().includes(id);}
 function wasVisited(id){return own(db.visited,id);}
 function isOpenInMonth(s){const first=month+'-01',last=lastDay(month);return (!s.start||s.start<=last)&&(!s.close||s.close>=first);}
+const PLANNED_MONTHS=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+function plannedDate(s){
+  const match=String(s.planned||'').match(/\b(?:Sun|Mon|Tue|Wed|Thu|Fri|Sat),?\s+([A-Za-z]{3})\s+(\d{1,2})/i);
+  if(!match)return null;
+  const idx=PLANNED_MONTHS.indexOf(match[1].toLowerCase());if(idx<0)return null;
+  return month.slice(0,4)+'-'+String(idx+1).padStart(2,'0')+'-'+String(+match[2]).padStart(2,'0');
+}
+function renderPlan(){
+  const groups=new Map();
+  for(const s of currentWatch()){
+    const date=plannedDate(s);if(!date||!date.startsWith(month+'-'))continue;
+    if(!groups.has(date))groups.set(date,[]);groups.get(date).push(s);
+  }
+  const values=[...groups.entries()].sort(([a],[b])=>a.localeCompare(b));
+  $('planStrip').hidden=!values.length;
+  $('clearPlan').hidden=!filters.planDate;
+  $('planDays').innerHTML=values.map(([date,shows])=>{
+    const day=new Date(date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+    const areas=[...new Set(shows.map(s=>s.area))].join(' / ');
+    return `<button type="button" class="plan-day ${filters.planDate===date?'active':''}" data-plan-date="${date}" aria-pressed="${filters.planDate===date}"><strong>${escapeHtml(day)}</strong><span>${shows.length} show${shows.length===1?'':'s'} · ${escapeHtml(areas)}</span></button>`;
+  }).join('');
+}
 function visibleWatch(){
   const byId=new Map(allShows().map(s=>[s.id,s]));
   const shows=watchIDs().map(id=>byId.get(id)).filter(Boolean);
   const q=filters.watchTerm.toLowerCase();
-  return shows.filter(s=>(filters.watchStatus==='all'||(filters.watchStatus==='done' ? wasVisited(s.id):!wasVisited(s.id))) && (filters.watchArea==='all'||s.area===filters.watchArea) && (!q||`${s.title} ${s.artist} ${s.venue} ${s.address} ${s.area}`.toLowerCase().includes(q)))
+  return shows.filter(s=>(!filters.planDate||plannedDate(s)===filters.planDate) &&(filters.watchStatus==='all'||(filters.watchStatus==='done' ? wasVisited(s.id):!wasVisited(s.id))) && (filters.watchArea==='all'||s.area===filters.watchArea) && (!q||`${s.title} ${s.artist} ${s.venue} ${s.address} ${s.area}`.toLowerCase().includes(q)))
    .sort((a,b)=>(wasVisited(a.id)?1:0)-(wasVisited(b.id)?1:0)||String(a.close||'9999').localeCompare(String(b.close||'9999'))||a.artist.localeCompare(b.artist));
 }
 function currentWatch(){const m=new Map(allShows().map(s=>[s.id,s]));return watchIDs().map(id=>m.get(id)).filter(Boolean);}
@@ -511,7 +569,7 @@ function renderDiscover(){
   $('directoryCards').innerHTML=shows.length?shows.map(directoryCard).join(''):
     `<div class="blank" style="grid-column:1/-1"><div class="symbol">✳</div><h3>Nothing matches yet.</h3><p>Change the filters, browse all dates or add a new exhibition.</p><button class="solid" type="button" data-new-show="yes">+ Add exhibition</button></div>`;
 }
-function render(){renderStats();renderWatch();renderDiscover();}
+function render(){renderStats();renderPlan();renderWatch();renderDiscover();}
 function showToast(message){
   $('toast').textContent=message;$('toast').classList.add('show');
   if(toastTimeout)clearTimeout(toastTimeout);
@@ -549,7 +607,7 @@ function buildMonthOptions(){
 }
 function setMonth(newMonth){
   if(!/^\d{4}-\d{2}$/.test(newMonth))return;
-  month=newMonth;filters.watchStatus='all';filters.watchArea='all';filters.watchTerm='';$('watchSearch').value='';
+  month=newMonth;filters.planDate=null;filters.watchStatus='all';filters.watchArea='all';filters.watchTerm='';$('watchSearch').value='';
   filters.catalogStatus='all';filters.catalogTerm='';$('catalogSearch').value='';
   $('watchArea').value='all';$('catalogArea').value='all';$('catalogStatus').value='all';
   if(![...$('monthSelect').options].some(o=>o.value===month))buildMonthOptions();
@@ -788,6 +846,7 @@ document.addEventListener('click',event=>{
   if(d.go){goPage(d.go);return;}
   if(d.newShow){openShowDialog();return;}
   if(d.watchStatus){filters.watchStatus=d.watchStatus;renderWatch();return;}
+  if(d.planDate){filters.planDate=filters.planDate===d.planDate?null:d.planDate;renderPlan();renderWatch();fitMapPins();return;}
 });
 document.addEventListener('change',event=>{
   const target=event.target;
@@ -803,6 +862,7 @@ $('catalogArea').addEventListener('change',e=>{filters.catalogArea=e.target.valu
 $('catalogDates').addEventListener('change',e=>{filters.catalogDates=e.target.value;renderDiscover();});
 $('catalogStatus').addEventListener('change',e=>{filters.catalogStatus=e.target.value;renderDiscover();});
 $('carryOver').addEventListener('click',carryOver);
+$('clearPlan').addEventListener('click',()=>{filters.planDate=null;renderPlan();renderWatch();fitMapPins();});
 $('exploreFromWatch').addEventListener('click',()=>goPage('explore'));
 $('backToWatch').addEventListener('click',()=>goPage('watchlist'));
 $('fitPins').addEventListener('click',fitMapPins);
@@ -844,7 +904,14 @@ async function refreshHostedCatalog(){
   }
 }
 refreshHostedCatalog();
+window.JPArt={
+  getState:()=>JSON.parse(JSON.stringify(db)),
+  getMonth:()=>month,
+  setState:(state,notify=false)=>{db=sanitizeDB(state);persist(notify);renderAreas();render();setTimeout(fitMapPins,100);},
+  setMonth:(m)=>setMonth(m)
+};
 window.addEventListener('load',initMap,{once:true});
 </script>
+  <script src="./cloud.js"></script>
 </body>
 </html>
