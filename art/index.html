@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#1d332c">
-  <meta name="description" content="A reusable, interactive New York City exhibition catalog, month-by-month watchlist and map.">
-  <title>NYC Art Tracker — JP</title>
+  <meta name="description" content="Art Agenda: a personal guide to New York City exhibitions, monthly watchlists and gallery maps.">
+  <title>Art Agenda — New York City</title>
   <link rel="preconnect" href="https://unpkg.com">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoAtV+ebGumETI=" crossorigin="">
   <style>@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap');
@@ -211,7 +211,7 @@ dialog::backdrop{background:#1c332ab8;backdrop-filter:blur(3px)}
   <header class="top">
     <div class="shell">
       <div class="topbar">
-        <div class="identity"><span class="glyph" aria-hidden="true"></span> JP / NYC ART INDEX</div>
+        <div class="identity"><span class="glyph" aria-hidden="true"></span> ART AGENDA</div>
         <nav class="topnav" aria-label="Pages">
           <a href="#watchlist" class="navlink active" id="navWatch" aria-current="page">My watchlist <span class="pill-count" id="navWatchCount">17</span></a>
           <a href="#explore" class="navlink" id="navExplore">All exhibitions <span class="pill-count" id="navCatalogCount">24</span></a>
@@ -311,7 +311,7 @@ dialog::backdrop{background:#1c332ab8;backdrop-filter:blur(3px)}
     </section>
     <footer class="pagefooter">
       <div>Curated exhibition dates and links checked November 13, 2026. Confirm opening hours and reservations before going.<br>Watchlists save <strong>in this browser</strong> until cloud sync is connected. Use Sync / share for a transfer link, or export JSON for a backup.</div>
-      <div>NYC / ART INDEX &nbsp; · &nbsp; Made to keep exploring.</div>
+      <div>ART AGENDA &nbsp; · &nbsp; New York City</div>
     </footer>
   </main>
   <div id="toast" role="status" aria-live="polite"></div>
@@ -796,8 +796,8 @@ function downloadJSON(data,filename){
   setTimeout(()=>{URL.revokeObjectURL(u);a.remove();},1000);
 }
 function saveBackup(){
-  const data={app:'JP NYC Art Tracker',type:'jp-art-backup',version:2,exportedAt:new Date().toISOString(),selectedMonth:month,data:db,catalog:allShows()};
-  downloadJSON(data,`jp-nyc-art-backup-${todayISO()}.json`);showToast('Backup downloaded. Keep it to restore your watchlists.');
+  const data={app:'Art Agenda',type:'jp-art-backup',version:2,exportedAt:new Date().toISOString(),selectedMonth:month,data:db,catalog:allShows()};
+  downloadJSON(data,`art-agenda-backup-${todayISO()}.json`);showToast('Backup downloaded. Keep it to restore your watchlists.');
 }
 function mergeCatalogItems(items){
   let count=0;for(const rec of items){const s=normalizeRecord(rec);if(!s)continue;
@@ -828,7 +828,7 @@ async function importJSON(file){
       showToast('Backup restored. Your watchlists and visits are back.');
     }else{
       const items=Array.isArray(json)?json:Array.isArray(json.exhibitions)?json.exhibitions:Array.isArray(json.shows)?json.shows:Array.isArray(json.catalog)?json.catalog:null;
-      if(!items)throw new Error('Expected an array of exhibitions or a JP art tracker backup.');
+      if(!items)throw new Error('Expected an array of exhibitions or an Art Agenda backup.');
       count=mergeCatalogItems(items);showToast(`${count} catalog records imported. Existing watchlists preserved.`);
     }
     persist();renderAreas();buildMonthOptions();render();setTimeout(fitMapPins,80);
