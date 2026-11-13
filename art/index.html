@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#1d332c">
+  <meta name="description" content="A reusable, interactive New York City exhibition catalog, month-by-month watchlist and map.">
+  <title>NYC Art Tracker — JP</title>
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoAtV+ebGumETI=" crossorigin="">
+  <style>@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap');
+:root{--bg:#f6f5f0;--paper:#fff;--dark:#1d332c;--ink:#27332c;--sub:#657168;--soft:#edf1eb;--line:#dfe6de;--accent:#c58c6b;--accent-d:#a96647;--moss:#496e5c;--shadow:0 9px 30px rgba(19,45,29,.05);--sans:'DM Sans',system-ui,-apple-system,Segoe UI,Arial,sans-serif;--serif:'DM Serif Display',Georgia,serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid #d8ac91;outline-offset:2px}
+:focus-visible{scroll-margin-top:80px}
+.shell{max-width:1450px;margin:0 auto;padding:0 35px}
+.top{background:var(--dark);color:#fbfcf9;position:relative;overflow:hidden}
+.top::after{content:'';pointer-events:none;position:absolute;right:-120px;top:40px;width:520px;height:520px;border:1px solid #ffffff18;border-radius:50%;box-shadow:0 0 0 70px #ffffff06,0 0 0 155px #ffffff04}
+.top .shell{position:relative;z-index:1}
+.topbar{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:28px;border-bottom:1px solid #ffffff1b}
+.identity{display:flex;align-items:center;gap:12px;white-space:nowrap;font-size:11px;letter-spacing:.18em;font-weight:700;text-transform:uppercase}
+.identity .glyph{width:27px;height:27px;border-radius:50%;border:1.5px solid #c9a08b;display:grid;place-items:center}
+.identity .glyph:after{content:'';width:8px;height:8px;background:#d3a48d;border-radius:50%}
+.topnav{display:flex;gap:7px;align-items:center;padding:6px;border:1px solid #ffffff24;border-radius:12px;background:#ffffff0a}
+.navlink{display:flex;align-items:center;gap:9px;justify-content:center;border:0;color:#becdc2;background:transparent;border-radius:8px;padding:10px 17px;font-size:12px;font-weight:700;transition:.15s}
+.navlink:hover{background:#ffffff17;color:white}
+.navlink.active{background:#faf9f5;color:#2a3b30;box-shadow:0 2px 8px #0002}
+.pill-count{font-size:10px;min-width:22px;padding:3px 5px;border-radius:6px;background:#ffffff1c;text-align:center}
+.navlink.active .pill-count{background:#e8ece5}
+.hero{padding:51px 0 50px;display:flex;gap:20px;justify-content:space-between;align-items:end}
+.overline{color:#d4ae95;text-transform:uppercase;font-size:11px;letter-spacing:.22em;font-weight:700;margin-bottom:12px}
+h1,h2,h3,h4,p{margin-top:0}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:400}
+h1{font-size:clamp(43px,5.5vw,75px);line-height:1.02;letter-spacing:-.025em;margin-bottom:12px}
+.hero-description{max-width:620px;font-size:13px;line-height:1.75;color:#c2cec5;margin:0}
+.hero-numbers{display:flex;gap:34px;text-align:left;padding-bottom:1px;flex-shrink:0}
+.hero-numbers strong{display:block;font:normal 39px/1 var(--serif);letter-spacing:-.04em}
+.hero-numbers small{display:block;text-transform:uppercase;letter-spacing:.1em;color:#b2c0b4;font-size:10px;margin-top:8px}
+.month-strip{background:#e9ede5;border-bottom:1px solid #dfe5db}
+.month-strip .shell{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap}
+.month-cluster{display:flex;align-items:center;gap:8px}
+.month-cluster .month-label{color:#6d7970;letter-spacing:.12em;font-size:10px;font-weight:700;text-transform:uppercase;margin-right:10px}
+.month-button{border:1px solid #d1dbd1;background:white;border-radius:9px;width:34px;height:34px;font-size:18px;color:#42584b;display:grid;place-items:center}
+.month-button:hover{background:#f1f4ef}
+#monthSelect{border:1px solid #d1dbd1;border-radius:9px;padding:9px 24px 9px 12px;background:white;font-size:12px;font-weight:700;color:#284035;min-width:170px}
+.month-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.ghost,.solid,.soft,.textlink,.mini{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:700;border-radius:9px;padding:10px 14px;border:1px solid transparent;transition:background .14s,border .14s,transform .14s;white-space:nowrap}
+.solid{background:#2c5140;color:white}
+.solid:hover{background:#204331}
+.ghost{background:transparent;border-color:#becdc0;color:#405e4b}
+.ghost:hover{background:#fff}
+.soft{background:#edf2ed;color:#3b6048;border-color:#dfe9df}
+.soft:hover{background:#dae8dd}
+.textlink{padding:7px 3px;background:transparent;color:#3f7558}
+.textlink:hover{text-decoration:underline;text-underline-offset:3px}
+.mini{padding:8px 10px;font-size:11px}
+main.shell{padding-top:30px;padding-bottom:52px;min-height:50vh}
+.view[hidden]{display:none!important}
+.view-header{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:20px}
+.view-header h2{font-size:35px;letter-spacing:-.025em;margin-bottom:6px}
+.view-header p{font-size:12px;line-height:1.7;color:#78867b;margin:0}
+.small-actions{display:flex;gap:8px;flex-wrap:wrap}
+.watch-layout{display:grid;grid-template-columns:minmax(355px,1fr) minmax(370px,1.04fr);gap:22px;align-items:start}
+.list-pane{min-width:0}
+.search-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:12px}
+.searchbox{position:relative;flex:1;min-width:185px}
+.searchbox svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);stroke:#819288;pointer-events:none}
+.searchbox input{width:100%;border:1px solid #dce3da;background:white;border-radius:9px;height:43px;font-size:12px;padding:0 12px 0 39px}
+.filterselect{height:43px;border:1px solid #dce3da;background:white;border-radius:9px;padding:0 10px;font-size:11px;min-width:130px;max-width:185px}
+.pills{display:flex;gap:7px;margin-bottom:16px;flex-wrap:wrap}
+.pills button{border:1px solid #dce4db;color:#61746a;background:#fff;border-radius:30px;padding:8px 13px;font-weight:700;font-size:11px}
+.pills button.active{background:#294b3b;color:#fff;border-color:#294b3b}
+.cards{display:flex;flex-direction:column;gap:11px}
+.show-card{position:relative;background:var(--paper);border:1px solid #e3e8e1;border-radius:13px;box-shadow:0 2px 7px #152d2105;overflow:hidden;display:flex;transition:border-color .15s,box-shadow .15s}
+.show-card:hover{border-color:#b5c9b9;box-shadow:var(--shadow)}
+.show-card.focused{outline:2px solid #8ead95;outline-offset:2px}
+.show-card.visited{background:#f1f3ee}
+.show-card .stripe{width:5px;flex:none;background:var(--stripe,#689380)}
+.show-body{padding:17px 18px 16px;flex:1;min-width:0}
+.show-top{display:flex;align-items:start;justify-content:space-between;gap:11px}
+.artist-kicker{font-size:10px;letter-spacing:.09em;font-weight:800;color:#758279;text-transform:uppercase;line-height:1.5}
+.show-card h3{font-size:22px;line-height:1.12;margin:5px 0 6px;overflow-wrap:anywhere}
+.show-card.visited h3{text-decoration:line-through;color:#879188;text-decoration-color:#9aa59a}
+.meta{color:#7d8b7d;font-size:11px;line-height:1.5}
+.deadline{font-size:10px;font-weight:750;white-space:nowrap;border-radius:6px;background:#f1f2ed;color:#626f65;padding:6px 8px;flex-shrink:0}
+.deadline.soon{background:#fcece1;color:#ab6542}
+.deadline.ended{background:#edf0eb;color:#9b9f97}
+.deadline.booking{background:#efe9fa;color:#7667a0}
+.visit-planned{display:inline-flex;align-items:center;gap:7px;margin-top:10px;padding:7px 10px;font-size:11px;line-height:1.3;font-weight:750;color:#2f6d4e;background:#eaf4ea;border:1px solid #cce6d3;border-radius:7px}
+.calendar-bullet{color:#4b9163;font-size:11px}
+.note{font-size:12px;color:#687970;line-height:1.6;margin:12px 0 14px}
+.card-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.card-actions{display:flex;align-items:center;flex-wrap:wrap;gap:13px}
+.card-actions a,.card-actions button{color:#49705d;font-size:11px;font-weight:750;padding:0;background:none;border:0;text-decoration:none}
+.card-actions a:hover,.card-actions button:hover{text-decoration:underline}
+.visit-label{font-size:11px;color:#6e8074;font-weight:700;display:flex;align-items:center;gap:7px;cursor:pointer;white-space:nowrap}
+.visit-label input{accent-color:#3e7355;width:16px;height:16px;margin:0}
+.pin-info{border:1px solid #ecdfcb;background:#fdf8ef;color:#8b6e4a;padding:8px 10px;border-radius:8px;font-size:11px;margin-top:11px;line-height:1.5}
+.map-pane{position:sticky;top:18px;background:white;border:1px solid #e3e8e1;border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.map-head{padding:19px 20px 15px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.map-head h3{font-size:25px;margin:0 0 4px}
+.map-head p{color:#8a978c;margin:0;font-size:11px}
+.map-container{position:relative;height:min(68vh,610px);min-height:430px;background:#e9f0e9}
+#map{height:100%;width:100%;z-index:1}
+.map-empty{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;background:#eaf0ebdd;color:#536a5c;z-index:300;padding:30px}
+.map-empty.show{display:flex}
+.map-empty strong{display:block;font:normal 24px/1.3 var(--serif);margin:0 auto 8px}
+.map-empty span{display:block;font-size:12px;line-height:1.6;max-width:250px}
+#offlineMap{display:none;position:absolute;inset:0;background:repeating-linear-gradient(32deg,#e6ede7 0px,#e6ede7 28px,#dce7df 29px,#e6ede7 30px);overflow:hidden}
+#offlineMap:before{content:'';position:absolute;transform:rotate(34deg);left:27%;top:-40%;height:190%;width:48%;background:linear-gradient(90deg,#f6f3e9,#f1efe8);border-left:3px solid #c3d4c7;border-right:3px solid #c3d4c7}
+.offline-message{position:absolute;left:13px;top:13px;padding:8px 10px;background:#fff;border:1px solid #e2e8e0;border-radius:7px;color:#687d6f;font-size:10px;z-index:2;max-width:80%}
+.offline-pin{position:absolute;z-index:3;color:white;border:2px solid #fff;box-shadow:0 3px 10px #25372b42;background:#648974;border-radius:50%;font-size:11px;font-weight:800;min-width:26px;height:26px;display:grid;place-items:center;transform:translate(-50%,-50%);padding:0 6px;cursor:pointer}
+.map-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 20px}
+.map-foot span{color:#879289;font-size:10px;line-height:1.6}
+.color-key{display:flex;gap:10px;flex-wrap:wrap}
+.key-item{font-size:10px;color:#6a766c;font-weight:700;white-space:nowrap}
+.key-item:before{content:'';display:inline-block;width:7px;height:7px;background:var(--keycolor);border-radius:50%;margin-right:5px}
+.leaflet-container{font:12px var(--sans)!important}
+.leaflet-popup-content{margin:13px 14px!important;min-width:175px;max-width:260px}
+.map-popup .place{font-size:10px;font-weight:800;color:#869588;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.map-popup strong{font:normal 18px/1.2 var(--serif);display:block;color:#2a4935;margin-bottom:5px}
+.map-popup p{margin:6px 0;font-size:11px;color:#5f7065;line-height:1.5}
+.map-popup button{border:0;border-radius:6px;color:#fff;background:#28523d;padding:7px 9px;font-size:10px;font-weight:800;margin-top:7px;display:block}
+.map-popup .popup-item+.popup-item{padding-top:10px;border-top:1px solid #e6ede3;margin-top:10px}
+.art-pin{width:30px;height:30px;background:var(--pin-color,#4e826a);color:#fff;font:800 12px/30px var(--sans);border:2px solid #fff;text-align:center;border-radius:50%;box-shadow:0 2px 10px #2443345d}
+.art-pin.is-visited{background:#859c8e}
+.art-pin.is-selected{outline:2px solid #d99c7f;outline-offset:3px}
+.art-pin.many{background:#2b5e45;min-width:32px}
+.area-summary{margin-top:24px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.area-summary .area{font-size:11px;border:1px solid #dfe7dc;border-radius:50px;padding:8px 11px;background:#fff;color:#647267}
+.area-summary .area strong{color:#2c5941}
+.blank{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:46px 20px;background:#fff;border:1px dashed #cdd9cd;border-radius:14px;gap:10px}
+.blank .symbol{font:normal 51px/1 var(--serif);color:#8da798}
+.blank h3{font-size:27px;margin:0}
+.blank p{font-size:12px;color:#7e8d80;max-width:340px;line-height:1.6;margin:0 0 8px}
+.discover-info{padding:15px 18px;border:1px solid #e2e8de;background:#eef2ec;border-radius:11px;font-size:12px;color:#647665;line-height:1.6;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.catalog-tools{display:flex;align-items:center;gap:10px;margin-bottom:17px;flex-wrap:wrap}
+.catalog-tools .searchbox{max-width:480px;min-width:240px}
+.catalog-tools .filterselect{min-width:160px}
+#catalogCount{color:#768779;font-size:11px;margin-left:auto}
+.directory-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.directory-card{background:#fff;border:1px solid #e2e8de;border-radius:13px;overflow:hidden;display:flex;flex-direction:column;min-height:257px}
+.directory-card:hover{border-color:#b4c7b9;box-shadow:var(--shadow)}
+.directory-card .stripe-top{height:5px;background:var(--stripe,#577e68)}
+.directory-content{padding:16px 17px 17px;display:flex;flex-direction:column;flex:1}
+.directory-card .dir-kind{display:flex;align-items:center;justify-content:space-between;color:#94a095;gap:10px;font-size:10px;letter-spacing:.07em;text-transform:uppercase;font-weight:800}
+.directory-card h3{font-size:23px;line-height:1.12;margin:11px 0 6px}
+.directory-card h3.visited{text-decoration:line-through;color:#92a097}
+.directory-card .dir-artist{font-size:11px;color:#778a7b;margin-bottom:9px;font-weight:700}
+.directory-card .dir-venue{font-size:11px;color:#768478;margin-bottom:7px}
+.directory-card .dir-dates{font-size:11px;color:#556d5c;font-weight:700}
+.directory-card .dir-note{margin:10px 0 14px;color:#7d8c7f;font-size:11px;line-height:1.6;flex:1}
+.directory-card .dir-actions{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;border-top:1px solid #ecf0ea;padding-top:13px}
+.directory-card .dir-actions a,.directory-card .dir-actions button.small-link{font-size:11px;color:#6d8071;background:transparent;border:0;padding:4px 0;font-weight:700}
+.directory-card .dir-actions .solid,.directory-card .dir-actions .soft{font-size:11px;padding:8px 10px}
+.pagefooter{margin-top:43px;border-top:1px solid #e0e7dc;padding:22px 0;display:flex;justify-content:space-between;gap:20px;color:#98a295;font-size:11px;line-height:1.6}
+.pagefooter a{color:#577d63;text-decoration:underline;text-underline-offset:3px}
+#toast{position:fixed;right:23px;bottom:23px;background:#1d382a;color:#fff;border:1px solid #5b7966;border-radius:11px;box-shadow:0 8px 30px #1d382a44;z-index:10000;padding:13px 17px;font-size:12px;max-width:min(370px,calc(100vw - 28px));opacity:0;transform:translateY(12px);transition:opacity .2s,transform .2s;pointer-events:none}
+#toast.show{opacity:1;transform:translateY(0)}
+dialog{border:1px solid #dfe6db;border-radius:17px;padding:0;width:min(580px,calc(100% - 28px));max-height:min(90vh,860px);box-shadow:0 30px 90px #15292055;background:white;color:#263c2b}
+dialog::backdrop{background:#1c332ab8;backdrop-filter:blur(3px)}
+.dialog-head{padding:23px 25px 16px;border-bottom:1px solid #e8eee6;display:flex;align-items:start;justify-content:space-between;gap:12px}
+.dialog-head h2{font-size:30px;margin-bottom:5px}
+.dialog-head p{color:#718577;font-size:12px;line-height:1.5;margin:0}
+.xbtn{border:0;background:#f2f5f0;color:#5b6e61;border-radius:8px;width:31px;height:31px;font-size:18px}
+.form-body{padding:19px 25px 23px;overflow-y:auto;max-height:calc(90vh - 130px)}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.field.full{grid-column:1/-1}
+.field label{font-size:11px;font-weight:800;color:#5c6f62}
+.field input,.field select,.field textarea{border:1px solid #dce6dc;background:white;border-radius:8px;padding:11px 10px;font-size:12px;width:100%;min-width:0}
+.field textarea{min-height:72px;resize:vertical}
+.form-help{font-size:11px;color:#789181;line-height:1.55;margin:0 0 8px}
+.form-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:11px;border-top:1px solid #e7ece5;padding-top:14px}
+.form-foot .checkadd{display:flex;gap:8px;align-items:center;font-size:12px;color:#657768}
+.form-foot input[type=checkbox]{accent-color:#386f50}
+#geoStatus{font-size:11px;color:#727e72;line-height:1.5}
+.coordinate-row{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:1px 0 13px}
+.coordinate-row .mini{font-size:10px}
+.coordinate-row #geoStatus{flex:1;min-width:160px}
+@media(max-width:1120px){.directory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.watch-layout{grid-template-columns:minmax(330px,1fr) minmax(330px,.95fr)}.hero-numbers{gap:19px}.hero-numbers strong{font-size:34px}}
+@media(max-width:780px){.shell{padding:0 19px}.topbar{min-height:68px;gap:14px}.hero{padding:33px 0 34px;display:block}.hero-numbers{margin-top:25px;gap:30px}.hero-numbers strong{font-size:34px}.month-cluster .month-label{display:none}.month-strip .shell{padding-top:12px;padding-bottom:12px}.watch-layout{display:flex;flex-direction:column}.map-pane{order:-1;position:relative;top:auto;width:100%}.list-pane{width:100%}.map-container{height:370px;min-height:370px}.directory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.view-header{align-items:start}.view-header h2{font-size:30px}}
+@media(max-width:555px){.shell{padding:0 14px}.topbar{flex-wrap:wrap;justify-content:center;padding:14px 0 12px}.identity{font-size:10px}.topnav{width:100%;justify-content:stretch}.navlink{flex:1;padding:10px 9px;font-size:11px}.hero{padding-top:27px}.hero-numbers{gap:23px}.hero-numbers strong{font-size:31px}.hero-numbers small{font-size:9px}h1{font-size:49px}.month-strip .shell{gap:11px}.month-cluster{width:100%;justify-content:center}.month-actions{width:100%;justify-content:center}.view-header{display:block}.small-actions{margin-top:12px}.search-row{display:block}.searchbox{margin-bottom:8px}.filterselect{max-width:none;width:100%}.directory-grid{grid-template-columns:1fr}.catalog-tools{display:grid;grid-template-columns:1fr 1fr}.catalog-tools .searchbox{grid-column:1/-1;min-width:0;max-width:none;margin:0}.catalog-tools .filterselect{min-width:0;max-width:none;width:100%}#catalogCount{grid-column:1/-1;margin:0}.discover-info{display:block}.discover-info button{margin-top:11px}.map-container{height:315px;min-height:315px}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.pagefooter{display:block}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+  <header class="top">
+    <div class="shell">
+      <div class="topbar">
+        <div class="identity"><span class="glyph" aria-hidden="true"></span> JP / NYC ART INDEX</div>
+        <nav class="topnav" aria-label="Pages">
+          <a href="#watchlist" class="navlink active" id="navWatch" aria-current="page">My watchlist <span class="pill-count" id="navWatchCount">17</span></a>
+          <a href="#explore" class="navlink" id="navExplore">All exhibitions <span class="pill-count" id="navCatalogCount">24</span></a>
+        </nav>
+      </div>
+      <div class="hero">
+        <div>
+          <div class="overline">A living art diary &nbsp;/&nbsp; New York City</div>
+          <h1>Art, on the map.</h1>
+          <p class="hero-description">Find what’s on, save the exhibitions you want to see, and build a new gallery agenda every month. Your saved shows appear as pins on the map.</p>
+        </div>
+        <div class="hero-numbers" aria-live="polite">
+          <div><strong id="heroSaved">17</strong><small>Watchlisted</small></div>
+          <div><strong id="heroDone">1</strong><small>Seen</small></div>
+          <div><strong id="heroCatalog">24</strong><small>In catalog</small></div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="month-strip">
+    <div class="shell">
+      <div class="month-cluster">
+        <span class="month-label">Planning for</span>
+        <button class="month-button" id="prevMonth" type="button" aria-label="Previous month">‹</button>
+        <select id="monthSelect" aria-label="Select month"></select>
+        <button class="month-button" id="nextMonth" type="button" aria-label="Next month">›</button>
+      </div>
+      <div class="month-actions">
+        <button type="button" class="ghost" id="newShow">+ Add exhibition</button>
+        <button type="button" class="ghost" id="importBtn">↑ Import JSON</button>
+        <button type="button" class="solid" id="backupBtn">↓ Save backup</button>
+        <input id="importFile" type="file" accept="application/json,.json" hidden>
+      </div>
+    </div>
+  </div>
+  <main class="shell">
+    <section id="watchlistView" class="view" aria-labelledby="watchTitle">
+      <div class="view-header">
+        <div>
+          <div class="overline" style="color:#ab775a">Your month, your map</div>
+          <h2 id="watchTitle">November watchlist</h2>
+          <p id="watchSubtitle">Every saved exhibition has a spot on the map. Tick one off when you go.</p>
+        </div>
+        <div class="small-actions">
+          <button type="button" class="ghost" id="carryOver">↻ Carry over unfinished</button>
+          <button type="button" class="soft" id="exploreFromWatch">+ Explore exhibitions</button>
+        </div>
+      </div>
+      <div class="watch-layout">
+        <div class="list-pane">
+          <div class="search-row">
+            <div class="searchbox"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.9"></circle><path d="m16 16 5 5"></path></svg><input id="watchSearch" type="search" placeholder="Search your watchlist..." aria-label="Search watchlist"></div>
+            <select id="watchArea" class="filterselect" aria-label="Watchlist neighborhood"><option value="all">All neighborhoods</option></select>
+          </div>
+          <div class="pills" id="watchStatusPills" aria-label="Filter by visit status">
+            <button class="active" data-watch-status="all" type="button">All</button>
+            <button data-watch-status="todo" type="button">To visit</button>
+            <button data-watch-status="done" type="button">Visited</button>
+          </div>
+          <div id="watchCards" class="cards" aria-live="polite"></div>
+        </div>
+        <aside class="map-pane" aria-label="Map of saved exhibitions">
+          <div class="map-head"><div><h3>The watchlist map</h3><p id="mapSubtitle">Your exhibitions, pinned around the city.</p></div><button type="button" class="ghost mini" id="fitPins">Fit pins ↗</button></div>
+          <div class="map-container">
+            <div id="map" role="region" aria-label="Map of current-month watchlist pins"></div>
+            <div id="offlineMap"><div class="offline-message">Approximate map · Connect to view the street map.</div></div>
+            <div id="mapEmpty" class="map-empty"><div><strong>No pins yet.</strong><span>Open All exhibitions and add a show to place it on your map.</span></div></div>
+          </div>
+          <div class="map-foot"><span id="mapFootText">Select a pin to see the exhibition.</span><div class="color-key" id="colorLegend"><span class="key-item" style="--keycolor:#54866a">To visit</span><span class="key-item" style="--keycolor:#91a297">Visited</span></div></div>
+        </aside>
+      </div>
+      <div id="areaSummary" class="area-summary"></div>
+    </section>
+    <section id="exploreView" class="view" aria-labelledby="catalogTitle" hidden>
+      <div class="view-header">
+        <div>
+          <div class="overline" style="color:#ab775a">The exhibition directory</div>
+          <h2 id="catalogTitle">All exhibitions</h2>
+          <p>Discover shows in the catalog, then select <strong>Add to watchlist</strong> to pin them on your map for the chosen month.</p>
+        </div>
+        <div class="small-actions"><button type="button" class="solid" id="newShowExplore">+ Add a new exhibition</button></div>
+      </div>
+      <div class="discover-info"><span><strong>A growing, curated collection</strong> — not every exhibition in New York. You can add any show you find, and import new catalog updates in future months.</span><button type="button" class="ghost mini" id="backToWatch">View my map →</button></div>
+      <div class="catalog-tools">
+        <div class="searchbox"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.9"></circle><path d="m16 16 5 5"></path></svg><input id="catalogSearch" type="search" placeholder="Artist, exhibition or gallery..." aria-label="Search the exhibition catalog"></div>
+        <select id="catalogDates" class="filterselect" aria-label="Catalog date filter"><option value="month">Showing this month</option><option value="all">All dates</option></select>
+        <select id="catalogStatus" class="filterselect" aria-label="Catalog watchlist filter"><option value="all">All exhibitions</option><option value="unsaved">Not on my list</option><option value="saved">In my watchlist</option></select>
+        <select id="catalogArea" class="filterselect" aria-label="Catalog neighborhood"><option value="all">All neighborhoods</option></select>
+        <span id="catalogCount"></span>
+      </div>
+      <div id="directoryCards" class="directory-grid" aria-live="polite"></div>
+    </section>
+    <footer class="pagefooter">
+      <div>Curated exhibition dates and links checked November 13, 2026. Confirm opening hours and reservations before going.<br>Watchlists and custom exhibitions save <strong>in this browser</strong>, not to an online account. Export JSON to keep a backup or move devices.</div>
+      <div>NYC / ART INDEX &nbsp; · &nbsp; Made to keep exploring.</div>
+    </footer>
+  </main>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <dialog id="showDialog" aria-labelledby="dialogTitle">
+    <div class="dialog-head"><div><h2 id="dialogTitle">Add an exhibition</h2><p>It will appear in the catalog and, if selected, in this month's watchlist.</p></div><button class="xbtn" type="button" id="closeDialog" aria-label="Close dialog">×</button></div>
+    <form class="form-body" id="exhibitForm">
+      <input type="hidden" id="editId">
+      <div class="fields">
+        <div class="field full"><label for="formArtist">Artist or exhibition name *</label><input id="formArtist" required maxlength="160" placeholder="e.g. Alice Neel"></div>
+        <div class="field full"><label for="formTitle">Exhibition title *</label><input id="formTitle" required maxlength="160" placeholder="e.g. A Studio in New York"></div>
+        <div class="field"><label for="formVenue">Gallery / museum *</label><input id="formVenue" required maxlength="160" placeholder="e.g. Pace Gallery"></div>
+        <div class="field"><label for="formArea">Neighborhood</label><select id="formArea"><option>Chelsea</option><option>Hudson Yards</option><option>Midtown</option><option>Upper East Side</option><option>Tribeca</option><option>Meatpacking</option><option>Lower East Side</option><option>SoHo</option><option>Brooklyn</option><option>Other NYC</option></select></div>
+        <div class="field full"><label for="formAddress">Street address *</label><input id="formAddress" required maxlength="250" placeholder="e.g. 540 West 25th Street, New York, NY 10001"></div>
+        <div class="field"><label for="formStart">Opens (optional)</label><input type="date" id="formStart"></div>
+        <div class="field"><label for="formClose">Closes (optional)</label><input type="date" id="formClose"></div>
+        <div class="field full"><label for="formUrl">Exhibition website</label><input id="formUrl" type="url" maxlength="900" placeholder="https://..."></div>
+        <div class="field full"><label for="formNote">Notes</label><textarea id="formNote" maxlength="700" placeholder="What makes this one worth seeing?"></textarea></div>
+        <div class="field"><label for="formLat">Latitude (optional)</label><input id="formLat" type="number" step="any" placeholder="40.750..."></div>
+        <div class="field"><label for="formLon">Longitude (optional)</label><input id="formLon" type="number" step="any" placeholder="-74.006..."></div>
+      </div>
+      <p class="form-help">A map pin needs coordinates. Use the location finder below, or enter latitude / longitude directly. If it can't find your address, you can still save the exhibition and locate it later.</p>
+      <div class="coordinate-row"><button type="button" id="findAddress" class="ghost mini">⌖ Find address on map</button><span id="geoStatus">No location checked yet.</span></div>
+      <div class="form-foot"><label class="checkadd"><input type="checkbox" id="formAdd" checked> Add to <span id="formMonth">November 2026</span> watchlist</label><div style="display:flex;gap:8px"><button type="button" class="ghost" id="cancelDialog">Cancel</button><button type="submit" class="solid" id="saveShow">Save exhibition</button></div></div>
+    </form>
+  </dialog>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>'use strict';
+// Exhibition directory refreshes from exhibitions.json on the hosted site.
+// Watchlists and visited status are stored locally in this browser; no cloud account is required.
+const SEED_CATALOG = [{"id":"sothebys-nov-2026","title":"The New York Sales — Modern Art Previews","artist":"Sotheby’s","venue":"Sotheby’s New York (Breuer Building)","area":"Upper East Side","address":"945 Madison Avenue, New York, NY 10021","start":"2026-11-07","close":"2026-11-18","url":"https://www.sothebys.com/en/series/the-new-york-sales","note":"Modern auction previews run through Nov 18. Planned for Tuesday, Nov 17, during lunch; reserve a free entry time. The Now & Contemporary previews finish Nov 15.","kind":"Auction preview","reservation":true,"planned":"Tue, Nov 17 · lunch break","points":[[40.77341,-73.96384]],"curated":true},{"id":"christies","title":"20th Century Evening Sale","artist":"Christie’s","venue":"Christie’s New York","area":"Midtown","address":"20 Rockefeller Plaza, New York, NY 10020","close":"2026-11-17","url":"https://www.christies.com/en/auction/20th-century-evening-sale-24266-nyr/overview","note":"20th Century Evening Sale preview; planned Monday, Nov 16, during lunch. The live sale is Nov 17 at 6:30 PM.","planned":"Mon, Nov 16 · lunch break","points":[[40.75877,-73.97871]],"kind":"Auction preview","start":null,"curated":true},{"id":"lichtenstein","title":"Like New","artist":"Roy Lichtenstein","venue":"Whitney Museum of American Art","area":"Meatpacking","address":"99 Gansevoort Street, New York, NY 10014","close":"2027-05-10","url":"https://whitney.org/exhibitions/lichtenstein/","note":"A career-spanning look at the artist’s innovations in Pop and image culture.","points":[[40.73958,-74.00886]],"kind":"Museum","start":"2026-10-11","curated":true},{"id":"brancusi","title":"The Artist and His Studio","artist":"Constantin Brancusi","venue":"The Museum of Modern Art","area":"Midtown","address":"11 West 53rd Street, New York, NY 10019","close":"2027-02-27","url":"https://www.moma.org/calendar/exhibitions/5910","note":"Sculptures, photographs, tools, and archival objects evoking his Paris studio.","points":[[40.7615,-73.97767]],"kind":"Museum","start":"2026-10-25","curated":true},{"id":"nara","title":"Yoshitomo Nara","artist":"Yoshitomo Nara","venue":"David Zwirner · 19th & 20th Street","area":"Chelsea","address":"533 W 19th St & 537 W 20th St, New York, NY 10011","close":"2026-12-12","url":"https://www.davidzwirner.com/exhibitions/2026/yoshitomo-nara","note":"New paintings, drawings, sculpture and earlier works. Two separate Chelsea spaces.","points":[[40.74436,-74.00715],[40.74523,-74.00708]],"kind":"Gallery","start":"2026-11-05","curated":true,"planned":"Sat, Nov 21 · Chelsea gallery day"},{"id":"chow","title":"Friends and Legends: The Collection of Michael Chow","artist":"Michael Chow","venue":"Gagosian · 980 Madison at 76th","area":"Upper East Side","address":"974 Madison Avenue, New York, NY 10075","close":"2026-12-22","url":"https://gagosian.com/exhibitions/2026/friends-and-legends-the-collection-of-michael-chow-new-york/","note":"Basquiat, Hockney, Haring and Warhol portraits from Michael Chow’s collection. Special Sunday opening Nov 15, 1–5 PM; easy to pair with Sotheby’s.","points":[[40.77323,-73.9642]],"kind":"Gallery","start":"2026-11-14","curated":true,"planned":"Sun, Nov 15 · 1–5 PM"},{"id":"bacon","title":"Bacon / de Kooning","artist":"Bacon / de Kooning","venue":"Lévy Gorvy Dayan","area":"Upper East Side","address":"19 East 64th Street, New York, NY 10065","close":"2026-12-19","url":"https://www.levygorvydayan.com/exhibitions/bacon-de-kooning","note":"A rare dialogue between Francis Bacon and Willem de Kooning. Closed Sunday; visit Tuesday–Saturday, 10 AM–6 PM.","points":[[40.76643,-73.97044]],"kind":"Gallery","start":"2026-11-04","curated":true},{"id":"krasner","title":"Krasner and Pollock: Past Continuous","artist":"Krasner / Pollock","venue":"The Metropolitan Museum of Art","area":"Upper East Side","address":"1000 Fifth Avenue, New York, NY 10028","close":"2027-01-31","url":"https://www.metmuseum.org/exhibitions/krasner-and-pollock-past-continuous","note":"Already visited. The first major New York show of their work together in over two decades.","points":[[40.77945,-73.96324]],"kind":"Museum","visited":true,"start":null,"curated":true},{"id":"marden","title":"I Am Plane Image","artist":"Brice Marden","venue":"Gagosian · West 21st Street","area":"Chelsea","address":"522 West 21st Street, New York, NY 10011","close":"2026-12-12","url":"https://gagosian.com/exhibitions/2026/brice-marden-i-am-plane-image/","note":"Major survey spanning six decades of Marden’s painting.","points":[[40.74621,-74.00672]],"kind":"Gallery","start":"2026-09-15","curated":true,"planned":"Sat, Nov 21 · Chelsea gallery day"},{"id":"rothko","title":"The Surrealist Years","artist":"Rothko / Gottlieb","venue":"125 Newbury · Pace","area":"Tribeca","address":"395 Broadway, New York, NY 10013","close":"2027-01-09","url":"https://125newbury.com/exhibitions/rothko-gottlieb","note":"Paintings and works on paper from 1941–1951, before their mature abstract languages.","points":[[40.71938,-74.00312]],"kind":"Gallery","start":"2026-11-13","curated":true},{"id":"turrell","title":"Something Old, Something New, Something Borrowed, Something Blue","artist":"James Turrell","venue":"Almine Rech","area":"Tribeca","address":"361 Broadway, New York, NY 10013","close":"2027-01-30","url":"https://www.alminerech.com/exhibitions/12743-james-turrell","note":"Light-based works. Free but reservation required; slots were fully booked when checked Nov 13.","points":[[40.71825,-74.00374]],"kind":"Gallery","reservation":true,"start":"2026-11-12","curated":true},{"id":"johns","title":"Recent Drawings","artist":"Jasper Johns","venue":"Matthew Marks Gallery","area":"Chelsea","address":"526 West 22nd Street, New York, NY 10011","close":"2027-01-23","url":"https://matthewmarks.com/exhibitions/jasper-johns-recent-drawings-11-2026","note":"Twelve recent drawings that revisit motifs from across Johns’s career.","points":[[40.74709,-74.00652]],"kind":"Gallery","start":"2026-11-05","curated":true,"planned":"Sat, Nov 21 · Chelsea gallery day"},{"id":"baselitz","title":"Meine Schule","artist":"Georg Baselitz","venue":"Gagosian · West 24th Street","area":"Chelsea","address":"555 West 24th Street, New York, NY 10011","close":"2027-01-23","url":"https://gagosian.com/exhibitions/2026/georg-baselitz-meine-schule/","note":"Late paintings and sculptures, including some references to de Kooning.","points":[[40.74936,-74.00618]],"kind":"Gallery","start":"2026-11-12","curated":true,"planned":"Sat, Nov 21 · Chelsea gallery day"},{"id":"curtiss","title":"UNREAL","artist":"Julie Curtiss","venue":"Gagosian · West 24th Street","area":"Chelsea","address":"541 West 24th Street, New York, NY 10011","close":"2026-12-19","url":"https://gagosian.com/exhibitions/2026/julie-curtiss-unreal/","note":"Stylized paintings reflecting the strangeness of contemporary New York.","points":[[40.74917,-74.00573]],"kind":"Gallery","start":"2026-11-10","curated":true,"planned":"Sat, Nov 21 · Chelsea gallery day"},{"id":"guston","title":"In the Studio","artist":"Philip Guston","venue":"The Museum of Modern Art","area":"Midtown","address":"11 West 53rd Street, New York, NY 10019","start":"2026-11-21","close":"2027-02-07","url":"https://www.moma.org/calendar/exhibitions/5962","note":"Paintings from the studio, with everyday objects and unsettling figures.","points":[[40.7615,-73.97767]],"kind":"Museum","curated":true},{"id":"huyghe","title":"UUmwelt","artist":"Pierre Huyghe","venue":"The Museum of Modern Art","area":"Midtown","address":"11 West 53rd Street, New York, NY 10019","start":null,"close":"2026-11-29","url":"https://www.moma.org/calendar/exhibitions/5912","note":"An AI-inflected installation in MoMA’s sculpture garden. Closes Nov 29.","points":[[40.7615,-73.97767]],"kind":"Museum","curated":true},{"id":"surrealist-book","title":"Tomorrow Lives in Mirrors","artist":"The Surrealist Book","venue":"The Museum of Modern Art","area":"Midtown","address":"11 West 53rd Street, New York, NY 10019","start":"2026-10-04","close":"2027-01-23","url":"https://www.moma.org/calendar/exhibitions/5918","note":"Surrealist publications, artist books and experiments on paper.","points":[[40.7615,-73.97767]],"kind":"Museum","curated":true},{"id":"african-architecture","title":"Modernism in Western Africa","artist":"Architects of Liberation","venue":"The Museum of Modern Art","area":"Midtown","address":"11 West 53rd Street, New York, NY 10019","start":"2026-07-05","close":"2027-01-02","url":"https://www.moma.org/calendar/exhibitions/5906","note":"Architecture and national identity in post-independence West Africa.","points":[[40.7615,-73.97767]],"kind":"Museum","curated":true},{"id":"minnie-evans","title":"The Lost World","artist":"Minnie Evans","venue":"Whitney Museum of American Art","area":"Meatpacking","address":"99 Gansevoort Street, New York, NY 10014","start":"2026-08-22","close":"2027-01-10","url":"https://whitney.org/exhibitions/the-lost-world","note":"Visionary, intricately patterned paintings and drawings.","points":[[40.73958,-74.00886]],"kind":"Museum","curated":true},{"id":"coumba","title":"Stars and Stripes","artist":"Coumba Samba","venue":"Whitney Museum of American Art","area":"Meatpacking","address":"99 Gansevoort Street, New York, NY 10014","start":"2026-09-19","close":"2027-01-18","url":"https://whitney.org/exhibitions","note":"New work at the Whitney; see the museum site for gallery details.","points":[[40.73958,-74.00886]],"kind":"Museum","curated":true},{"id":"na-mira","title":"NO SMOKING","artist":"Na Mira","venue":"The Museum of Modern Art","area":"Midtown","address":"11 West 53rd Street, New York, NY 10019","start":"2026-11-14","close":"2027-02-15","url":"https://www.moma.org/calendar/exhibitions","note":"A new MoMA exhibition opening November 14.","points":[[40.7615,-73.97767]],"kind":"Museum","curated":true},{"id":"carrington-vicuna","artist":"Leonora Carrington & Cecilia Vicuña","title":"Leonora Carrington & Cecilia Vicuña","venue":"Lehmann Maupin · West 24th Street","area":"Chelsea","address":"501 West 24th Street, New York, NY 10011","start":"2026-11-19","close":"2026-12-19","url":"https://www.lehmannmaupin.com/exhibitions/cecilia-vicuna-leonora-carrington","note":"Historical works by Carrington paired with new work by Vicuña, exploring myth and transformation. Opens Nov 19; close to other West 24th Street galleries.","kind":"Gallery","planned":"Sat, Nov 21 · Chelsea gallery day","points":[[40.74885,-74.00464]],"curated":true},{"id":"wiley-what-the-light-becomes","artist":"Kehinde Wiley","title":"What the Light Becomes","venue":"Sean Kelly · Tenth Avenue","area":"Hudson Yards","address":"475 Tenth Avenue, New York, NY 10018","start":"2026-11-06","close":"2026-12-23","url":"https://www.skny.com/exhibitions/kehinde-wiley3","note":"Portraits of contemporary New Yorkers. Sean Kelly is near West 36th Street — about a 15–20 minute walk north of the Chelsea galleries. Open Saturday.","kind":"Gallery","points":[[40.75584,-73.99784]],"curated":true},{"id":"johnson-birthday-boys","artist":"Rashid Johnson","title":"Birthday Boys","venue":"Hauser & Wirth · Wooster Street","area":"SoHo","address":"134 Wooster Street, New York, NY 10012","start":"2026-11-03","close":"2027-01-16","url":"https://www.hauserwirth.com/gsw/hauser-wirth-exhibitions/rashid-johnson-birthday-boys/","note":"New mosaics, suspended sculptures and film exploring father-son relationships. Separate SoHo outing; no ticket needed.","kind":"Gallery","points":[[40.7256,-73.99854]],"curated":true}];
+const STORAGE_KEY = 'jp-nyc-art-tracker-v2';
+const LEGACY_VISITS_KEY = 'jp-nyc-art-nov-2026-visited-v1';
+const FIRST_WATCHLIST_IDS = ['sothebys-nov-2026','christies','lichtenstein','brancusi','nara','chow','bacon','krasner','marden','rothko','turrell','johns','baselitz','curtiss','carrington-vicuna','wiley-what-the-light-becomes','johnson-birthday-boys'];
+const COLORS = {'Chelsea':'#4c8066','Hudson Yards':'#8f736b','Midtown':'#6b83a8','Upper East Side':'#bd815c','Tribeca':'#6497a4','Meatpacking':'#947397','Lower East Side':'#ad786e','SoHo':'#b98e61','Brooklyn':'#648b94','Other NYC':'#788d71'};
+const $ = id => document.getElementById(id);
+const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeLink = value => { try { let u = new URL(value); return /^(https?:)$/.test(u.protocol) ? u.href : ''; } catch(e) { return ''; } };
+const own = (o, key) => Object.prototype.hasOwnProperty.call(o, key);
+const todayISO = () => {const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
+const currentMonth = () => todayISO().slice(0,7);
+const monthName = m => {const [y,mm] = m.split('-').map(Number);return new Date(y,mm-1,15).toLocaleDateString('en-US',{month:'long',year:'numeric'});};
+const shortMonth = m => {const [y,mm]=m.split('-').map(Number);return new Date(y,mm-1,15).toLocaleDateString('en-US',{month:'long'});};
+const shiftMonth = (m,delta) => {const [y,mm]=m.split('-').map(Number);const d=new Date(y,mm-1+delta,15);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;};
+const lastDay = m => {const [y,mm]=m.split('-').map(Number);return `${m}-${String(new Date(y,mm,0).getDate()).padStart(2,'0')}`;};
+const humanDate = date => !date?'Date TBA':new Date(date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+const dayDiff = a => Math.round((new Date(a+'T12:00:00') - new Date(todayISO()+'T12:00:00'))/86400000);
+const colorFor = area => COLORS[area] || '#688b76';
+const hasPins = show => Array.isArray(show.points) && show.points.some(p => Array.isArray(p) && Number.isFinite(+p[0]) && Number.isFinite(+p[1]));
+const isISODate = d => !d || /^\d{4}-\d{2}-\d{2}$/.test(d);
+function defaultDB(){return {schemaVersion:4,watchByMonth:{'2026-11':[...FIRST_WATCHLIST_IDS]},visited:{krasner:'2026-11-13'},custom:[],overrides:{}};}
+function normalizeRecord(rec){
+  if(!rec || typeof rec!=='object')return null;
+  let id=String(rec.id||'').trim().slice(0,80);
+  let artist=String(rec.artist||'').trim().slice(0,160);
+  let title=String(rec.title||'').trim().slice(0,160);
+  if(!id || !artist || !title)return null;
+  let points=Array.isArray(rec.points)?rec.points.filter(p=>Array.isArray(p)&&p.length===2&&Number.isFinite(+p[0])&&Number.isFinite(+p[1])&&Math.abs(+p[0])<=90&&Math.abs(+p[1])<=180).map(p=>[+p[0],+p[1]]).slice(0,5):[];
+  return {
+    id,artist,title,venue:String(rec.venue||'').slice(0,160),area:String(rec.area||'Other NYC').slice(0,70),
+    address:String(rec.address||'').slice(0,250),start:isISODate(rec.start)?(rec.start||null):null,
+    close:isISODate(rec.close)?(rec.close||null):null,url:safeLink(rec.url)||'',
+    note:String(rec.note||'').slice(0,700),kind:String(rec.kind||'Gallery').slice(0,50),
+    reservation:Boolean(rec.reservation),points,planned:String(rec.planned||'').slice(0,90),curated:Boolean(rec.curated)
+  };
+}
+let BASE = SEED_CATALOG.map(normalizeRecord).filter(Boolean);
+let BASE_IDS = new Set(BASE.map(s=>s.id));
+function sanitizeDB(input){
+  const d=defaultDB(); if(!input || typeof input!=='object')return d;
+  d.schemaVersion=Number.isFinite(Number(input.schemaVersion))&&Number(input.schemaVersion)>=2?Math.floor(Number(input.schemaVersion)):2;
+  if(input.watchByMonth && typeof input.watchByMonth==='object'){
+    d.watchByMonth={};
+    for(const [month,ids] of Object.entries(input.watchByMonth)){
+      if(/^\d{4}-\d{2}$/.test(month) && Array.isArray(ids))d.watchByMonth[month]=[...new Set(ids.filter(x=>typeof x==='string'))].slice(0,500);
+    }
+  }
+  if(input.visited && typeof input.visited==='object'){
+    d.visited={}; for(const [id,when] of Object.entries(input.visited))if(when===true || typeof when==='string')d.visited[id]=when===true?'':when;
+  }
+  if(Array.isArray(input.custom))d.custom=input.custom.map(normalizeRecord).filter(Boolean).slice(0,800);
+  if(input.overrides && typeof input.overrides==='object'){
+    d.overrides={};for(const [id,rec] of Object.entries(input.overrides)){const v=normalizeRecord({...rec,id});if(v)d.overrides[id]=v;}
+  }
+  return d;
+}
+let db=defaultDB();
+let localAvailable=true;
+try{
+  const raw=localStorage.getItem(STORAGE_KEY);
+  if(raw){db=sanitizeDB(JSON.parse(raw));}
+  else {
+    // Carry the checked-off exhibitions across from version 1, if present.
+    const legacy=JSON.parse(localStorage.getItem(LEGACY_VISITS_KEY)||'null');
+    if(Array.isArray(legacy))db.visited=Object.fromEntries(legacy.map(id=>[id,'']));
+  }
+}catch(e){localAvailable=false;}
+// One-time addition for people who already saved a watchlist using the previous HTML.
+// Mark the migration so removing Sotheby's later is respected on refresh.
+if(db.schemaVersion<3){
+  const ids=db.watchByMonth['2026-11']||(db.watchByMonth['2026-11']=[]);
+  if(!ids.includes('sothebys-nov-2026'))ids.push('sothebys-nov-2026');
+  db.schemaVersion=3;
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(db));}catch(e){localAvailable=false;}
+}
+// One-time catalog upgrade. It adds the three requested November shows to existing
+// watchlists without resetting visited items, custom exhibitions or other months.
+// Once upgraded, manually removing an exhibition stays respected on refresh.
+if(db.schemaVersion<4){
+  const november=db.watchByMonth['2026-11']||(db.watchByMonth['2026-11']=[]);
+  for(const id of ['carrington-vicuna','wiley-what-the-light-becomes','johnson-birthday-boys']){
+    if(!november.includes(id))november.push(id);
+  }
+  db.schemaVersion=4;
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(db));}catch(e){localAvailable=false;}
+}
+let month=localStorageGetMonth() || currentMonth();
+let page='watchlist';
+const filters={watchStatus:'all',watchTerm:'',watchArea:'all',catalogDates:'month',catalogStatus:'all',catalogTerm:'',catalogArea:'all'};
+let map=null,markers=[],leafletLayer=null,offlineMode=false,focusedId=null,geoCoordinates=null,toastTimeout=null;
+function localStorageGetMonth(){try {const m=localStorage.getItem('jp-nyc-art-month');return /^\d{4}-\d{2}$/.test(m||'')?m:null;}catch(e){return null;}}
+function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(db));localStorage.setItem('jp-nyc-art-month',month);localAvailable=true;}catch(e){localAvailable=false;}}
+function allShows(){
+  const seeded=BASE.map(s=>normalizeRecord(db.overrides[s.id]||s));
+  const seen=new Set(seeded.map(s=>s.id));
+  const custom=[];
+  for(const item of db.custom){const s=normalizeRecord(db.overrides[item.id]||item);if(s && !seen.has(s.id)){custom.push(s);seen.add(s.id);}}
+  return seeded.concat(custom).filter(Boolean);
+}
+function getShow(id){return allShows().find(s=>s.id===id);}
+function watchIDs(){return db.watchByMonth[month]||[];}
+function inWatchlist(id){return watchIDs().includes(id);}
+function wasVisited(id){return own(db.visited,id);}
+function isOpenInMonth(s){const first=month+'-01',last=lastDay(month);return (!s.start||s.start<=last)&&(!s.close||s.close>=first);}
+function visibleWatch(){
+  const byId=new Map(allShows().map(s=>[s.id,s]));
+  const shows=watchIDs().map(id=>byId.get(id)).filter(Boolean);
+  const q=filters.watchTerm.toLowerCase();
+  return shows.filter(s=>(filters.watchStatus==='all'||(filters.watchStatus==='done' ? wasVisited(s.id):!wasVisited(s.id))) && (filters.watchArea==='all'||s.area===filters.watchArea) && (!q||`${s.title} ${s.artist} ${s.venue} ${s.address} ${s.area}`.toLowerCase().includes(q)))
+   .sort((a,b)=>(wasVisited(a.id)?1:0)-(wasVisited(b.id)?1:0)||String(a.close||'9999').localeCompare(String(b.close||'9999'))||a.artist.localeCompare(b.artist));
+}
+function currentWatch(){const m=new Map(allShows().map(s=>[s.id,s]));return watchIDs().map(id=>m.get(id)).filter(Boolean);}
+function visibleCatalog(){
+  const q=filters.catalogTerm.toLowerCase();
+  return allShows().filter(s=>
+    (filters.catalogDates==='all'||isOpenInMonth(s))&&
+    (filters.catalogStatus==='all'||(filters.catalogStatus==='saved'?inWatchlist(s.id):!inWatchlist(s.id)))&&
+    (filters.catalogArea==='all'||s.area===filters.catalogArea)&&
+    (!q||`${s.title} ${s.artist} ${s.venue} ${s.address} ${s.area} ${s.note}`.toLowerCase().includes(q))
+  ).sort((a,b)=>(inWatchlist(a.id)?1:0)-(inWatchlist(b.id)?1:0)||String(a.close||'9999').localeCompare(String(b.close||'9999'))||a.artist.localeCompare(b.artist));
+}
+function statusBadge(s){
+  if(wasVisited(s.id))return {label:'Visited ✓',cls:'ended'};
+  if(s.reservation)return {label:'Reservation needed',cls:'booking'};
+  if(s.close && dayDiff(s.close)<0)return {label:'Closed',cls:'ended'};
+  if(s.start && dayDiff(s.start)>0)return {label:'Opens '+humanDate(s.start).replace(', 2026','').replace(', 2027',''),cls:''};
+  if(s.close && dayDiff(s.close)<=8)return {label:'Closes soon',cls:'soon'};
+  return {label:s.close?'Through '+humanDate(s.close).replace(', 2026','').replace(', 2027',''):'Date TBA',cls:''};
+}
+function runDates(s){return s.start && s.close?`${humanDate(s.start)} – ${humanDate(s.close)}`:s.close?`Through ${humanDate(s.close)}`:s.start?`From ${humanDate(s.start)}`:'Dates not listed';}
+function showTitle(s){return s.title===s.artist?s.artist:s.title;}
+function showInfo(s){return s.artist===s.title?'':s.artist;}
+function locationLink(s){return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.address||s.venue+' New York')}`;}
+function watchCard(s){
+  const badge=statusBadge(s),done=wasVisited(s.id),url=safeLink(s.url),title=showTitle(s);
+  return `<article class="show-card ${done?'visited':''} ${focusedId===s.id?'focused':''}" style="--stripe:${colorFor(s.area)}" id="watch-${escapeHtml(s.id)}">
+    <div class="stripe"></div><div class="show-body"><div class="show-top"><div><div class="artist-kicker">${escapeHtml(showInfo(s)||s.kind)} · ${escapeHtml(s.area)}</div><h3>${escapeHtml(title)}</h3><div class="meta">${escapeHtml(s.venue)} · ${escapeHtml(runDates(s))}</div></div><span class="deadline ${badge.cls}">${escapeHtml(badge.label)}</span></div>
+    ${s.planned?`<div class="visit-planned"><span class="calendar-bullet" aria-hidden="true">◉</span> Planned ${escapeHtml(s.planned)}</div>`:''}
+    <p class="note">${escapeHtml(s.note||s.address)}</p>
+    <div class="card-bottom"><label class="visit-label"><input type="checkbox" data-visited="${escapeHtml(s.id)}" ${done?'checked':''}> ${done?'Seen ✓':'Mark visited'}</label>
+    <div class="card-actions"><button type="button" data-pin="${escapeHtml(s.id)}">${hasPins(s)?'Show pin ↗':'Set pin ↗'}</button>${url?`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">Official page ↗</a>`:''}<button type="button" data-remove="${escapeHtml(s.id)}">Remove ×</button></div></div>
+    ${!hasPins(s)?`<div class="pin-info">Location not pinned yet. Select <strong>Set pin</strong> to add map coordinates.</div>`:''}
+    </div></article>`;
+}
+function directoryCard(s){
+  const badge=statusBadge(s),saved=inWatchlist(s.id),url=safeLink(s.url),done=wasVisited(s.id),title=showTitle(s);
+  return `<article class="directory-card" style="--stripe:${colorFor(s.area)}"><div class="stripe-top"></div>
+   <div class="directory-content"><div class="dir-kind"><span>${escapeHtml(s.kind||'Exhibition')} · ${escapeHtml(s.area)}</span><span>${s.curated?'CURATED':'ADDED'}</span></div>
+   <h3 class="${done?'visited':''}">${escapeHtml(title)}</h3><div class="dir-artist">${escapeHtml(showInfo(s)||s.artist)}</div><div class="dir-venue">${escapeHtml(s.venue)}</div>
+   <div class="dir-dates">${escapeHtml(runDates(s))}</div><div class="dir-note">${escapeHtml(s.note||s.address)} ${!hasPins(s)?'<span style="color:#b16d4a"> · Pin location needed</span>':''}</div>
+   <div class="dir-actions"><div>${url?`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">Exhibition ↗</a>`:''} <button type="button" class="small-link" data-edit="${escapeHtml(s.id)}" style="margin-left:10px">Edit</button></div>
+     <button type="button" class="${saved?'soft':'solid'}" data-toggle-watch="${escapeHtml(s.id)}">${saved?'✓ In watchlist':'＋ Add to watchlist'}</button>
+   </div></div></article>`;
+}
+function renderAreas(){
+  const areas=['all',...new Set(allShows().map(s=>s.area))].sort((a,b)=>a==='all'?-1:b==='all'?1:a.localeCompare(b));
+  for(const id of ['watchArea','catalogArea']){
+    const select=$(id),prev=select.value||'all';
+    select.innerHTML=areas.map(a=>`<option value="${escapeHtml(a)}">${a==='all'?'All neighborhoods':escapeHtml(a)}</option>`).join('');
+    select.value=areas.includes(prev)?prev:'all';
+  }
+}
+function renderStats(){
+  const w=currentWatch();const done=w.filter(s=>wasVisited(s.id)).length;
+  $('heroSaved').textContent=w.length;$('heroDone').textContent=done;$('heroCatalog').textContent=allShows().length;
+  $('navWatchCount').textContent=w.length;$('navCatalogCount').textContent=allShows().length;
+  $('watchTitle').textContent=shortMonth(month)+' watchlist';
+  $('watchSubtitle').textContent=`${w.length} saved · ${done} visited · ${w.length-done} left to see. Click a card's pin to locate it on the map.`;
+  $('monthSelect').value=month;
+  $('formMonth').textContent=monthName(month);
+}
+function renderWatch(){
+  const shows=visibleWatch(),all=currentWatch(),complete=all.filter(s=>wasVisited(s.id)).length;
+  $('watchCards').innerHTML=shows.length?shows.map(watchCard).join(''):
+    `<div class="blank"><div class="symbol">✳</div><h3>${all.length?'No matching exhibitions':'Your watchlist is empty.'}</h3><p>${all.length?'Try changing the filters to see more.':`Go to All exhibitions, find something you like, and click Add to watchlist. Its pin will appear here.`}</p><button class="solid" type="button" data-go="explore">Explore exhibitions →</button></div>`;
+  document.querySelectorAll('[data-watch-status]').forEach(b=>{
+    const selected=b.dataset.watchStatus===filters.watchStatus;
+    b.classList.toggle('active',selected);b.setAttribute('aria-pressed',String(selected));
+    let count=b.dataset.watchStatus==='all'?all.length:b.dataset.watchStatus==='done'?complete:all.length-complete;
+    b.textContent=(b.dataset.watchStatus==='all'?'All':b.dataset.watchStatus==='done'?'Visited':'To visit')+' '+count;
+  });
+  const areaCounts={};all.forEach(s=>{areaCounts[s.area]=(areaCounts[s.area]||0)+1;});
+  $('areaSummary').innerHTML=Object.entries(areaCounts).sort((a,b)=>b[1]-a[1]).map(([name,n])=>`<span class="area">${escapeHtml(name)} &nbsp;<strong>${n}</strong></span>`).join('');
+  const prev=shiftMonth(month,-1),remaining=(db.watchByMonth[prev]||[]).filter(id=>{const s=getShow(id);return s&&!wasVisited(id)&&isOpenInMonth(s)&&!inWatchlist(id);});
+  $('carryOver').title=remaining.length?`${remaining.length} unvisited show(s) from ${monthName(prev)} are still running`:'No unvisited shows available to carry forward from the previous month';
+  $('mapSubtitle').textContent=`${shows.length} shows visible · Tap a pin for details`;
+  renderMarkers(shows);
+}
+function renderDiscover(){
+  let shows=visibleCatalog();$('catalogCount').textContent=`${shows.length} exhibitions`;
+  $('directoryCards').innerHTML=shows.length?shows.map(directoryCard).join(''):
+    `<div class="blank" style="grid-column:1/-1"><div class="symbol">✳</div><h3>Nothing matches yet.</h3><p>Change the filters, browse all dates or add a new exhibition.</p><button class="solid" type="button" data-new-show="yes">+ Add exhibition</button></div>`;
+}
+function render(){renderStats();renderWatch();renderDiscover();}
+function showToast(message){
+  $('toast').textContent=message;$('toast').classList.add('show');
+  if(toastTimeout)clearTimeout(toastTimeout);
+  toastTimeout=setTimeout(()=>$('toast').classList.remove('show'),3400);
+}
+function addWatch(id){
+  const s=getShow(id);if(!s)return;
+  if(!db.watchByMonth[month])db.watchByMonth[month]=[];
+  if(db.watchByMonth[month].includes(id))return;
+  db.watchByMonth[month].push(id);persist();render();
+  showToast(`${s.artist} added to ${monthName(month)}. ${hasPins(s)?'Pin added to your map.':'Add a location to show its pin.'}`);
+}
+function removeWatch(id){
+  const s=getShow(id);if(!s)return;
+  db.watchByMonth[month]=watchIDs().filter(x=>x!==id);
+  focusedId=null;persist();render();showToast(`${s.artist} removed from ${monthName(month)} watchlist.`);
+}
+function toggleVisited(id,yes){
+  if(yes)db.visited[id]=todayISO();else delete db.visited[id];
+  persist();render();showToast(yes?'Marked as visited.':'Moved back to your to-visit list.');
+}
+function carryOver(){
+  const prev=shiftMonth(month,-1),older=db.watchByMonth[prev]||[];
+  const ids=older.filter(id=>{const s=getShow(id);return s&&!wasVisited(id)&&isOpenInMonth(s)&&!inWatchlist(id);});
+  if(!ids.length){showToast('No unfinished exhibitions to carry forward from '+monthName(prev)+'.');return;}
+  db.watchByMonth[month]=[...watchIDs(),...ids];persist();render();fitMapPins();
+  showToast(`${ids.length} still-open exhibition${ids.length===1?'':'s'} carried into ${monthName(month)}.`);
+}
+function buildMonthOptions(){
+  const curYear=new Date().getFullYear(),start=Math.min(2025,curYear-1),end=Math.max(2030,curYear+3);
+  $('monthSelect').innerHTML=Array.from({length:(end-start+1)*12},(_,idx)=>{
+    const y=start+Math.floor(idx/12),m=String(idx%12+1).padStart(2,'0'),val=y+'-'+m;
+    return `<option value="${val}">${monthName(val)}</option>`;
+  }).join('');
+}
+function setMonth(newMonth){
+  if(!/^\d{4}-\d{2}$/.test(newMonth))return;
+  month=newMonth;filters.watchStatus='all';filters.watchArea='all';filters.watchTerm='';$('watchSearch').value='';
+  filters.catalogStatus='all';filters.catalogTerm='';$('catalogSearch').value='';
+  $('watchArea').value='all';$('catalogArea').value='all';$('catalogStatus').value='all';
+  if(![...$('monthSelect').options].some(o=>o.value===month))buildMonthOptions();
+  persist();render();setTimeout(fitMapPins,100);
+}
+function applyRoute(){
+  page=window.location.hash==='#explore'?'explore':'watchlist';
+  $('watchlistView').hidden=page!=='watchlist';$('exploreView').hidden=page!=='explore';
+  $('navWatch').classList.toggle('active',page==='watchlist');$('navExplore').classList.toggle('active',page==='explore');
+  if(page==='watchlist')$('navWatch').setAttribute('aria-current','page');else $('navWatch').removeAttribute('aria-current');
+  if(page==='explore')$('navExplore').setAttribute('aria-current','page');else $('navExplore').removeAttribute('aria-current');
+  if(page==='watchlist')setTimeout(()=>{if(map){map.invalidateSize();fitMapPins();}},90);
+}
+function goPage(name){
+  const hash=name==='explore'?'#explore':'#watchlist';
+  if(window.location.hash!==hash)window.location.hash=hash;
+  else applyRoute();
+}
+// Map: only exhibitions added to the selected month's watchlist are pinned.
+function locationGroups(shows){
+  const groups=new Map();
+  for(const s of shows){
+    for(const point of s.points||[]){
+      if(!Array.isArray(point)||!Number.isFinite(point[0])||!Number.isFinite(point[1]))continue;
+      const key=point[0].toFixed(5)+','+point[1].toFixed(5);
+      if(!groups.has(key))groups.set(key,{point,shows:[]});
+      const group=groups.get(key);
+      if(!group.shows.some(x=>x.id===s.id))group.shows.push(s);
+    }
+  }
+  return [...groups.values()];
+}
+function pinPopup(group){
+  return `<div class="map-popup"><div class="place">${escapeHtml(group.shows[0].area)} · ${escapeHtml(group.shows[0].venue)}</div>
+    ${group.shows.map(s=>`<div class="popup-item"><strong>${escapeHtml(showTitle(s))}</strong><p>${escapeHtml(s.artist)}<br>${escapeHtml(s.address)}</p><button type="button" data-popup-focus="${escapeHtml(s.id)}">Find in watchlist →</button></div>`).join('')}</div>`;
+}
+function renderMarkers(shows){
+  const groups=locationGroups(shows);
+  $('mapFootText').textContent=`${groups.length} location pin${groups.length===1?'':'s'} · ${shows.length} exhibitions`;
+  $('mapEmpty').classList.toggle('show',groups.length===0);
+  if(!map){drawOfflinePins(groups);return;}
+  markers.forEach(m=>map.removeLayer(m.marker));markers=[];
+  for(const group of groups){
+    const allSeen=group.shows.every(s=>wasVisited(s.id)),many=group.shows.length>1;
+    const text=many?group.shows.length:(group.shows[0].artist.charAt(0)||'•');
+    const color=allSeen?'#879b8b':colorFor(group.shows[0].area);
+    const classes=['art-pin',allSeen?'is-visited':'',many?'many':'',group.shows.some(s=>s.id===focusedId)?'is-selected':''].join(' ');
+    const html=`<div class="${classes}" style="--pin-color:${color}">${escapeHtml(text)}</div>`;
+    const icon=L.divIcon({className:'',html,iconSize:[32,32],iconAnchor:[16,16]});
+    const marker=L.marker(group.point,{icon,keyboard:true,alt:group.shows.map(s=>s.artist).join(', ')}).addTo(map);
+    marker.bindPopup(pinPopup(group),{minWidth:185,maxWidth:270});
+    markers.push({marker,group});
+  }
+}
+function drawOfflinePins(groups){
+  const area=$('offlineMap');if(!area)return;
+  area.querySelectorAll('.offline-pin').forEach(el=>el.remove());
+  if(!offlineMode)return;
+  for(const group of groups){
+    // Approximate Manhattan geography; clickable dots still work without a live tile map.
+    const [lat,lon]=group.point;
+    const x=Math.max(8,Math.min(93,35+(lon+74.015)/0.066*45));
+    const y=Math.max(7,Math.min(93,10+(40.790-lat)/0.086*83));
+    const pin=document.createElement('button');pin.type='button';pin.className='offline-pin';
+    pin.style.left=x+'%';pin.style.top=y+'%';pin.style.background=colorFor(group.shows[0].area);
+    pin.textContent=group.shows.length>1?String(group.shows.length):group.shows[0].artist.charAt(0);
+    pin.title=group.shows.map(s=>s.artist).join(', ');pin.addEventListener('click',()=>focusPin(group.shows[0].id));
+    area.appendChild(pin);
+  }
+}
+function initMap(){
+  if(typeof L==='undefined'){
+    offlineMode=true;$('offlineMap').style.display='block';renderMarkers(visibleWatch());return;
+  }
+  map=L.map('map',{scrollWheelZoom:false,zoomControl:false}).setView([40.748,-73.99],12);
+  L.control.zoom({position:'bottomright'}).addTo(map);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
+    maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'
+  }).addTo(map);
+  map.on('popupopen',ev=>{
+    const node=ev.popup.getElement();
+    node?.querySelectorAll('[data-popup-focus]').forEach(b=>b.addEventListener('click',()=>focusPin(b.dataset.popupFocus)));
+  });
+  renderMarkers(visibleWatch());setTimeout(()=>{map.invalidateSize();fitMapPins();},140);
+}
+function fitMapPins(){
+  if(!map || page!=='watchlist')return;
+  const points=locationGroups(visibleWatch()).map(g=>g.point);
+  if(!points.length)return;
+  if(points.length===1)map.setView(points[0],15);
+  else map.fitBounds(L.latLngBounds(points),{padding:[43,43],maxZoom:15,animate:false});
+}
+function focusPin(id){
+  const s=getShow(id);if(!s)return;
+  if(!inWatchlist(id)){showToast('First add this exhibition to your watchlist.');return;}
+  filters.watchArea='all';filters.watchStatus='all';filters.watchTerm='';$('watchArea').value='all';$('watchSearch').value='';
+  focusedId=id;goPage('watchlist');render();
+  setTimeout(()=>{
+    if(map && hasPins(s)){
+      map.invalidateSize();map.flyTo(s.points[0],Math.max(15,map.getZoom()),{duration:.45});
+      const m=markers.find(x=>x.group.shows.some(q=>q.id===id));if(m)m.marker.openPopup();
+    }
+    else if(!hasPins(s))openShowDialog(id);
+    $('watch-'+id)?.scrollIntoView({behavior:'smooth',block:window.innerWidth>780?'center':'start'});
+  },110);
+}
+// Add or edit a show, and resolve its pin using an explicit address lookup.
+function openShowDialog(id){
+  const s=id?getShow(id):null;
+  $('exhibitForm').reset();$('editId').value=s?.id||'';
+  $('dialogTitle').textContent=s?'Edit exhibition':'Add an exhibition';
+  $('formArtist').value=s?.artist||'';$('formTitle').value=s?.title||'';
+  $('formVenue').value=s?.venue||'';$('formArea').value=s?.area||'Chelsea';
+  $('formAddress').value=s?.address||'';$('formStart').value=s?.start||'';$('formClose').value=s?.close||'';
+  $('formUrl').value=s?.url||'';$('formNote').value=s?.note||'';
+  $('formLat').value=s?.points?.[0]?.[0]??'';$('formLon').value=s?.points?.[0]?.[1]??'';
+  geoCoordinates=s?.points?.length?s.points:null;
+  $('formAdd').checked=s?inWatchlist(s.id):true;
+  $('formMonth').textContent=monthName(month);
+  $('geoStatus').textContent=geoCoordinates?'Location ready for map':'No location found yet.';
+  $('showDialog').showModal();
+}
+function closeDialog(){$('showDialog').close();}
+async function geocodeAddress(){
+  const address=$('formAddress').value.trim();if(!address){$('geoStatus').textContent='Enter an address first.';return null;}
+  $('geoStatus').textContent='Finding the gallery location…';
+  // No autocomplete or background requests: only one lookup when Save or Find is clicked.
+  try{
+    const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),7000);
+    const q=address.toLowerCase().includes('new york')||address.toLowerCase().includes('brooklyn')?address:address+', New York, NY, USA';
+    const response=await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=us&q=${encodeURIComponent(q)}`,{signal:controller.signal,headers:{'Accept':'application/json'}});
+    clearTimeout(timer);
+    if(!response.ok)throw new Error('Geocoder unavailable');
+    const results=await response.json();if(!results.length)throw new Error('No matching address found');
+    const p=[Number(results[0].lat),Number(results[0].lon)];
+    if(!Number.isFinite(p[0])||!Number.isFinite(p[1]))throw new Error('Invalid map location');
+    geoCoordinates=[p];$('formLat').value=p[0].toFixed(6);$('formLon').value=p[1].toFixed(6);
+    $('geoStatus').textContent='✓ Map location found';return geoCoordinates;
+  }catch(e){$('geoStatus').textContent='Location lookup unavailable. You can enter coordinates or save and edit later.';return null;}
+}
+function coordinatesFromFields(){
+  const a=$('formLat').value.trim(),b=$('formLon').value.trim();
+  if(a&&b){const lat=Number(a),lon=Number(b);if(Number.isFinite(lat)&&Number.isFinite(lon)&&Math.abs(lat)<=90&&Math.abs(lon)<=180)return [[lat,lon]];}
+  return null;
+}
+async function saveShowFromForm(ev){
+  ev.preventDefault();
+  const prior=getShow($('editId').value),start=$('formStart').value||null,close=$('formClose').value||null;
+  if(start&&close&&start>close){showToast('The opening date cannot be after the closing date.');return;}
+  const button=$('saveShow');button.disabled=true;button.textContent='Saving…';
+  try{
+    const address=$('formAddress').value.trim();
+    let points=coordinatesFromFields();
+    // Preserve both Yoshitomo Nara locations on edits if the address / first pin is unchanged.
+    if(prior && address===prior.address && prior.points?.length>1 && points && points[0][0]===prior.points[0][0] && points[0][1]===prior.points[0][1])points=prior.points;
+    if(!points){
+      const match=allShows().find(s=>s.address.toLowerCase()===address.toLowerCase()&&hasPins(s));
+      if(match)points=match.points;
+    }
+    if(!points){points=await geocodeAddress();}
+    const s=normalizeRecord({
+      id:prior?.id||`custom-${Date.now()}-${Math.floor(Math.random()*1e5)}`,
+      artist:$('formArtist').value.trim(),title:$('formTitle').value.trim(),
+      venue:$('formVenue').value.trim(),area:$('formArea').value,address,
+      start,close,url:$('formUrl').value.trim(),note:$('formNote').value.trim(),
+      kind:prior?.kind||'Gallery',reservation:prior?.reservation||false,points:points||[],
+      curated:prior?.curated||false,planned:prior?.planned||''
+    });
+    if(!s){showToast('Please fill in an artist and exhibition title.');return;}
+    if(BASE_IDS.has(s.id)){db.overrides[s.id]=s;}
+    else {
+      const index=db.custom.findIndex(x=>x.id===s.id);
+      if(index===-1)db.custom.push(s);else db.custom[index]=s;
+    }
+    if($('formAdd').checked){
+      if(!db.watchByMonth[month])db.watchByMonth[month]=[];
+      if(!inWatchlist(s.id))db.watchByMonth[month].push(s.id);
+    } else db.watchByMonth[month]=watchIDs().filter(x=>x!==s.id);
+    persist();renderAreas();render();closeDialog();
+    showToast(`${s.artist} saved${inWatchlist(s.id)?' to your watchlist':''}.${hasPins(s)?' Map pin ready.':' Add its coordinates later for a map pin.'}`);
+  }finally{button.disabled=false;button.textContent='Save exhibition';}
+}
+function downloadJSON(data,filename){
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=filename;document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(u);a.remove();},1000);
+}
+function saveBackup(){
+  const data={app:'JP NYC Art Tracker',type:'jp-art-backup',version:2,exportedAt:new Date().toISOString(),selectedMonth:month,data:db,catalog:allShows()};
+  downloadJSON(data,`jp-nyc-art-backup-${todayISO()}.json`);showToast('Backup downloaded. Keep it to restore your watchlists.');
+}
+function mergeCatalogItems(items){
+  let count=0;for(const rec of items){const s=normalizeRecord(rec);if(!s)continue;
+    if(BASE_IDS.has(s.id))db.overrides[s.id]=s;
+    else {const idx=db.custom.findIndex(c=>c.id===s.id);if(idx===-1)db.custom.push(s);else db.custom[idx]=s;}
+    count++;
+  }
+  return count;
+}
+async function importJSON(file){
+  try{
+    const json=JSON.parse(await file.text());let count=0;
+    if(json?.type==='jp-art-backup' && json.data){
+      if(!window.confirm('Restore your saved backup? This will replace the watchlists and visit status saved in this browser.'))return;
+      db=sanitizeDB(json.data);
+      // Earlier backups already carry custom edits in db.overrides and db.custom.
+      // Import only records not in the current built-in catalog, to avoid replacing
+      // updated exhibition dates/plans with stale data from an old HTML file.
+      if(Array.isArray(json.catalog))count=mergeCatalogItems(json.catalog.filter(s=>!BASE_IDS.has(s.id)));
+      if(db.schemaVersion<4){
+        const november=db.watchByMonth['2026-11']||(db.watchByMonth['2026-11']=[]);
+        for(const id of ['carrington-vicuna','wiley-what-the-light-becomes','johnson-birthday-boys']){
+          if(!november.includes(id))november.push(id);
+        }
+        db.schemaVersion=4;
+      }
+      if(/^\d{4}-\d{2}$/.test(json.selectedMonth||''))month=json.selectedMonth;
+      showToast('Backup restored. Your watchlists and visits are back.');
+    }else{
+      const items=Array.isArray(json)?json:Array.isArray(json.exhibitions)?json.exhibitions:Array.isArray(json.shows)?json.shows:Array.isArray(json.catalog)?json.catalog:null;
+      if(!items)throw new Error('Expected an array of exhibitions or a JP art tracker backup.');
+      count=mergeCatalogItems(items);showToast(`${count} catalog records imported. Existing watchlists preserved.`);
+    }
+    persist();renderAreas();buildMonthOptions();render();setTimeout(fitMapPins,80);
+  }catch(e){showToast('Could not import JSON: '+e.message);}
+}
+// Event handlers are delegated so new cards behave the same after every update.
+document.addEventListener('click',event=>{
+  const target=event.target;
+  const button=target.closest('button');if(!button)return;
+  const d=button.dataset;
+  if(d.toggleWatch){inWatchlist(d.toggleWatch)?removeWatch(d.toggleWatch):addWatch(d.toggleWatch);return;}
+  if(d.remove){removeWatch(d.remove);return;}
+  if(d.pin){focusPin(d.pin);return;}
+  if(d.edit){openShowDialog(d.edit);return;}
+  if(d.go){goPage(d.go);return;}
+  if(d.newShow){openShowDialog();return;}
+  if(d.watchStatus){filters.watchStatus=d.watchStatus;renderWatch();return;}
+});
+document.addEventListener('change',event=>{
+  const target=event.target;
+  if(target.matches('[data-visited]'))toggleVisited(target.dataset.visited,target.checked);
+});
+$('prevMonth').addEventListener('click',()=>setMonth(shiftMonth(month,-1)));
+$('nextMonth').addEventListener('click',()=>setMonth(shiftMonth(month,1)));
+$('monthSelect').addEventListener('change',e=>setMonth(e.target.value));
+$('watchSearch').addEventListener('input',e=>{filters.watchTerm=e.target.value.trim();renderWatch();});
+$('catalogSearch').addEventListener('input',e=>{filters.catalogTerm=e.target.value.trim();renderDiscover();});
+$('watchArea').addEventListener('change',e=>{filters.watchArea=e.target.value;renderWatch();fitMapPins();});
+$('catalogArea').addEventListener('change',e=>{filters.catalogArea=e.target.value;renderDiscover();});
+$('catalogDates').addEventListener('change',e=>{filters.catalogDates=e.target.value;renderDiscover();});
+$('catalogStatus').addEventListener('change',e=>{filters.catalogStatus=e.target.value;renderDiscover();});
+$('carryOver').addEventListener('click',carryOver);
+$('exploreFromWatch').addEventListener('click',()=>goPage('explore'));
+$('backToWatch').addEventListener('click',()=>goPage('watchlist'));
+$('fitPins').addEventListener('click',fitMapPins);
+$('newShow').addEventListener('click',()=>openShowDialog());
+$('newShowExplore').addEventListener('click',()=>openShowDialog());
+$('closeDialog').addEventListener('click',closeDialog);
+$('cancelDialog').addEventListener('click',closeDialog);
+$('findAddress').addEventListener('click',geocodeAddress);
+$('exhibitForm').addEventListener('submit',saveShowFromForm);
+$('backupBtn').addEventListener('click',saveBackup);
+$('importBtn').addEventListener('click',()=>$('importFile').click());
+$('importFile').addEventListener('change',async e=>{if(e.target.files?.[0])await importJSON(e.target.files[0]);e.target.value='';});
+window.addEventListener('hashchange',applyRoute);
+// Reset cached lookup on address change, so stale coordinates aren't accidentally reused.
+$('formAddress').addEventListener('input',()=>{const prior=getShow($('editId').value);if(!prior || $('formAddress').value!==prior.address){geoCoordinates=null;$('formLat').value='';$('formLon').value='';$('geoStatus').textContent='New address — find its location before saving.';}});
+$('showDialog').addEventListener('click',e=>{if(e.target===$('showDialog'))closeDialog();});
+buildMonthOptions();renderAreas();applyRoute();render();
+if(!localAvailable)setTimeout(()=>showToast('Browser storage is unavailable here. Export a backup to preserve changes.'),800);
+// Hosted catalog can be updated independently from the page and user watchlists.
+async function refreshHostedCatalog(){
+  try {
+    if(window.location.protocol === 'file:') return;
+    const response = await fetch('./exhibitions.json', {cache:'no-store'});
+    if(!response.ok) throw new Error('Catalog unavailable');
+    const rows = await response.json();
+    if(!Array.isArray(rows)) throw new Error('Catalog must be an array');
+    const unique=new Set(), items=[];
+    for(const row of rows){
+      const item=normalizeRecord(row);
+      if(item && !unique.has(item.id)){items.push(item);unique.add(item.id);}
+    }
+    if(!items.length) throw new Error('Catalog was empty');
+    BASE=items;
+    BASE_IDS=new Set(items.map(item=>item.id));
+    buildMonthOptions();renderAreas();render();
+    if(map) fitMapPins();
+  } catch(error) {
+    console.info('Using the bundled exhibition catalog:', error.message);
+  }
+}
+refreshHostedCatalog();
+window.addEventListener('load',initMap,{once:true});
+</script>
+</body>
+</html>
