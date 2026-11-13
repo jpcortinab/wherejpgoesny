@@ -1,0 +1,498 @@
+[
+  {
+    "id": "sothebys-nov-2026",
+    "title": "The New York Sales — Modern Art Previews",
+    "artist": "Sotheby’s",
+    "venue": "Sotheby’s New York (Breuer Building)",
+    "area": "Upper East Side",
+    "address": "945 Madison Avenue, New York, NY 10021",
+    "start": "2026-11-07",
+    "close": "2026-11-18",
+    "url": "https://www.sothebys.com/en/series/the-new-york-sales",
+    "note": "Modern auction previews run through Nov 18. Planned for Tuesday, Nov 17, during lunch; reserve a free entry time. The Now & Contemporary previews finish Nov 15.",
+    "kind": "Auction preview",
+    "reservation": true,
+    "planned": "Tue, Nov 17 · lunch break",
+    "points": [
+      [
+        40.77341,
+        -73.96384
+      ]
+    ],
+    "curated": true
+  },
+  {
+    "id": "christies",
+    "title": "20th Century Evening Sale",
+    "artist": "Christie’s",
+    "venue": "Christie’s New York",
+    "area": "Midtown",
+    "address": "20 Rockefeller Plaza, New York, NY 10020",
+    "close": "2026-11-17",
+    "url": "https://www.christies.com/en/auction/20th-century-evening-sale-24266-nyr/overview",
+    "note": "20th Century Evening Sale preview; planned Monday, Nov 16, during lunch. The live sale is Nov 17 at 6:30 PM.",
+    "planned": "Mon, Nov 16 · lunch break",
+    "points": [
+      [
+        40.75877,
+        -73.97871
+      ]
+    ],
+    "kind": "Auction preview",
+    "start": null,
+    "curated": true
+  },
+  {
+    "id": "lichtenstein",
+    "title": "Like New",
+    "artist": "Roy Lichtenstein",
+    "venue": "Whitney Museum of American Art",
+    "area": "Meatpacking",
+    "address": "99 Gansevoort Street, New York, NY 10014",
+    "close": "2027-05-10",
+    "url": "https://whitney.org/exhibitions/lichtenstein/",
+    "note": "A career-spanning look at the artist’s innovations in Pop and image culture.",
+    "points": [
+      [
+        40.73958,
+        -74.00886
+      ]
+    ],
+    "kind": "Museum",
+    "start": "2026-10-11",
+    "curated": true
+  },
+  {
+    "id": "brancusi",
+    "title": "The Artist and His Studio",
+    "artist": "Constantin Brancusi",
+    "venue": "The Museum of Modern Art",
+    "area": "Midtown",
+    "address": "11 West 53rd Street, New York, NY 10019",
+    "close": "2027-02-27",
+    "url": "https://www.moma.org/calendar/exhibitions/5910",
+    "note": "Sculptures, photographs, tools, and archival objects evoking his Paris studio.",
+    "points": [
+      [
+        40.7615,
+        -73.97767
+      ]
+    ],
+    "kind": "Museum",
+    "start": "2026-10-25",
+    "curated": true
+  },
+  {
+    "id": "nara",
+    "title": "Yoshitomo Nara",
+    "artist": "Yoshitomo Nara",
+    "venue": "David Zwirner · 19th & 20th Street",
+    "area": "Chelsea",
+    "address": "533 W 19th St & 537 W 20th St, New York, NY 10011",
+    "close": "2026-12-12",
+    "url": "https://www.davidzwirner.com/exhibitions/2026/yoshitomo-nara",
+    "note": "New paintings, drawings, sculpture and earlier works. Two separate Chelsea spaces.",
+    "points": [
+      [
+        40.74436,
+        -74.00715
+      ],
+      [
+        40.74523,
+        -74.00708
+      ]
+    ],
+    "kind": "Gallery",
+    "start": "2026-11-05",
+    "curated": true,
+    "planned": "Sat, Nov 21 · Chelsea gallery day"
+  },
+  {
+    "id": "chow",
+    "title": "Friends and Legends: The Collection of Michael Chow",
+    "artist": "Michael Chow",
+    "venue": "Gagosian · 980 Madison at 76th",
+    "area": "Upper East Side",
+    "address": "974 Madison Avenue, New York, NY 10075",
+    "close": "2026-12-22",
+    "url": "https://gagosian.com/exhibitions/2026/friends-and-legends-the-collection-of-michael-chow-new-york/",
+    "note": "Basquiat, Hockney, Haring and Warhol portraits from Michael Chow’s collection. Special Sunday opening Nov 15, 1–5 PM; easy to pair with Sotheby’s.",
+    "points": [
+      [
+        40.77323,
+        -73.9642
+      ]
+    ],
+    "kind": "Gallery",
+    "start": "2026-11-14",
+    "curated": true,
+    "planned": "Sun, Nov 15 · 1–5 PM"
+  },
+  {
+    "id": "bacon",
+    "title": "Bacon / de Kooning",
+    "artist": "Bacon / de Kooning",
+    "venue": "Lévy Gorvy Dayan",
+    "area": "Upper East Side",
+    "address": "19 East 64th Street, New York, NY 10065",
+    "close": "2026-12-19",
+    "url": "https://www.levygorvydayan.com/exhibitions/bacon-de-kooning",
+    "note": "A rare dialogue between Francis Bacon and Willem de Kooning. Closed Sunday; visit Tuesday–Saturday, 10 AM–6 PM.",
+    "points": [
+      [
+        40.76643,
+        -73.97044
+      ]
+    ],
+    "kind": "Gallery",
+    "start": "2026-11-04",
+    "curated": true
+  },
+  {
+    "id": "krasner",
+    "title": "Krasner and Pollock: Past Continuous",
+    "artist": "Krasner / Pollock",
+    "venue": "The Metropolitan Museum of Art",
+    "area": "Upper East Side",
+    "address": "1000 Fifth Avenue, New York, NY 10028",
+    "close": "2027-01-31",
+    "url": "https://www.metmuseum.org/exhibitions/krasner-and-pollock-past-continuous",
+    "note": "Already visited. The first major New York show of their work together in over two decades.",
+    "points": [
+      [
+        40.77945,
+        -73.96324
+      ]
+    ],
+    "kind": "Museum",
+    "visited": true,
+    "start": null,
+    "curated": true
+  },
+  {
+    "id": "marden",
+    "title": "I Am Plane Image",
+    "artist": "Brice Marden",
+    "venue": "Gagosian · West 21st Street",
+    "area": "Chelsea",
+    "address": "522 West 21st Street, New York, NY 10011",
+    "close": "2026-12-12",
+    "url": "https://gagosian.com/exhibitions/2026/brice-marden-i-am-plane-image/",
+    "note": "Major survey spanning six decades of Marden’s painting.",
+    "points": [
+      [
+        40.74621,
+        -74.00672
+      ]
+    ],
+    "kind": "Gallery",
+    "start": "2026-09-15",
+    "curated": true,
+    "planned": "Sat, Nov 21 · Chelsea gallery day"
+  },
+  {
+    "id": "rothko",
+    "title": "The Surrealist Years",
+    "artist": "Rothko / Gottlieb",
+    "venue": "125 Newbury · Pace",
+    "area": "Tribeca",
+    "address": "395 Broadway, New York, NY 10013",
+    "close": "2027-01-09",
+    "url": "https://125newbury.com/exhibitions/rothko-gottlieb",
+    "note": "Paintings and works on paper from 1941–1951, before their mature abstract languages.",
+    "points": [
+      [
+        40.71938,
+        -74.00312
+      ]
+    ],
+    "kind": "Gallery",
+    "start": "2026-11-13",
+    "curated": true
+  },
+  {
+    "id": "turrell",
+    "title": "Something Old, Something New, Something Borrowed, Something Blue",
+    "artist": "James Turrell",
+    "venue": "Almine Rech",
+    "area": "Tribeca",
+    "address": "361 Broadway, New York, NY 10013",
+    "close": "2027-01-30",
+    "url": "https://www.alminerech.com/exhibitions/12743-james-turrell",
+    "note": "Light-based works. Free but reservation required; slots were fully booked when checked Nov 13.",
+    "points": [
+      [
+        40.71825,
+        -74.00374
+      ]
+    ],
+    "kind": "Gallery",
+    "reservation": true,
+    "start": "2026-11-12",
+    "curated": true
+  },
+  {
+    "id": "johns",
+    "title": "Recent Drawings",
+    "artist": "Jasper Johns",
+    "venue": "Matthew Marks Gallery",
+    "area": "Chelsea",
+    "address": "526 West 22nd Street, New York, NY 10011",
+    "close": "2027-01-23",
+    "url": "https://matthewmarks.com/exhibitions/jasper-johns-recent-drawings-11-2026",
+    "note": "Twelve recent drawings that revisit motifs from across Johns’s career.",
+    "points": [
+      [
+        40.74709,
+        -74.00652
+      ]
+    ],
+    "kind": "Gallery",
+    "start": "2026-11-05",
+    "curated": true,
+    "planned": "Sat, Nov 21 · Chelsea gallery day"
+  },
+  {
+    "id": "baselitz",
+    "title": "Meine Schule",
+    "artist": "Georg Baselitz",
+    "venue": "Gagosian · West 24th Street",
+    "area": "Chelsea",
+    "address": "555 West 24th Street, New York, NY 10011",
+    "close": "2027-01-23",
+    "url": "https://gagosian.com/exhibitions/2026/georg-baselitz-meine-schule/",
+    "note": "Late paintings and sculptures, including some references to de Kooning.",
+    "points": [
+      [
+        40.74936,
+        -74.00618
+      ]
+    ],
+    "kind": "Gallery",
+    "start": "2026-11-12",
+    "curated": true,
+    "planned": "Sat, Nov 21 · Chelsea gallery day"
+  },
+  {
+    "id": "curtiss",
+    "title": "UNREAL",
+    "artist": "Julie Curtiss",
+    "venue": "Gagosian · West 24th Street",
+    "area": "Chelsea",
+    "address": "541 West 24th Street, New York, NY 10011",
+    "close": "2026-12-19",
+    "url": "https://gagosian.com/exhibitions/2026/julie-curtiss-unreal/",
+    "note": "Stylized paintings reflecting the strangeness of contemporary New York.",
+    "points": [
+      [
+        40.74917,
+        -74.00573
+      ]
+    ],
+    "kind": "Gallery",
+    "start": "2026-11-10",
+    "curated": true,
+    "planned": "Sat, Nov 21 · Chelsea gallery day"
+  },
+  {
+    "id": "guston",
+    "title": "In the Studio",
+    "artist": "Philip Guston",
+    "venue": "The Museum of Modern Art",
+    "area": "Midtown",
+    "address": "11 West 53rd Street, New York, NY 10019",
+    "start": "2026-11-21",
+    "close": "2027-02-07",
+    "url": "https://www.moma.org/calendar/exhibitions/5962",
+    "note": "Paintings from the studio, with everyday objects and unsettling figures.",
+    "points": [
+      [
+        40.7615,
+        -73.97767
+      ]
+    ],
+    "kind": "Museum",
+    "curated": true
+  },
+  {
+    "id": "huyghe",
+    "title": "UUmwelt",
+    "artist": "Pierre Huyghe",
+    "venue": "The Museum of Modern Art",
+    "area": "Midtown",
+    "address": "11 West 53rd Street, New York, NY 10019",
+    "start": null,
+    "close": "2026-11-29",
+    "url": "https://www.moma.org/calendar/exhibitions/5912",
+    "note": "An AI-inflected installation in MoMA’s sculpture garden. Closes Nov 29.",
+    "points": [
+      [
+        40.7615,
+        -73.97767
+      ]
+    ],
+    "kind": "Museum",
+    "curated": true
+  },
+  {
+    "id": "surrealist-book",
+    "title": "Tomorrow Lives in Mirrors",
+    "artist": "The Surrealist Book",
+    "venue": "The Museum of Modern Art",
+    "area": "Midtown",
+    "address": "11 West 53rd Street, New York, NY 10019",
+    "start": "2026-10-04",
+    "close": "2027-01-23",
+    "url": "https://www.moma.org/calendar/exhibitions/5918",
+    "note": "Surrealist publications, artist books and experiments on paper.",
+    "points": [
+      [
+        40.7615,
+        -73.97767
+      ]
+    ],
+    "kind": "Museum",
+    "curated": true
+  },
+  {
+    "id": "african-architecture",
+    "title": "Modernism in Western Africa",
+    "artist": "Architects of Liberation",
+    "venue": "The Museum of Modern Art",
+    "area": "Midtown",
+    "address": "11 West 53rd Street, New York, NY 10019",
+    "start": "2026-07-05",
+    "close": "2027-01-02",
+    "url": "https://www.moma.org/calendar/exhibitions/5906",
+    "note": "Architecture and national identity in post-independence West Africa.",
+    "points": [
+      [
+        40.7615,
+        -73.97767
+      ]
+    ],
+    "kind": "Museum",
+    "curated": true
+  },
+  {
+    "id": "minnie-evans",
+    "title": "The Lost World",
+    "artist": "Minnie Evans",
+    "venue": "Whitney Museum of American Art",
+    "area": "Meatpacking",
+    "address": "99 Gansevoort Street, New York, NY 10014",
+    "start": "2026-08-22",
+    "close": "2027-01-10",
+    "url": "https://whitney.org/exhibitions/the-lost-world",
+    "note": "Visionary, intricately patterned paintings and drawings.",
+    "points": [
+      [
+        40.73958,
+        -74.00886
+      ]
+    ],
+    "kind": "Museum",
+    "curated": true
+  },
+  {
+    "id": "coumba",
+    "title": "Stars and Stripes",
+    "artist": "Coumba Samba",
+    "venue": "Whitney Museum of American Art",
+    "area": "Meatpacking",
+    "address": "99 Gansevoort Street, New York, NY 10014",
+    "start": "2026-09-19",
+    "close": "2027-01-18",
+    "url": "https://whitney.org/exhibitions",
+    "note": "New work at the Whitney; see the museum site for gallery details.",
+    "points": [
+      [
+        40.73958,
+        -74.00886
+      ]
+    ],
+    "kind": "Museum",
+    "curated": true
+  },
+  {
+    "id": "na-mira",
+    "title": "NO SMOKING",
+    "artist": "Na Mira",
+    "venue": "The Museum of Modern Art",
+    "area": "Midtown",
+    "address": "11 West 53rd Street, New York, NY 10019",
+    "start": "2026-11-14",
+    "close": "2027-02-15",
+    "url": "https://www.moma.org/calendar/exhibitions",
+    "note": "A new MoMA exhibition opening November 14.",
+    "points": [
+      [
+        40.7615,
+        -73.97767
+      ]
+    ],
+    "kind": "Museum",
+    "curated": true
+  },
+  {
+    "id": "carrington-vicuna",
+    "artist": "Leonora Carrington & Cecilia Vicuña",
+    "title": "Leonora Carrington & Cecilia Vicuña",
+    "venue": "Lehmann Maupin · West 24th Street",
+    "area": "Chelsea",
+    "address": "501 West 24th Street, New York, NY 10011",
+    "start": "2026-11-19",
+    "close": "2026-12-19",
+    "url": "https://www.lehmannmaupin.com/exhibitions/cecilia-vicuna-leonora-carrington",
+    "note": "Historical works by Carrington paired with new work by Vicuña, exploring myth and transformation. Opens Nov 19; close to other West 24th Street galleries.",
+    "kind": "Gallery",
+    "planned": "Sat, Nov 21 · Chelsea gallery day",
+    "points": [
+      [
+        40.74885,
+        -74.00464
+      ]
+    ],
+    "curated": true
+  },
+  {
+    "id": "wiley-what-the-light-becomes",
+    "artist": "Kehinde Wiley",
+    "title": "What the Light Becomes",
+    "venue": "Sean Kelly · Tenth Avenue",
+    "area": "Hudson Yards",
+    "address": "475 Tenth Avenue, New York, NY 10018",
+    "start": "2026-11-06",
+    "close": "2026-12-23",
+    "url": "https://www.skny.com/exhibitions/kehinde-wiley3",
+    "note": "Portraits of contemporary New Yorkers. Sean Kelly is near West 36th Street — about a 15–20 minute walk north of the Chelsea galleries. Open Saturday.",
+    "kind": "Gallery",
+    "points": [
+      [
+        40.75584,
+        -73.99784
+      ]
+    ],
+    "curated": true
+  },
+  {
+    "id": "johnson-birthday-boys",
+    "artist": "Rashid Johnson",
+    "title": "Birthday Boys",
+    "venue": "Hauser & Wirth · Wooster Street",
+    "area": "SoHo",
+    "address": "134 Wooster Street, New York, NY 10012",
+    "start": "2026-11-03",
+    "close": "2027-01-16",
+    "url": "https://www.hauserwirth.com/gsw/hauser-wirth-exhibitions/rashid-johnson-birthday-boys/",
+    "note": "New mosaics, suspended sculptures and film exploring father-son relationships. Separate SoHo outing; no ticket needed.",
+    "kind": "Gallery",
+    "points": [
+      [
+        40.7256,
+        -73.99854
+      ]
+    ],
+    "curated": true
+  }
+]
